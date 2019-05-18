@@ -9,6 +9,13 @@
 ##ESCPOS
 >>>>热敏打印机escpos指令测试代码
 
+部分截图
+-------
+![概览](https://github.com/tangxingchu/yidpu/blob/master/sample/1558161812772.jpg)
+![概览](https://github.com/tangxingchu/yidpu/blob/master/sample/1558161856684.jpg)
+![概览](https://github.com/tangxingchu/yidpu/blob/master/sample/1558161881168.jpg)
+![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558161900997.jpg)
+
 License
 -------
 MIT
