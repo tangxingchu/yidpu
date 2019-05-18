@@ -31,6 +31,11 @@
 ![概览](https://github.com/tangxingchu/yidpu/blob/master/sample/1558161856684.jpg)
 ![概览](https://github.com/tangxingchu/yidpu/blob/master/sample/1558161881168.jpg)
 ![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558161900997.jpg)
+![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168551664.jpg)
+![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168563258.jpg)
+![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168579404.jpg)
+![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168591878.jpg)
+![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168603722.jpg)
 
 License
 -------
