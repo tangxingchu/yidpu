@@ -1,0 +1,70 @@
+<!--index.wxml-->
+<view class="container">
+  <view class='searchViewContainer'>
+    <view class='location'>
+      <image src="../../images/near.png"></image><text>{{location}}</text>
+    </view>
+    <view class="weui-search-bar" style='flex: 1'>
+      <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input"  disabled='true' placeholder="输入店铺名、地址" bindtap="wxSearchTab"/>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--轮播-->
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='width:100%;height:150px;'>
+    <block wx:for="{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+
+<!--方形-->
+  <!-- <view class="system">
+    <view class="system_ding" wx:for="{{indeximg}}" >
+      <image data-id="{{item.id}}" bindtap="system" class="system_img" src="{{item.photo}}" data-ptype="{{item.ptype}}">
+      </image>
+    </view>
+  </view> -->
+  <!--我是一条分割线-->
+  <!-- <view class="xian"></view> -->
+  
+  <!-- <view class="classname">{{mini.classname}}</view> -->
+
+    <view class="wrap">
+
+      <view class="new-info">
+        <text class="new-info-tile">正是虾肥蟹壮时</text>
+        <image src="../../images/post/crab.png" class="new-info-img"></image>
+        <text class="new-info-summary">菊黄蟹正肥，品尝秋之味。徐志摩把,“看初花的荻芦”和“到楼外楼吃蟹”,并列为秋天来杭州不能错过的风雅之事；用林妹妹的话讲是“螯封嫩玉双双满，</text>
+      </view>
+
+      <view class="new-img-num">
+        <image src="../../images/icon/none-star.png" class="new-img"></image>
+        <text class="new-num">112</text>
+        <image src="../../images/icon/share-anti.png" class="new-img"></image>
+        <text class="new-num">96</text>
+      </view>
+    </view>
+    <view class="wrap">
+      <view class="new-info">
+        <text class="new-info-tile">正是虾肥蟹壮时</text>
+        <image src="../../images/post/crab.png" class="new-info-img"></image>
+        <text class="new-info-summary">菊黄蟹正肥，品尝秋之味。徐志摩把,“看初花的荻芦”和“到楼外楼吃蟹”,并列为秋天来杭州不能错过的风雅之事；用林妹妹的话讲是“螯封嫩玉双双满，</text>
+      </view>
+
+      <view class="new-img-num">
+        <image src="../../images/icon/none-star.png" class="new-img"></image>
+        <text class="new-num">112</text>
+        <image src="../../images/icon/share-anti.png" class="new-img"></image>
+        <text class="new-num">96</text>
+      </view>
+    </view>
+
+    <view class='reachBottomView'>
+      <text>数据加载中...</text>
+    </view>
+</view>

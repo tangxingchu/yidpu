@@ -1,0 +1,29 @@
+@import '~antd/lib/style/themes/default.less';
+@import '../../../utils/utils.less';
+
+// @primary-color
+// @text-color
+// @text-color-secondary
+// @background-color-base
+// @heading-color
+.tableList {
+    .tableListOperator {
+      margin-bottom: 16px;
+      button {
+        margin-right: 8px;
+      }
+    }
+    :global {
+        .ant-list-vertical .ant-list-item-meta-avatar {
+            display: block;
+        }
+        .ant-list-vertical .ant-list-item-action {
+            text-align: right;
+        }
+    }
+}
+
+
+.expired {
+    text-decoration-line: line-through;
+}

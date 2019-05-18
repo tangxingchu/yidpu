@@ -1,0 +1,68 @@
+<view class='container' >
+    <view class='profileView' wx:if="{{hasUserInfo}}">
+      <image src="{{userInfo.avatarUrl}}"  class='profileViewImageStyle'></image>
+      <text class='profileViewFontStyle'>{{userInfo.nickName}}</text>
+    </view>
+    <view class='profileView' wx:if="{{hasUserInfo==false}}">
+      <image src="{{userInfo.avatarUrl}}"  class='profileViewImageStyle'></image>
+      <button class='secondfontstyle_button' wx:if="{{canIUse}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取微信公开信息</button>
+      <view wx:else><text class='secondfontstyle'>请升级微信版本</text></view>
+    </view>
+    <view class='secondlayout'>
+        <view class='secondlayoutitem'>
+          <text class='secondfontstyle'>1{{personal.scores}}</text>
+          <text class='secondfontstyle_secondary'>积分</text>
+        </view>
+        <view class='secondlayoutitem'>
+          <text class='secondfontstyle'>4{{personal.lv}}</text>
+          <text class='secondfontstyle_secondary'>优惠券</text>
+        </view>
+        <view class='secondlayoutitem'>
+          <text class='secondfontstyle'>0{{personal.lv}}</text>
+          <text class='secondfontstyle_secondary'>消息</text>
+        </view>
+    </view>
+
+    <view>
+        <view class='thirdlayout' bindtap='bindViewTapbasic'>
+            <view class='thirdlayout'>
+                <image class='secondimagestyle' src='../../images/phone.png'></image>
+                <text class='secondfontstyle'>手机号码</text>
+            </view>
+            <view class='fourthlayout'>
+                <text class='secondfontstyle_secondary'>未绑定</text><image src='../../images/right-arrow.png' class='thirdimagestyle'></image>
+            </view>
+        </view>
+        <view class='thirdlayout' bindtap='bindViewTapaddress'>
+            <view class='thirdlayout'>
+                <image class='secondimagestyle' src='../../images/collection.png'></image>
+                <text class='secondfontstyle'>我的收藏</text>
+            </view>
+            <view class='fourthlayout'>
+                <image src='../../images/right-arrow.png' class='thirdimagestyle'></image>
+            </view>
+        </view>
+        <view class='thirdlayout' bindtap='bindViewTapaddress'>
+            <view class='thirdlayout'>
+                <image class='secondimagestyle' src='../../images/address.png'></image>
+                <text class='secondfontstyle'>收货地址</text>
+            </view>
+            <view class='fourthlayout'>
+                <image src='../../images/right-arrow.png' class='thirdimagestyle'></image>
+            </view>
+        </view>
+    </view>
+
+    <view>
+        <view class='thirdlayout'  bindtap="onShareTap">
+            <view class='thirdlayout'>
+                <image class='secondimagestyle' src='../../images/customerservice.png'></image>
+                <text class='secondfontstyle'>联系我们</text>
+            </view>
+            <view class='fourthlayout'>
+                <image src='../../images/right-arrow.png' class='thirdimagestyle'></image>
+            </view>
+        </view>
+    </view>
+</view>
+

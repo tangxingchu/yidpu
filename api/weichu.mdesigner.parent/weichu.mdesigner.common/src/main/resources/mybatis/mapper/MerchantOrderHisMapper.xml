@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantOrderHisMapper">
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantOrderHis">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="pay_order_no" jdbcType="VARCHAR" property="payOrderNo" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="diners_num" jdbcType="INTEGER" property="dinersNum" />
+    <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="order_channel" jdbcType="INTEGER" property="orderChannel" />
+    <result column="order_method" jdbcType="INTEGER" property="orderMethod" />
+    <result column="pay_method" jdbcType="INTEGER" property="payMethod" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
+    <result column="exception_price" jdbcType="DECIMAL" property="exceptionPrice" />
+    <result column="pay_no" jdbcType="VARCHAR" property="payNo" />
+    <result column="table_code" jdbcType="VARCHAR" property="tableCode" />
+    <result column="subtract_type" jdbcType="INTEGER" property="subtractType" />
+    <result column="subtract_amount" jdbcType="DECIMAL" property="subtractAmount" />
+    <result column="subtract_remark" jdbcType="VARCHAR" property="subtractRemark" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid" />
+    <result column="alipay_userid" jdbcType="VARCHAR" property="alipayUserid" />
+    <result column="seq_number" jdbcType="VARCHAR" property="seqNumber" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="close_time" jdbcType="TIMESTAMP" property="closeTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="his_time" jdbcType="TIMESTAMP" property="hisTime" />
+  </resultMap>
+  <resultMap id="BaseResultMapVo" type="com.weichu.mdesigner.common.vo.OrderHisVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="pay_order_no" jdbcType="VARCHAR" property="payOrderNo" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="diners_num" jdbcType="INTEGER" property="dinersNum" />
+    <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="order_channel" jdbcType="INTEGER" property="orderChannel" />
+    <result column="order_method" jdbcType="INTEGER" property="orderMethod" />
+    <result column="pay_method" jdbcType="INTEGER" property="payMethod" />
+    <result column="subtract_type" jdbcType="INTEGER" property="subtractType" />
+    <result column="subtract_amount" jdbcType="DECIMAL" property="subtractAmount" />
+    <result column="subtract_remark" jdbcType="VARCHAR" property="subtractRemark" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
+    <result column="exception_price" jdbcType="DECIMAL" property="exceptionPrice" />
+    <result column="pay_no" jdbcType="VARCHAR" property="payNo" />
+    <result column="table_code" jdbcType="VARCHAR" property="tableCode" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid" />
+    <result column="alipay_userid" jdbcType="VARCHAR" property="alipayUserid" />
+    <result column="seq_number" jdbcType="VARCHAR" property="seqNumber" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="close_time" jdbcType="TIMESTAMP" property="closeTime" />
+    <result column="his_time" jdbcType="TIMESTAMP" property="hisTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_no, out_trade_no, pay_order_no, merchant_id, member_id, diners_num, order_status, 
+    order_time, order_channel, order_method, pay_method, total_price, pay_price, exception_price, 
+    pay_no, table_code, subtract_type, subtract_amount, subtract_remark, remark, create_user, 
+    create_time, wx_openid, alipay_userid, seq_number, end_time, close_time, modify_time, 
+    his_time
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantOrderHisExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_order_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_order_his
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_order_his
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantOrderHisExample">
+    delete from merchant_order_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantOrderHis">
+    insert into merchant_order_his (id, order_no, out_trade_no, 
+      pay_order_no, merchant_id, member_id, 
+      diners_num, order_status, order_time, 
+      order_channel, order_method, pay_method, 
+      total_price, pay_price, exception_price, 
+      pay_no, table_code, subtract_type, 
+      subtract_amount, subtract_remark, remark, 
+      create_user, create_time, wx_openid, 
+      alipay_userid, seq_number, end_time, 
+      close_time, modify_time, his_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, 
+      #{payOrderNo,jdbcType=VARCHAR}, #{merchantId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
+      #{dinersNum,jdbcType=INTEGER}, #{orderStatus,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{orderChannel,jdbcType=INTEGER}, #{orderMethod,jdbcType=INTEGER}, #{payMethod,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=DECIMAL}, #{payPrice,jdbcType=DECIMAL}, #{exceptionPrice,jdbcType=DECIMAL}, 
+      #{payNo,jdbcType=VARCHAR}, #{tableCode,jdbcType=VARCHAR}, #{subtractType,jdbcType=INTEGER}, 
+      #{subtractAmount,jdbcType=DECIMAL}, #{subtractRemark,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{wxOpenid,jdbcType=VARCHAR}, 
+      #{alipayUserid,jdbcType=VARCHAR}, #{seqNumber,jdbcType=VARCHAR}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{closeTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{hisTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantOrderHis">
+    insert into merchant_order_his
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="payOrderNo != null">
+        pay_order_no,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="dinersNum != null">
+        diners_num,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="orderChannel != null">
+        order_channel,
+      </if>
+      <if test="orderMethod != null">
+        order_method,
+      </if>
+      <if test="payMethod != null">
+        pay_method,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="payPrice != null">
+        pay_price,
+      </if>
+      <if test="exceptionPrice != null">
+        exception_price,
+      </if>
+      <if test="payNo != null">
+        pay_no,
+      </if>
+      <if test="tableCode != null">
+        table_code,
+      </if>
+      <if test="subtractType != null">
+        subtract_type,
+      </if>
+      <if test="subtractAmount != null">
+        subtract_amount,
+      </if>
+      <if test="subtractRemark != null">
+        subtract_remark,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="wxOpenid != null">
+        wx_openid,
+      </if>
+      <if test="alipayUserid != null">
+        alipay_userid,
+      </if>
+      <if test="seqNumber != null">
+        seq_number,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="closeTime != null">
+        close_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="hisTime != null">
+        his_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null">
+        #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="dinersNum != null">
+        #{dinersNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderChannel != null">
+        #{orderChannel,jdbcType=INTEGER},
+      </if>
+      <if test="orderMethod != null">
+        #{orderMethod,jdbcType=INTEGER},
+      </if>
+      <if test="payMethod != null">
+        #{payMethod,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payPrice != null">
+        #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="exceptionPrice != null">
+        #{exceptionPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tableCode != null">
+        #{tableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subtractType != null">
+        #{subtractType,jdbcType=INTEGER},
+      </if>
+      <if test="subtractAmount != null">
+        #{subtractAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="subtractRemark != null">
+        #{subtractRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxOpenid != null">
+        #{wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayUserid != null">
+        #{alipayUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNumber != null">
+        #{seqNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null">
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hisTime != null">
+        #{hisTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantOrderHisExample" resultType="java.lang.Long">
+    select count(*) from merchant_order_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantOrderHis">
+    update merchant_order_his
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null">
+        pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="dinersNum != null">
+        diners_num = #{dinersNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderChannel != null">
+        order_channel = #{orderChannel,jdbcType=INTEGER},
+      </if>
+      <if test="orderMethod != null">
+        order_method = #{orderMethod,jdbcType=INTEGER},
+      </if>
+      <if test="payMethod != null">
+        pay_method = #{payMethod,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payPrice != null">
+        pay_price = #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="exceptionPrice != null">
+        exception_price = #{exceptionPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payNo != null">
+        pay_no = #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tableCode != null">
+        table_code = #{tableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="subtractType != null">
+        subtract_type = #{subtractType,jdbcType=INTEGER},
+      </if>
+      <if test="subtractAmount != null">
+        subtract_amount = #{subtractAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="subtractRemark != null">
+        subtract_remark = #{subtractRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxOpenid != null">
+        wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayUserid != null">
+        alipay_userid = #{alipayUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNumber != null">
+        seq_number = #{seqNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null">
+        close_time = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hisTime != null">
+        his_time = #{hisTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantOrderHis">
+    update merchant_order_his
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      merchant_id = #{merchantId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      diners_num = #{dinersNum,jdbcType=INTEGER},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      order_channel = #{orderChannel,jdbcType=INTEGER},
+      order_method = #{orderMethod,jdbcType=INTEGER},
+      pay_method = #{payMethod,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      pay_price = #{payPrice,jdbcType=DECIMAL},
+      exception_price = #{exceptionPrice,jdbcType=DECIMAL},
+      pay_no = #{payNo,jdbcType=VARCHAR},
+      table_code = #{tableCode,jdbcType=VARCHAR},
+      subtract_type = #{subtractType,jdbcType=INTEGER},
+      subtract_amount = #{subtractAmount,jdbcType=DECIMAL},
+      subtract_remark = #{subtractRemark,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      alipay_userid = #{alipayUserid,jdbcType=VARCHAR},
+      seq_number = #{seqNumber,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      close_time = #{closeTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      his_time = #{hisTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 以上是自动生成的,一下是自己写的, 上面还有一个resultMap -->
+  <!-- 订单完成后添加进历史表 -->
+  <insert id="insertFromOrder">
+  	insert into merchant_order_his(order_no,out_trade_no,pay_order_no,merchant_id,member_id,diners_num,order_status,
+		order_time,order_channel,order_method,pay_method,total_price,pay_price,exception_price,pay_no,
+		table_code,subtract_type,subtract_amount,subtract_remark,remark,create_user,create_time,
+		wx_openid, alipay_userid, seq_number, end_time,close_time,modify_time)
+		select order_no,out_trade_no,pay_order_no,merchant_id,member_id,diners_num,order_status,
+		order_time,order_channel,order_method,pay_method,total_price,pay_price,exception_price,pay_no,
+		table_code,subtract_type,subtract_amount,subtract_remark,remark,create_user,create_time,
+		wx_openid, alipay_userid, seq_number, end_time,close_time,modify_time from merchant_order o where o.order_no = #{orderNo,jdbcType=VARCHAR}
+		and o.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </insert>
+  <select id="listBySearchParams" parameterType="hashmap" resultMap="BaseResultMapVo">
+  	select o.* from merchant_order_his o
+	<where>
+		<if test="orderNo != null">
+			and o.order_no = #{orderNo,jdbcType=VARCHAR}
+		</if>
+		<if test="tableCodes != null">
+			and o.table_code in
+			<foreach collection="tableCodes" index="index" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="orderStatus != null">
+			and o.order_status = #{orderStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="orderTimeStart != null and orderTimeEnd != null">
+			and o.order_time &gt;= #{orderTimeStart,jdbcType=TIMESTAMP} and o.order_time &lt;= #{orderTimeEnd,jdbcType=TIMESTAMP}
+		</if>
+	    and o.merchant_id=#{merchantId}
+	</where>
+		order by o.order_time desc
+  </select>
+  <!-- 界面点+号 展开合并支付订单 -->
+  <select id="listByOutTradeNo" resultMap="BaseResultMapVo">
+  	select o.* from merchant_order_his o
+	  	where o.out_trade_no = #{outTradeNo,jdbcType=VARCHAR} and o.order_no != #{orderNo} and o.merchant_id=#{merchantId}
+	  	order by o.order_time desc
+  </select>
+  <!-- 根据订单号查询订单 -->
+  <select id="selectByOrderNo" resultMap="BaseResultMapVo">
+  	select o.* from merchant_order_his o
+	    where o.order_no = #{orderNo,jdbcType=VARCHAR} and o.merchant_id=#{merchantId}
+  </select>
+  <!-- 根据订单号退款 (全额退款) -->
+  <update id="refundAllByOrderNo">
+  	<!-- update merchant_order_his set order_status = (case
+    when pay_price - #{refundAmount} &lt;= 0 then '7'
+    else '11'
+    end), pay_price = (case
+    when pay_price - #{refundAmount} &lt;= 0 then 0
+    else (pay_price - #{refundAmount})
+    end)  where pay_price - #{refundAmount} &lt;= 0
+  		and order_no = #{orderNo,jdbcType=VARCHAR} and merchant_id=#{merchantId} -->
+  	update merchant_order_his set order_status = (case
+    when pay_price - #{refundAmount} &lt;= 0 then '7'
+    else '11'
+    end), pay_price = (case
+    when pay_price - #{refundAmount} &lt;= 0 then 0
+    else (pay_price - #{refundAmount})
+    end)  where order_no = #{orderNo,jdbcType=VARCHAR} and merchant_id=#{merchantId}
+  </update>
+  <!-- 根据订单号退款(合并订单支付)(部分退款) -->
+  <update id="refundPartByOrderNo">
+  	update merchant_order_his set order_status = 
+	(case
+    when pay_price - #{refundAmount} = 0 then '7'
+    else '11'
+    end), pay_price = pay_price - #{refundAmount} where pay_price - #{refundAmount} >= 0
+  		and order_no = #{orderNo,jdbcType=VARCHAR} and merchant_id=#{merchantId}
+  </update>
+  <!-- 根据合并单号全额退款(前台扫码支付) -->
+  <update id="refundALlByOutTradeNo">
+    <!--
+  	update merchant_order_his set order_status = (case
+    when pay_price - #{refundAmount} &lt;= 0 then '7'
+    else '11'
+    end), pay_price = (case
+    when pay_price - #{refundAmount} &lt;= 0 then 0
+    else (pay_price - #{refundAmount})
+    end) where pay_price - #{refundAmount} &lt;= 0
+  		and out_trade_no = #{outTradeNo,jdbcType=VARCHAR} and merchant_id=#{merchantId}
+  		  -->
+  update merchant_order_his set order_status = (case
+    when pay_price - #{refundAmount} &lt;= 0 then '7'
+    else '11'
+    end), pay_price = (case
+    when pay_price - #{refundAmount} &lt;= 0 then 0
+    else (pay_price - #{refundAmount})
+    end) where out_trade_no = #{outTradeNo,jdbcType=VARCHAR} and merchant_id=#{merchantId}
+  </update>
+  <!-- 修改订单备注 -->
+  <update id="modifyRemark">
+  	update merchant_order_his set remark = #{remark,jdbcType=VARCHAR} where 
+  		order_no = #{orderNo,jdbcType=VARCHAR} and merchant_id=#{merchantId}
+  </update>
+  <!-- 查询合并单 -->
+  <select id="listOrderHisByOutTradeNo" resultMap="BaseResultMapVo">
+  	select o.* from merchant_order_his o
+	    where o.out_trade_no = #{outTradeNo,jdbcType=VARCHAR} and o.merchant_id=#{merchantId}
+  </select>
+  <!--合并支付单，根据合并单号关闭订单  -->
+  <update id="closeOrderByOutTradeNo">
+  	update merchant_order_his set order_status = '10' where 
+  		out_trade_no = #{outTradeNo,jdbcType=VARCHAR} and merchant_id=#{merchantId}
+  </update>
+  <!-- 非合并支付订单，根据订单号关闭订单 -->
+  <update id="closeOrderByOrderNo">
+  	update merchant_order_his set order_status = '10' where 
+  		order_no = #{orderNo,jdbcType=VARCHAR} and merchant_id=#{merchantId}
+  </update>
+  <!-- 报表界面查询退款订单详情 -->
+  <select id="listReundOrderHis" resultMap="BaseResultMap">
+  	select * from merchant_order_his t where t.order_status in ('7', '11') and t.order_time &gt;=#{beginOrderTime}
+  		and t.order_time &lt;=#{endOrderTime} and t.merchant_id=#{merchantId}
+  </select>
+  <!-- 报表界面查询退款订单详情(全额退款) -->
+  <select id="listAllReundOrderHis" resultMap="BaseResultMap">
+  	select * from merchant_order_his t where t.order_status = '7' and t.order_time &gt;=#{beginOrderTime}
+  		and t.order_time &lt;=#{endOrderTime} and t.merchant_id=#{merchantId}
+  </select>
+  <!-- 报表界面查询退款订单详情(部分退款) -->
+  <select id="listPartReundOrderHis" resultMap="BaseResultMap">
+  	select * from merchant_order_his t where t.order_status = '11' and t.order_time &gt;=#{beginOrderTime}
+  		and t.order_time &lt;=#{endOrderTime} and t.merchant_id=#{merchantId}
+  </select>
+  <!-- 异常订单 -->
+  <select id="listExceptionOrderHis" resultMap="BaseResultMap">
+  	select t.remark, t.* from merchant_order_his t where t.total_price != (t.pay_price + t.subtract_amount) 
+		and t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP} and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+		and t.order_status not in ('7', '11')
+		and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+	union all
+	select '有退单' as remark, a.* from merchant_order_his a left join (
+		select distinct order_no from merchant_order_item_his b
+		where b.order_item_status = '9' and b.merchant_id = #{merchantId,jdbcType=INTEGER}
+	) as c on a.order_no = c.order_no where c.order_no is not null
+	and a.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP} and a.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	and a.merchant_id = #{merchantId,jdbcType=INTEGER} 
+  </select>
+</mapper>

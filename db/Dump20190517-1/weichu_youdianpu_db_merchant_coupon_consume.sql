@@ -1,0 +1,61 @@
+CREATE DATABASE  IF NOT EXISTS `weichu_youdianpu_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `weichu_youdianpu_db`;
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+--
+-- Host: 127.0.0.1    Database: weichu_youdianpu_db
+-- ------------------------------------------------------
+-- Server version	5.7.22
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `merchant_coupon_consume`
+--
+
+DROP TABLE IF EXISTS `merchant_coupon_consume`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `merchant_coupon_consume` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `merchant_id` int(11) NOT NULL COMMENT '商家ID',
+  `order_no` varchar(45) NOT NULL COMMENT '订单号',
+  `coupon_no` varchar(100) DEFAULT NULL COMMENT '现金优惠券编号',
+  `coupon_price` decimal(10,2) NOT NULL COMMENT '现金券金额',
+  `coupon_status` int(11) NOT NULL DEFAULT '1' COMMENT '状态（1=已创建,2=已抵扣）,新建的时候状态为1，当收款完成时将状态改为2',
+  `consume_time` datetime DEFAULT NULL COMMENT '消费时间(收款完成时的时间)',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注或其他信息',
+  `create_time` datetime DEFAULT NULL COMMENT '记录创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '记录修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='消费现金券记录表(实物)';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `merchant_coupon_consume`
+--
+
+LOCK TABLES `merchant_coupon_consume` WRITE;
+/*!40000 ALTER TABLE `merchant_coupon_consume` DISABLE KEYS */;
+INSERT INTO `merchant_coupon_consume` VALUES (7,1,'1311077095667800000001',NULL,29.00,2,'2018-11-08 12:03:47',NULL,'2018-11-08 11:51:35','2018-11-08 11:51:35'),(21,1,'132018111821160200001A81',NULL,9.00,2,'2018-11-18 21:16:31',NULL,'2018-11-18 21:16:18','2018-11-18 21:16:18'),(22,1,'132018121717484000001C81','110',2.00,2,'2018-12-17 17:50:23',NULL,'2018-12-17 17:50:04','2018-12-17 17:50:04'),(23,1,'132019011814152900001A81','123',5.00,2,'2019-01-18 18:09:02',NULL,'2019-01-18 15:42:43','2019-01-18 15:42:43'),(24,1,'132019012311170900001B81','001',29.00,2,'2019-01-23 16:09:58',NULL,'2019-01-23 16:09:45','2019-01-23 16:09:45'),(26,1,'132019031221502700001A81','1',2.00,2,'2019-03-12 21:51:51',NULL,'2019-03-12 21:51:21','2019-03-12 21:51:21'),(27,1,'132019031221511300001C81','1',2.00,2,'2019-03-12 21:51:51',NULL,'2019-03-12 21:51:31','2019-03-12 21:51:31');
+/*!40000 ALTER TABLE `merchant_coupon_consume` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-05-18  0:49:42

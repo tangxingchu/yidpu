@@ -1,0 +1,81 @@
+.goods_container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.goods_container .goodsDisabled {
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  margin: 4px;
+}
+.goods_container .goods {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+  text-align: center;
+  justify-content: center;
+  box-shadow: 0px 0px 1px #aaaaaa;
+  margin: 4px;
+}
+.goods_container .goods:hover {
+  background-color: #e6f7ff;
+  box-shadow: 0px 0px 3px #aaaaaa;
+}
+.goods_container .goods_name {
+  padding: 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.goods_container .goods_price {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-size: 16px;
+}
+.goods_container .goods_price_disabled {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-size: 14px;
+  text-decoration: line-through;
+}
+.goods_container .new_price {
+  flex: 1;
+  font-size: 18px;
+  vertical-align: middle;
+  color: #ff4242;
+}
+.goods_container .goods_inventory {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+.goodsDay_wrap {
+  position: relative;
+  height: 0px;
+}
+.goodsDay_wrap .goodsDay {
+  position: absolute;
+  font-size: 12px;
+  color: #ff4242;
+  top: -2px;
+  left: -2px;
+  transform: rotate(-45deg);
+}
+.goodsDay_wrap .goodsDiscount {
+  position: absolute;
+  font-size: 12px;
+  color: #ff4242;
+  top: -2px;
+  right: -6px;
+  transform: rotate(45deg);
+}

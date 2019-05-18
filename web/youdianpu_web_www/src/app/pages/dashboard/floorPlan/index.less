@@ -1,0 +1,164 @@
+@import '~antd/lib/style/themes/default.less';
+@import '../../../utils/utils.less';
+
+.container {
+    margin: -24px -24px 0px;
+}
+.toolbar {
+    /* position: relative;
+    left: 204px;
+    top: 64px;
+    right:0px; */
+    height: 28px;
+    padding-left: 8px;
+    padding-top: 4px;
+    background: whiteSmoke;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.graph {
+    /* position: absolute; */
+    overflow:auto;
+    font-family: Arial;
+    font-size: 8pt;
+    border-style: solid;
+    border-color: #F2F2F2;
+    border-width: 1px;
+    background: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2UwZTBlMCIgb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZTBlMGUwIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=");
+    background-color: #FFFFFF;
+    transition: all .2s;
+}
+
+.splash {
+    width: calc(100% - 200px);
+    height: calc(100% - 64px);
+    background: white;
+    /* position: absolute;
+    top: 64px;
+    left: 200px; */
+    z-index: 2;
+}
+
+.shape {
+    /* position: absolute; */
+    width: 240px;
+    padding-top:2px;
+    /* right:2px;
+    top:64px; */
+}
+
+.floorButtons {
+    position: absolute;
+    top: 96px;
+    right: 4px;
+}
+
+.logInfo {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    width: 288px;
+}
+
+.total {
+  text-align: right;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.placeOrderModal {
+  :global {
+    .ant-modal-body {
+      padding: 12px;
+    }
+  }
+}
+
+.standardList {
+  :global {
+      .ant-card-head {
+        border-bottom: none;
+      }
+      .ant-card-head-title {
+        line-height: 32px;
+        padding: 4px 0;
+      }
+      .ant-card-extra {
+        padding: 4px 0;
+      }
+      .ant-list-pagination {
+        text-align: right;
+        margin-top: 12px;
+      }
+      .ant-avatar-lg {
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+      }
+      .ant-card-head {
+          padding: 0px;
+      }
+      .ant-card-body {
+          padding: 0px;
+      }
+    }
+    .headerInfo {
+      position: relative;
+      text-align: center;
+      & > span {
+        color: @text-color-secondary;
+        display: inline-block;
+        font-size: @font-size-base;
+        line-height: 22px;
+        margin-bottom: 4px;
+      }
+      & > p {
+        color: @heading-color;
+        font-size: 24px;
+        line-height: 24px;
+        margin: 0;
+      }
+      & > em {
+        background-color: @border-color-split;
+        position: absolute;
+        height: 56px;
+        width: 1px;
+        top: 0;
+        right: 0;
+      }
+    }
+    .listContent {
+      font-size: 0;
+      .listContentItem {
+        color: @text-color-secondary;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: @font-size-base;
+        margin-left: 40px;
+        > span {
+          line-height: 20px;
+        }
+        > p {
+          margin-top: 4px;
+          margin-bottom: 0;
+          line-height: 22px;
+        }
+      }
+    }
+    .extraContentSearch {
+      margin-left: 8px;
+      margin-right: 8px;
+      width: 280px;
+    }
+    .extraContentLabel {
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+}
+
+.tips {
+  display: flex;
+  flex-direction: row;
+  color: @text-color-secondary;
+  justify-content: center;
+}

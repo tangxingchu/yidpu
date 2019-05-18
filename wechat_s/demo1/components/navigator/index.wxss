@@ -1,0 +1,23 @@
+/* components/navigator.wxss */
+.scroll-view-x{
+  background-color: #fff;
+  white-space: nowrap;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 30rpx;
+  z-index:10;
+  box-shadow: 0px 0px 4px #888888;
+  top:0
+}
+.scroll-view-x .scroll-view-item{
+  display:inline-block;
+  margin:0px 8px;
+  line-height: 33px;
+  cursor: pointer;
+}
+.on{
+  border-bottom: 2px solid #E64320;
+  color: #E64320
+}

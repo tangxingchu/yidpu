@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "订单",
+  "usingComponents": {
+    "wux-tabs": "../../dist/tabs/index",
+    "wux-tab": "../../dist/tab/index",
+    "wux-card": "../../dist/card/index",
+    "wux-white-space": "../../dist/white-space/index",
+    "wux-wing-blank": "../../dist/wing-blank/index",
+    "wux-spin": "../../dist/spin/index",
+    "slideTab": "../../components/navigator/index"
+  }
+}

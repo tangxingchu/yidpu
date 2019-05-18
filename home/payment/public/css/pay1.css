@@ -1,0 +1,78 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.pay-shop-info {
+    width: 100%;
+    margin-bottom: 0.2rem;
+}
+.pay-shop-info .content {
+    padding-top: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 4rem;
+    height: 0.8rem;
+    height: 48px;
+    margin: 0 auto;
+}
+.pay-shop-info .shop-logo{
+    width: 0.8rem;
+    width: 48px;
+    height: 0.8rem;
+    height: 48px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.pay-shop-info .shop-name {
+    height: 0.8rem;
+    font-size: 0.42rem;
+    line-height: 0.8rem;
+    line-height: 48px;
+    margin-left: 0.2rem;
+    color: #2f323a;
+}
+.pay-input-money {
+    height: 1.24rem;
+    line-height: 1.24rem;
+    margin: 0px 16px;
+    border: 0.04rem solid #fe9b20;
+    -webkit-border-radius: 0.02rem;
+    -moz-border-radius: 0.02rem;
+    border-radius: 0.02rem;
+    background: #fff;
+	padding-right: 0.15rem;
+}
+.input-left {
+    float: left;
+    font-size: 0.4rem;
+    padding-left: 0.24rem;
+}
+.input-right {
+    font-size: 0.4rem;
+    float: right;
+}
+.input-right label{
+    display: inline-block;
+    font-size: 0.4rem;
+}
+
+.upper-case {
+    margin-right: 0.48rem;
+    font-size: 0.25rem;
+    color: #949494;
+    float: right;
+}
+
+
+
+
+
+
+
+
+
+
+
+

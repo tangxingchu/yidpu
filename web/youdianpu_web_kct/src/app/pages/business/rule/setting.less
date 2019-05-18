@@ -1,0 +1,108 @@
+.stepsContent {
+    margin-top: 16px;
+    border: 1px dashed #e9e9e9;
+    border-radius: 6px;
+    background-color: #ffffff;
+    min-height: 200px;
+}
+  
+.stepsAction {
+    margin-top: 24px;
+}
+
+.stepPrice {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    :global {
+        .ant-input {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+    }
+    .common {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+.goodsItems {
+    flex: 1;
+    margin-top: 12;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .goodsItem {
+        margin: 4px;
+        .oldPrice {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .newPrice {
+            font-size: 16px;
+            padding: 4px;
+            color: #ff4d4f;
+        }
+    }
+}
+
+.tooltip {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.result {
+    margin: 0 auto;
+    padding: 24px 0 8px;
+}
+
+.goods_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .goods {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        height: 120px;
+        width: 120px;
+        text-align: center;
+        box-shadow: 0px 0px 1px #aaaaaa;
+        margin: 4px;
+        &:hover {
+          background-color: #e6f7ff;
+          box-shadow: 0px 0px 3px #aaaaaa;
+        }
+        .goods_name {
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .goods_price {
+          font-size: 14px;
+          padding: 4px;
+          text-decoration:line-through;
+        }
+        .goods_newprice {
+            font-size: 16px;
+            padding: 4px;
+            color: #ff4d4f;
+        }
+        &::before {
+            position: relative;
+            left: -26px;
+            top: 4px;
+            transform: rotate(-45deg);
+            content: '特惠';
+            width: 76px;
+            padding: 0 4px;
+            color: #fff;
+            background: #ff4d4f;
+            font-size: 12px;
+            text-align: center;
+        }
+    }
+}

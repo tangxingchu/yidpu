@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantCashierLogMapper">
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantCashierLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="table_code" jdbcType="VARCHAR" property="tableCode" />
+    <result column="cashier_amount" jdbcType="DECIMAL" property="cashierAmount" />
+    <result column="cashier_time" jdbcType="TIMESTAMP" property="cashierTime" />
+    <result column="cashier_method" jdbcType="INTEGER" property="cashierMethod" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="cashier_type" jdbcType="INTEGER" property="cashierType" />
+    <result column="cashier_source" jdbcType="INTEGER" property="cashierSource" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="operation_staff" jdbcType="VARCHAR" property="operationStaff" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, merchant_id, table_code, cashier_amount, cashier_time, cashier_method, order_no, 
+    cashier_type, cashier_source, remark, operation_staff, create_time, modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantCashierLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_cashier_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_cashier_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_cashier_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantCashierLogExample">
+    delete from merchant_cashier_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantCashierLog">
+    insert into merchant_cashier_log (id, merchant_id, table_code, 
+      cashier_amount, cashier_time, cashier_method, 
+      order_no, cashier_type, cashier_source, 
+      remark, operation_staff, create_time, 
+      modify_time)
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{tableCode,jdbcType=VARCHAR}, 
+      #{cashierAmount,jdbcType=DECIMAL}, #{cashierTime,jdbcType=TIMESTAMP}, #{cashierMethod,jdbcType=INTEGER}, 
+      #{orderNo,jdbcType=VARCHAR}, #{cashierType,jdbcType=INTEGER}, #{cashierSource,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{operationStaff,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantCashierLog">
+    insert into merchant_cashier_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="tableCode != null">
+        table_code,
+      </if>
+      <if test="cashierAmount != null">
+        cashier_amount,
+      </if>
+      <if test="cashierTime != null">
+        cashier_time,
+      </if>
+      <if test="cashierMethod != null">
+        cashier_method,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="cashierType != null">
+        cashier_type,
+      </if>
+      <if test="cashierSource != null">
+        cashier_source,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="operationStaff != null">
+        operation_staff,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="tableCode != null">
+        #{tableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierAmount != null">
+        #{cashierAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="cashierTime != null">
+        #{cashierTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cashierMethod != null">
+        #{cashierMethod,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierType != null">
+        #{cashierType,jdbcType=INTEGER},
+      </if>
+      <if test="cashierSource != null">
+        #{cashierSource,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operationStaff != null">
+        #{operationStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantCashierLogExample" resultType="java.lang.Long">
+    select count(*) from merchant_cashier_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantCashierLog">
+    update merchant_cashier_log
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="tableCode != null">
+        table_code = #{tableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierAmount != null">
+        cashier_amount = #{cashierAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="cashierTime != null">
+        cashier_time = #{cashierTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cashierMethod != null">
+        cashier_method = #{cashierMethod,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cashierType != null">
+        cashier_type = #{cashierType,jdbcType=INTEGER},
+      </if>
+      <if test="cashierSource != null">
+        cashier_source = #{cashierSource,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operationStaff != null">
+        operation_staff = #{operationStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantCashierLog">
+    update merchant_cashier_log
+    set merchant_id = #{merchantId,jdbcType=INTEGER},
+      table_code = #{tableCode,jdbcType=VARCHAR},
+      cashier_amount = #{cashierAmount,jdbcType=DECIMAL},
+      cashier_time = #{cashierTime,jdbcType=TIMESTAMP},
+      cashier_method = #{cashierMethod,jdbcType=INTEGER},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      cashier_type = #{cashierType,jdbcType=INTEGER},
+      cashier_source = #{cashierSource,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      operation_staff = #{operationStaff,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 以下是自己写的 -->
+  <!-- 根据条件分页查询 -->
+  <select id="selectByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select * from merchant_cashier_log
+  	<where>
+  		<if test="tableCode != null">
+        	and table_code = #{tableCode,jdbcType=VARCHAR}
+      	</if>
+  		<if test="cashierType != null">
+        	and cashier_type = #{cashierType,jdbcType=INTEGER}
+      	</if>
+      	<if test="cashierMethod != null">
+        	and cashier_method = #{cashierMethod,jdbcType=INTEGER}
+      	</if>
+      	<if test="orderNo != null">
+        	and order_no = #{orderNo,jdbcType=VARCHAR}
+      	</if>
+      	<if test="cashierTimeStart != null">
+        	and cashier_time &gt;= #{cashierTimeStart,jdbcType=TIMESTAMP}
+      	</if>
+      	<if test="cashierTimeEnd != null">
+        	and cashier_time &lt;= #{cashierTimeEnd,jdbcType=TIMESTAMP}
+      	</if>
+  		<if test="merchantId != null">
+        	and merchant_id = #{merchantId,jdbcType=INTEGER}
+      	</if>
+      	order by cashier_time desc
+  	</where>
+  </select>
+</mapper>

@@ -1,0 +1,126 @@
+.bottom_btns {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 16px;
+    text-align: right;
+    left: 0;
+    background: #fff;
+    border-radius: 0 0 4px 4px;
+}
+.container {
+    :global {
+        .ant-card-body {
+            padding: 0px;
+        }
+    }
+    .orderHeader {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .orderStatus {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+    .orderFooter {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    .orderTotalPrice {
+        margin-left: 8px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .bottomItem {
+        display: flex;
+        flex-direction: row;
+        padding-right: 16px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #e8e8e8;
+        justify-content: flex-end;
+        align-items: center;                
+    }
+    .bottomItem_border {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 2px;
+        padding-right: 16px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border: 1px solid #e8e8e8;
+        justify-content: flex-end;
+        align-items: center;                
+    }
+    .bottomItem_noBorder {
+        border-bottom: none;
+    }
+    .orderItemCancel {
+        text-decoration:line-through;
+    }
+    .orderItem {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: space-between;
+        .left {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            .ruleName {
+                color: #ff4242;
+            }
+            .extraItem {
+                margin-left: 4px;
+                color: rgba(0,0,0,.45);
+                font-size: 13px;
+            }
+            .remark {
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
+                margin-left: 4px;
+                color: rgba(0,0,0,.45);
+                font-size: 13px;
+            }
+        }
+        .priceItem {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            .price {
+                width: 80px;
+                text-align: right;
+            }
+            .num {
+                color: rgba(0,0,0,.45);
+                font-size: 13px;
+            }
+        }
+        .orderItemStatus {
+            margin-left: 8px;
+            .status4 {
+                color: #ff4242;
+                margin-right: 8px;
+                font-size: 13px;
+            }
+            .status {
+                color: rgba(0,0,0,.45);
+                margin-right: 8px;
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+.noData {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

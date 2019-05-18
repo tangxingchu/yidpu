@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Open Diagram</title>
+	<link rel="stylesheet" type="text/css" href="styles/grapheditor.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<script type="text/javascript">
+	var floorData = [];
+	function handleImport() {
+		var radio = document.getElementsByName('floorId');
+		var floorId = "", floorName = "";
+		for (i = 0; i < radio.length; i++) {
+			if (radio[i].checked) {
+				floorId = radio[i].value;
+				floorName = floorData[i].floorName;
+			}
+		}
+		if (floorId) {
+			fetch(window.parent.READ_URL + '/' + floorId, {"method": "get", "headers": {"Authorization": window.parent.authorization}}).then(function(res) {
+				if(res.ok) {
+					return res.text();
+				} else {
+					window.parent.mxUtils.error(window.parent.mxResources.get("foolPlanNotFound"), 200, true);
+				}
+			}).then(function(data){
+				window.parent.openFile.setData(data, floorName);
+			}).catch(e => {
+				window.parent.mxUtils.error(e, 200, true);
+			});
+			
+		}
+	}
+
+	// Hides this dialog
+	function hideWindow(cancel) {
+		window.parent.openFile.cancel(cancel);
+	}
+
+	function main() {
+		var openButton = document.getElementById('openButton');
+		openButton.value = window.parent.mxResources.get(window.parent.openKey || 'open');
+		var cancelButton = document.getElementById('cancelButton');
+		cancelButton.value = window.parent.mxResources.get('cancel');
+		var form = window.openForm || document.getElementById('openForm');
+		var param = JSON.stringify({});
+		fetch(window.parent.LIST_URL, {
+			"method": "post", "headers":
+				{ "Authorization": window.parent.authorization, "Content-type": 'application/json' }, body: param
+		}).then(function (res) {
+			if (res.ok) {
+				return res.json();
+			} else {
+				document.getElementById('loading').style.display = 'none';
+				window.parent.mxUtils.error(window.parent.mxResources.get("foolPlanNotFound"), 200, true);
+			}
+		}).then(function (data) {
+			floorData = data;
+			document.getElementById('loading').style.display = 'none';
+			var t = document.getElementById("table");
+			for (var i = 0; i < data.length; i++) {
+				var tr = document.createElement("tr");
+				var raidoTd = document.createElement("td");
+				var e = document.createElement("input", "floorId");
+				e.type = 'radio';
+				e.id = data[i].id;
+				e.name = "floorId";
+				e.value = data[i].id;
+				e.onchange = function () {
+					openButton.removeAttribute('disabled');
+				}
+				raidoTd.appendChild(e);
+				tr.appendChild(raidoTd);
+				var td = document.createElement("td");
+				td.innerHTML = data[i].floorName;
+				tr.appendChild(td);
+				t.appendChild(tr);
+			}
+		}).catch(e => {
+			document.getElementById('loading').style.display = 'none';
+			window.parent.mxUtils.error(e, 200, true);
+		});
+	};
+</script>
+
+<body onload="main();">
+	<div id="">
+		<h4>导入平面图</h4>
+		<span style="font-size: 12px;">导入之后请重新录入桌台编号,所有桌台编号不能重复.</span>
+	</div>
+	<table style="width:100%;" id="table">
+	</table>
+	<table style="width:100%;">
+		<tr>
+			<td style="vertical-align:middle;text-align:right;white-space:nowrap;">
+				<input type="button" id="cancelButton" class="geBtn" value="Cancel" onclick="hideWindow(true);">
+				<input type="button" id="openButton" class="geBtn gePrimaryBtn" value="Open" onclick="handleImport();" disabled="disabled">
+			</td>
+		</tr>
+	</table>
+	<div id="loading">数据加载中,请稍等...</div>
+</body>
+
+</html>

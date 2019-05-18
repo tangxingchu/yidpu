@@ -1,0 +1,116 @@
+/**index.wxss**/
+@import "../../wxSearchView/wxSearchView.wxss";
+page {  
+    background: #f7f7f7;
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.slide-image {
+  width: 100%;
+  display: block;
+  margin-bottom:8px;
+/*border-radius:20rpx;*/
+
+}
+
+.searchViewContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 8px;
+}
+.searchViewContainer .location {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 14px;  
+}
+.searchViewContainer .location image {
+  height: 16px;
+  width: 16px;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  margin: 8px 8px 0px 8px;
+  padding: 4px;
+  border: 1rpx solid #e6e6ea;
+  border-radius: 5px;
+}
+
+.new-info {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.new-info-tile {
+  margin-left: 10rpx;
+  font-weight: 600;
+}
+
+.new-info-img {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.new-info-summary {
+  margin-left: 40rpx;
+  margin-right: 40rpx;
+  line-height: 44rpx;
+  font-size: 28rpx;
+  color: #888;
+  letter-spacing: 3rpx;
+}
+
+.new-img-num {
+  margin-bottom: 10px;
+}
+
+.new-img {
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 30rpx;
+}
+
+.new-num {
+  margin-left: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+
+.reachBottomView {
+  color: #888;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: center;
+  padding: 8px;
+  font-size: 28rpx;
+}

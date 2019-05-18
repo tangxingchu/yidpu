@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <!-- set `maximum-scale` for some compatibility issues -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    </head>
+
+    <body>
+        <div id="tips"></div>
+        <script>
+                var parseUrl = function() {
+                    var searchHref = window.location.search.replace('?', '');
+                    var params = searchHref.split('&');
+                    var returnParam = {};
+                    params.forEach(function(param){
+                        var paramSplit = param.split('=');
+                        returnParam[paramSplit[0]] = paramSplit[1];
+                    });
+                    return returnParam;
+                }
+                var params = parseUrl();
+                var ua = window.navigator.userAgent.toLowerCase();
+                //判断是不是微信
+                if (ua.match(/MicroMessenger/i) == 'micromessenger' ) {
+                    //微信公众号里面必须设置 网页授权域名
+                    var redirect_uri = 'https://m.yidpu.com/member/wxbind/index.html?merchantId=' + params.merchantId;
+                    var redirect_uri_encode = encodeURIComponent(redirect_uri);
+                    //生产(商户号)wxc05e1b8602afb5e7
+                    var authUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6505d415747fb721&redirect_uri=" + redirect_uri_encode 
+                        + "&response_type=code&scope=snsapi_base#wechat_redirect";
+                    window.location.href = authUrl;
+                } else if (ua.match(/AlipayClient/i) == 'alipayclient') { //判断是不是支付宝
+                    // window.location.href = 'alipayment.html';
+                    //开发
+                    //var authUrl = "https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm?app_id=2016092000557569&scope=auth_base&redirect_uri=http://127.0.0.1:8090/api/alipay/buyerAuthRedirect";
+                    //沙箱测试
+                    //var authUrl = "https://openauth.alipaydev.com/oauth2/publicAppAuthorize.htm?app_id=2016092000557569&scope=auth_base&redirect_uri=https://api.yidpu.com/api/alipay/buyerAuthRedirect";
+                    //生产
+                    var authUrl = "https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2018102961920282&scope=auth_base&redirect_uri=https://api.yidpu.com/api/alipay/memberBindRedirect";
+                    window.location.href = authUrl + '?merchantId=' + params.merchantId;
+                } else {
+                    document.getElementById('tips').innerText = "请使用微信或支付宝扫码";
+                }
+            </script>
+    </body>
+
+</html>

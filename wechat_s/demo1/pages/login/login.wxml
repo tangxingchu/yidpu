@@ -1,0 +1,7 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+  <text>您需要先授权微信登录，才可以继续</text>
+  <button wx:if="{{!hasUserInfo && canIUse}}" class='auth_button' > 授权登录 </button>
+
+
+</view>

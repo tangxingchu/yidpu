@@ -1,0 +1,19 @@
+<import src='../../components/star/star.wxml' />
+<template name='store'>
+  <view class='store' bindtap='storelick'>
+    <image src="{{staticHost + store.defaultImage.imagePath}}" mode="aspectFill"></image>
+    <view class='info'>
+      <view class='name'>{{store.merchantName}}</view>
+      <view class='star_price'>
+        <template is='star' data="{{count:store.star}}" />
+        <text wx:if="{{store.price}}">人均消费:{{store.price}}</text>
+      </view>
+      <view class='type_km'>
+        <view class='type'>{{store.remark}}</view>
+        <view class='km'>{{store.distance}}
+          <text wx:if="{{store.distance}}">km</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

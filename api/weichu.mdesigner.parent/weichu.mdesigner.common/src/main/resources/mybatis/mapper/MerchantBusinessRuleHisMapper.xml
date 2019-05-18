@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantBusinessRuleHisMapper">
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHis">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="rule_code" jdbcType="VARCHAR" property="ruleCode" />
+    <result column="rule_name" jdbcType="VARCHAR" property="ruleName" />
+    <result column="rule_begin_date" jdbcType="TIMESTAMP" property="ruleBeginDate" />
+    <result column="rule_end_date" jdbcType="TIMESTAMP" property="ruleEndDate" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, merchant_id, rule_code, rule_name, rule_begin_date, rule_end_date, create_time, 
+    modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHisExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_business_rule_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_business_rule_his
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_business_rule_his
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHisExample">
+    delete from merchant_business_rule_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHis">
+    insert into merchant_business_rule_his (id, merchant_id, rule_code, 
+      rule_name, rule_begin_date, rule_end_date, 
+      create_time, modify_time)
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{ruleCode,jdbcType=VARCHAR}, 
+      #{ruleName,jdbcType=VARCHAR}, #{ruleBeginDate,jdbcType=TIMESTAMP}, #{ruleEndDate,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHis">
+    insert into merchant_business_rule_his
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="ruleCode != null">
+        rule_code,
+      </if>
+      <if test="ruleName != null">
+        rule_name,
+      </if>
+      <if test="ruleBeginDate != null">
+        rule_begin_date,
+      </if>
+      <if test="ruleEndDate != null">
+        rule_end_date,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="ruleCode != null">
+        #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleName != null">
+        #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleBeginDate != null">
+        #{ruleBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ruleEndDate != null">
+        #{ruleEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <selectKey keyProperty="id" resultType="java.lang.Integer">
+      select LAST_INSERT_ID() as id
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHisExample" resultType="java.lang.Long">
+    select count(*) from merchant_business_rule_his
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHis">
+    update merchant_business_rule_his
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="ruleCode != null">
+        rule_code = #{ruleCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleName != null">
+        rule_name = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleBeginDate != null">
+        rule_begin_date = #{ruleBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ruleEndDate != null">
+        rule_end_date = #{ruleEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessRuleHis">
+    update merchant_business_rule_his
+    set merchant_id = #{merchantId,jdbcType=INTEGER},
+      rule_code = #{ruleCode,jdbcType=VARCHAR},
+      rule_name = #{ruleName,jdbcType=VARCHAR},
+      rule_begin_date = #{ruleBeginDate,jdbcType=TIMESTAMP},
+      rule_end_date = #{ruleEndDate,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 以下是自己写的，上面是自动生成的 -->
+  <!-- 禁用某一个运营规则时 修改规则结束时间 -->
+  <update id="updateRuleEndDate">
+  	update merchant_business_rule_his set rule_end_date=#{ruleEndDate} where rule_end_date is null
+  		and rule_code = #{ruleCode} and merchant_id = #{merchantId}
+  </update>
+  <!-- 查询运营规则历史启用时间与停止时间  时间轴数据 -->
+  <select id="selectByTimeline" resultType="hashmap">
+  	SELECT 
+	    *
+	FROM
+	    (SELECT 
+	        a.id,
+	            a.rule_name,
+	            a.rule_code,
+                date_format(a.rule_begin_date, '%Y-%m-%d') as rule_begin_date,
+                date_format(a.rule_end_date, '%Y-%m-%d') as rule_end_date,
+	            date_format(a.rule_begin_date, '%Y-%m-%d') as rule_date,
+	            'begin' AS type
+	    FROM
+	        merchant_business_rule_his a
+	    WHERE
+	    	a.rule_begin_date &lt; #{ruleBeginDate}
+	        and a.merchant_id = #{merchantId}
+	 UNION ALL
+	 SELECT 
+	        b.id,
+	            b.rule_name,
+	            b.rule_code,
+                date_format(b.rule_begin_date, '%Y-%m-%d') as rule_begin_date,
+                date_format(b.rule_end_date, '%Y-%m-%d') as rule_end_date,
+	            date_format(b.rule_end_date, '%Y-%m-%d') as rule_date,
+	            'end' AS type
+	    FROM
+	         merchant_business_rule_his b
+	    WHERE
+			b.rule_begin_date &lt; #{ruleBeginDate}
+	        and b.merchant_id = #{merchantId}) AS c
+	ORDER BY c.rule_date ASC, c.rule_begin_date asc
+  </select>
+  <!-- 时间周期内 营业额求和 -->
+  <select id="sumTurnover" resultType="hashmap">
+  	select concat(date_format(#{preBeginDate}, '%Y-%m-%d'),'~',date_format(#{preEndDate}, '%Y-%m-%d')) as name,
+  		ifnull(sum(t.total_price), 0) as turnover from report_turnover 
+		t where t.data_date &gt;= #{preBeginDate} and t.data_date &lt;= #{preEndDate} and 
+		t.merchant_id = #{merchantId}
+	union all
+	select concat(date_format(#{beginDate}, '%Y-%m-%d'),'~',date_format(#{endDate}, '%Y-%m-%d')) as name,
+		ifnull(sum(t.total_price), 0) as turnover from report_turnover 
+		t where t.data_date &gt;= #{beginDate} and t.data_date &lt;= #{endDate} and
+		t.merchant_id = #{merchantId}
+  </select>
+  <!-- 时间周期内 客流量求和 -->
+  <select id="sumCustomerFlow" resultType="hashmap">
+  	select concat(date_format(#{preBeginDate}, '%Y-%m-%d'),'~',date_format(#{preEndDate}, '%Y-%m-%d')) as name,
+  		ifnull(sum(t.customer_flow), 0) as customer_flow from report_customer_flow
+		t where t.data_date &gt;= #{preBeginDate} and t.data_date &lt;= #{preEndDate} and 
+		t.merchant_id = #{merchantId}
+	union all
+	select concat(date_format(#{beginDate}, '%Y-%m-%d'),'~',date_format(#{endDate}, '%Y-%m-%d')) as name,
+		ifnull(sum(t.customer_flow), 0) as customer_flow from report_customer_flow
+		t where t.data_date &gt;= #{beginDate} and t.data_date &lt;= #{endDate} and
+		t.merchant_id = #{merchantId}
+  </select>
+  <!-- 时间周期内 翻台率 -->
+  <select id="sumTableRate" resultType="hashmap">
+  	select concat(date_format(#{preBeginDate}, '%Y-%m-%d'),'~',date_format(#{preEndDate}, '%Y-%m-%d')) as name,
+  		ifnull(sum(t.table_turnover), 0) as table_rate from report_table_rate
+		t where t.data_date &gt;= #{preBeginDate} and t.data_date &lt;= #{preEndDate} and 
+		t.merchant_id = #{merchantId}
+	union all
+	select concat(date_format(#{beginDate}, '%Y-%m-%d'),'~',date_format(#{endDate}, '%Y-%m-%d')) as name,
+		ifnull(sum(t.table_turnover), 0) as table_rate from report_table_rate
+		t where t.data_date &gt;= #{beginDate} and t.data_date &lt;= #{endDate} and
+		t.merchant_id = #{merchantId}
+  </select>
+  <!-- 查询运营分析时间周期内运营的规则 -->
+  <select id="listRuleHis" resultMap="BaseResultMap">
+  	select * from merchant_business_rule_his t where t.rule_begin_date &lt;= #{ruleEndDate} order by rule_begin_date asc
+  </select>
+</mapper>

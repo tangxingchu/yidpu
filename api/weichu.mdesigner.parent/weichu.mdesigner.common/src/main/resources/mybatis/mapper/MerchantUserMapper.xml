@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantUserMapper">
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="merchant_code" jdbcType="VARCHAR" property="merchantCode" />
+    <result column="business_licence_no" jdbcType="VARCHAR" property="businessLicenceNo" />
+    <result column="business_photo_id" jdbcType="INTEGER" property="businessPhotoId" />
+    <result column="business_category" jdbcType="INTEGER" property="businessCategory" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="identity_photo_front_id" jdbcType="INTEGER" property="identityPhotoFrontId" />
+    <result column="identity_photo_back_id" jdbcType="INTEGER" property="identityPhotoBackId" />
+    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="last_login_token" jdbcType="VARCHAR" property="lastLoginToken" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="lon" jdbcType="DOUBLE" property="lon" />
+    <result column="lat" jdbcType="DOUBLE" property="lat" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="locked" jdbcType="INTEGER" property="locked" />
+    <result column="merchant_status" jdbcType="INTEGER" property="merchantStatus" />
+    <result column="operating_status" jdbcType="INTEGER" property="operatingStatus" />
+    <result column="adcode" jdbcType="VARCHAR" property="adcode" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="city_name" jdbcType="VARCHAR" property="cityName" />
+    <result column="expiration_time" jdbcType="TIMESTAMP" property="expirationTime" />
+    <result column="star" jdbcType="REAL" property="star" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="alipay_steup" jdbcType="INTEGER" property="alipaySteup" />
+    <result column="wxpay_steup" jdbcType="INTEGER" property="wxpaySteup" />
+    <result column="change_audit_status" jdbcType="INTEGER" property="changeAuditStatus" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="biz_license_auth_id" jdbcType="INTEGER" property="bizLicenseAuthId" />
+    <result column="logo_path" jdbcType="VARCHAR" property="logoPath" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid" />
+    <result column="merchant_property" jdbcType="INTEGER" property="merchantProperty" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, merchant_name, merchant_code, business_licence_no, business_photo_id, business_category, 
+    phone, password, identity_photo_front_id, identity_photo_back_id, register_time, 
+    last_login_time, last_login_ip, last_login_token, address, lon, lat, enabled, grade, 
+    locked, merchant_status, operating_status, adcode, city_code, city_name, expiration_time, 
+    star, telephone, alipay_steup, wxpay_steup, change_audit_status, email, biz_license_auth_id, 
+    logo_path, remark, wx_openid, merchant_property, create_time, modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantUserExample">
+    delete from merchant_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantUser">
+    insert into merchant_user (id, merchant_name, merchant_code, 
+      business_licence_no, business_photo_id, business_category, 
+      phone, password, identity_photo_front_id, 
+      identity_photo_back_id, register_time, last_login_time, 
+      last_login_ip, last_login_token, address, 
+      lon, lat, enabled, grade, 
+      locked, merchant_status, operating_status, 
+      adcode, city_code, city_name, 
+      expiration_time, star, telephone, 
+      alipay_steup, wxpay_steup, change_audit_status, 
+      email, biz_license_auth_id, logo_path, 
+      remark, wx_openid, merchant_property, 
+      create_time, modify_time)
+    values (#{id,jdbcType=INTEGER}, #{merchantName,jdbcType=VARCHAR}, #{merchantCode,jdbcType=VARCHAR}, 
+      #{businessLicenceNo,jdbcType=VARCHAR}, #{businessPhotoId,jdbcType=INTEGER}, #{businessCategory,jdbcType=INTEGER}, 
+      #{phone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{identityPhotoFrontId,jdbcType=INTEGER}, 
+      #{identityPhotoBackId,jdbcType=INTEGER}, #{registerTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{lastLoginToken,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{lon,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE}, #{enabled,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, 
+      #{locked,jdbcType=INTEGER}, #{merchantStatus,jdbcType=INTEGER}, #{operatingStatus,jdbcType=INTEGER}, 
+      #{adcode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, 
+      #{expirationTime,jdbcType=TIMESTAMP}, #{star,jdbcType=REAL}, #{telephone,jdbcType=VARCHAR}, 
+      #{alipaySteup,jdbcType=INTEGER}, #{wxpaySteup,jdbcType=INTEGER}, #{changeAuditStatus,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{bizLicenseAuthId,jdbcType=INTEGER}, #{logoPath,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{wxOpenid,jdbcType=VARCHAR}, #{merchantProperty,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantUser">
+    insert into merchant_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="merchantCode != null">
+        merchant_code,
+      </if>
+      <if test="businessLicenceNo != null">
+        business_licence_no,
+      </if>
+      <if test="businessPhotoId != null">
+        business_photo_id,
+      </if>
+      <if test="businessCategory != null">
+        business_category,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="identityPhotoFrontId != null">
+        identity_photo_front_id,
+      </if>
+      <if test="identityPhotoBackId != null">
+        identity_photo_back_id,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip,
+      </if>
+      <if test="lastLoginToken != null">
+        last_login_token,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="lon != null">
+        lon,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="locked != null">
+        locked,
+      </if>
+      <if test="merchantStatus != null">
+        merchant_status,
+      </if>
+      <if test="operatingStatus != null">
+        operating_status,
+      </if>
+      <if test="adcode != null">
+        adcode,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="cityName != null">
+        city_name,
+      </if>
+      <if test="expirationTime != null">
+        expiration_time,
+      </if>
+      <if test="star != null">
+        star,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="alipaySteup != null">
+        alipay_steup,
+      </if>
+      <if test="wxpaySteup != null">
+        wxpay_steup,
+      </if>
+      <if test="changeAuditStatus != null">
+        change_audit_status,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="bizLicenseAuthId != null">
+        biz_license_auth_id,
+      </if>
+      <if test="logoPath != null">
+        logo_path,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="wxOpenid != null">
+        wx_openid,
+      </if>
+      <if test="merchantProperty != null">
+        merchant_property,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCode != null">
+        #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceNo != null">
+        #{businessLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessPhotoId != null">
+        #{businessPhotoId,jdbcType=INTEGER},
+      </if>
+      <if test="businessCategory != null">
+        #{businessCategory,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPhotoFrontId != null">
+        #{identityPhotoFrontId,jdbcType=INTEGER},
+      </if>
+      <if test="identityPhotoBackId != null">
+        #{identityPhotoBackId,jdbcType=INTEGER},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginToken != null">
+        #{lastLoginToken,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=INTEGER},
+      </if>
+      <if test="merchantStatus != null">
+        #{merchantStatus,jdbcType=INTEGER},
+      </if>
+      <if test="operatingStatus != null">
+        #{operatingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adcode != null">
+        #{adcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationTime != null">
+        #{expirationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=REAL},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="alipaySteup != null">
+        #{alipaySteup,jdbcType=INTEGER},
+      </if>
+      <if test="wxpaySteup != null">
+        #{wxpaySteup,jdbcType=INTEGER},
+      </if>
+      <if test="changeAuditStatus != null">
+        #{changeAuditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="bizLicenseAuthId != null">
+        #{bizLicenseAuthId,jdbcType=INTEGER},
+      </if>
+      <if test="logoPath != null">
+        #{logoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenid != null">
+        #{wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantProperty != null">
+        #{merchantProperty,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <selectKey keyProperty="id" resultType="java.lang.Integer">
+      select LAST_INSERT_ID() as id
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantUserExample" resultType="java.lang.Long">
+    select count(*) from merchant_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantUser">
+    update merchant_user
+    <set>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantCode != null">
+        merchant_code = #{merchantCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceNo != null">
+        business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessPhotoId != null">
+        business_photo_id = #{businessPhotoId,jdbcType=INTEGER},
+      </if>
+      <if test="businessCategory != null">
+        business_category = #{businessCategory,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPhotoFrontId != null">
+        identity_photo_front_id = #{identityPhotoFrontId,jdbcType=INTEGER},
+      </if>
+      <if test="identityPhotoBackId != null">
+        identity_photo_back_id = #{identityPhotoBackId,jdbcType=INTEGER},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginToken != null">
+        last_login_token = #{lastLoginToken,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        lon = #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=DOUBLE},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=INTEGER},
+      </if>
+      <if test="merchantStatus != null">
+        merchant_status = #{merchantStatus,jdbcType=INTEGER},
+      </if>
+      <if test="operatingStatus != null">
+        operating_status = #{operatingStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adcode != null">
+        adcode = #{adcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null">
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="expirationTime != null">
+        expiration_time = #{expirationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="star != null">
+        star = #{star,jdbcType=REAL},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="alipaySteup != null">
+        alipay_steup = #{alipaySteup,jdbcType=INTEGER},
+      </if>
+      <if test="wxpaySteup != null">
+        wxpay_steup = #{wxpaySteup,jdbcType=INTEGER},
+      </if>
+      <if test="changeAuditStatus != null">
+        change_audit_status = #{changeAuditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="bizLicenseAuthId != null">
+        biz_license_auth_id = #{bizLicenseAuthId,jdbcType=INTEGER},
+      </if>
+      <if test="logoPath != null">
+        logo_path = #{logoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenid != null">
+        wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantProperty != null">
+        merchant_property = #{merchantProperty,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantUser">
+    update merchant_user
+    set merchant_name = #{merchantName,jdbcType=VARCHAR},
+      merchant_code = #{merchantCode,jdbcType=VARCHAR},
+      business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+      business_photo_id = #{businessPhotoId,jdbcType=INTEGER},
+      business_category = #{businessCategory,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      identity_photo_front_id = #{identityPhotoFrontId,jdbcType=INTEGER},
+      identity_photo_back_id = #{identityPhotoBackId,jdbcType=INTEGER},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      last_login_token = #{lastLoginToken,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      lon = #{lon,jdbcType=DOUBLE},
+      lat = #{lat,jdbcType=DOUBLE},
+      enabled = #{enabled,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=INTEGER},
+      locked = #{locked,jdbcType=INTEGER},
+      merchant_status = #{merchantStatus,jdbcType=INTEGER},
+      operating_status = #{operatingStatus,jdbcType=INTEGER},
+      adcode = #{adcode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      expiration_time = #{expirationTime,jdbcType=TIMESTAMP},
+      star = #{star,jdbcType=REAL},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      alipay_steup = #{alipaySteup,jdbcType=INTEGER},
+      wxpay_steup = #{wxpaySteup,jdbcType=INTEGER},
+      change_audit_status = #{changeAuditStatus,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      biz_license_auth_id = #{bizLicenseAuthId,jdbcType=INTEGER},
+      logo_path = #{logoPath,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      merchant_property = #{merchantProperty,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 以下是自己写的 -->
+  <!-- 更新最后一次登录状态 --> 
+  <update id="updateLastLoginStatus">
+  	update merchant_user set last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      last_login_token = #{lastLoginToken,jdbcType=VARCHAR} where id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 商家初次登录 提交资料待审核 -->
+  <update id="updateBusinessId">
+  	update merchant_user
+  	<set>
+  		<if test="businessLicenceNo != null">
+			business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+		</if>
+		<if test="merchantName != null">
+			merchant_name = #{merchantName,jdbcType=VARCHAR},
+		</if>
+		<if test="logoPath != null">
+			logo_path = #{logoPath,jdbcType=VARCHAR},
+		</if>
+		<if test="address != null">
+			address = #{address,jdbcType=VARCHAR},
+		</if>
+		<if test="merchantStatus != null">
+			merchant_status = #{merchantStatus,jdbcType=INTEGER},
+		</if>
+		<if test="remark != null">
+			remark = #{remark,jdbcType=VARCHAR}
+		</if>
+  	</set>
+  	where id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 开始试用-修改状态为3  -->
+  <update id="updateStatusUseFree">
+  	update merchant_user set merchant_status = #{merchantStatus,jdbcType=INTEGER},
+  		expiration_time = #{expirationTime,jdbcType=TIMESTAMP} where id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 修改商家支付宝签约流程的状态 -->
+  <update id="updateAlipaySteup">
+  	update merchant_user set alipay_steup = #{alipaySteup,jdbcType=INTEGER} where id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 修改商家支付宝授权文件id -->
+  <update id="updateBizLicenseAuthId">
+  	update merchant_user set biz_license_auth_id = #{bizLicenseAuthId,jdbcType=INTEGER}, alipay_steup=2 where id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 修改商家变更状态 -->
+  <update id="updateChangeStatus">
+  	update merchant_user set change_audit_status = #{changeAuditStatus,jdbcType=INTEGER} where id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 只查询基本信息id,name,logo -->
+  <select id="selectBasicInfo" resultMap="BaseResultMap">
+  	select id, merchant_name, address, logo_path, merchant_property from merchant_user where id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 获取最后一次登录的token -->
+  <select id="getLastLoginToken" resultType="java.lang.String">
+  	select t.last_login_token from merchant_user t where t.id = #{merchantId,jdbcType=VARCHAR}
+  </select>
+  <!-- 系统 修改商家微信签约流程的状态 -->
+  <update id="updateWxpaySteup">
+  	update merchant_user set wxpay_steup = #{wxpaySteup,jdbcType=INTEGER} where id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 商家修改 自己的签约步骤 -->
+  <update id="updateWxpaySteupByM">
+  	update merchant_user set wxpay_steup = #{wxpaySteup,jdbcType=INTEGER} where wxpay_steup &gt;= 1 and wxpay_steup &lt;=4
+  		and id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <select id="selectOperatingStatus" resultType="java.lang.Integer">
+  	select operating_status from merchant_user t where t.id = #{merchantId,jdbcType=VARCHAR}
+  </select>
+  <!-- 重置密码 -->
+  <update id="resetPassword">
+  	update merchant_user set password=#{password} where phone=#{phone}
+  </update>
+</mapper>

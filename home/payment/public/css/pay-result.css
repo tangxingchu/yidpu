@@ -1,0 +1,78 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html,body {
+    background: #f0eff4;
+}
+.pay-status {
+    position: relative;
+    height: 1.35rem;
+    width: 100%;
+    margin-top: 1.53rem;
+    background: #ffffff;
+    line-height: 1.34rem;
+}
+.success-logo{
+    padding-left: 0.44rem;
+    padding-top: 0.3rem;
+    width: 0.84rem;
+    height: 0.84rem;
+}
+.success-tips {
+    padding-left: 0.3rem;
+    padding-top: 0.05rem;
+    position: absolute;
+    color: #73ab38;
+    font-size: 0.34rem;
+}
+.ad {
+    margin-top: 0.22rem;
+}
+.ad a{
+    display: block;
+}
+.ad,.ad a {
+    position: relative;
+    width: 7.5rem;
+    height: 4.4rem;
+}
+.ad a span{
+    display: block;
+    position: absolute;
+    width: 0.49rem;
+    height: 0.22rem;
+    line-height: 0.22rem;
+    text-align: center;
+    font-size: 0.14rem;
+    color: #fff;
+    background: #b2abad;
+    right: 0;
+    bottom: 0;
+}
+.ad a img {
+    width: 7.5rem;
+    height: 4.4rem;
+}
+.pay-info {
+    margin-top: 0.23rem;
+}
+.pay-sum {
+    margin-top: 0.04rem;
+}
+.pay-number, .pay-sum{
+    line-height: 0.98rem;
+    width: 7.5rem;
+    height: 0.98rem;
+    font-size: 0.3rem;
+    color: #7d7d7e;
+    background: #fff;
+}
+.pay-number span:nth-child(1), .pay-sum span:nth-child(1) {
+    padding-left: 0.42rem;
+}
+.pay-number span:nth-child(2), .pay-sum span:nth-child(2) {
+    padding-right: 0.42rem;
+    float: right;
+    color: #59595b;
+}

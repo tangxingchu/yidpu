@@ -1,0 +1,277 @@
+.container{ 
+    .ruleDsiabled {
+        :global {
+            .ant-card {
+                background-color: #fff;
+            }
+            .ant-card-bordered {
+                border: 1px solid #d8dde4;
+            }
+            .ant-card-head-title {
+                color: #76808e;
+            }
+            .ant-card-head {
+                border-bottom: 1px solid #d8dde4;
+            }
+        }
+        & > div {
+            color: #76808e;
+        }
+    }
+    .ruleEnabled {
+        :global {
+            .ant-card {
+                background-color: #fff;
+                &:hover {
+                    box-shadow: 0px 0px 3px #1890ff;
+                }
+            }
+            .ant-card-bordered {
+                border: 1px solid #1890ff;
+            }
+            .ant-card-head {
+                border-bottom: 1px solid #1890ff;
+            }
+        }
+        .days {
+            .row {
+                .week {
+                    border: 1px solid #ebedf0;
+                }
+            }
+        }
+    }
+    //每日特价
+    .days {
+        .row {
+            display: flex;
+            flex-direction: column;
+            .week {
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #ebedf0;
+                margin: 4px 0px 4px 0px;
+                .weekTitle {
+                    border-bottom: 1px dashed #ebedf0;
+                    padding: 8px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    font-size: 14px;
+                    .left {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                    }
+                    .right {
+                        cursor: pointer;
+                    }
+                }
+                .weekItem {
+                    padding: 4px;
+                    margin: 2px;
+                    margin-left: 32px;
+                    border: 1px dashed #ebedf0;
+                    display: flex;
+                    flex-direction: row;
+                    transition: all .2s;
+                    :global {
+                        .anticon {
+                            cursor: pointer;
+                        }
+                    }
+                    .goodsName {
+                        font-weight: bold;
+                        margin-left: 2px;
+                        margin-right: 8px;
+                    }
+                    .oldPrice {
+                        text-decoration:line-through;
+                        margin: 0px 8px;
+                    }
+                    .price {
+                        color: #ff4d4f;
+                        font-size: 16px;
+                        margin: 0px 8px;
+                    }
+                    
+                    &:hover {
+                        box-shadow: 0px 0px 3px #1890ff;
+                    }
+                }
+                .weekItemDsiabled {
+                    color: rgba(0, 0, 0, 0.45);
+                    &::after {
+                        color: #ff4d4f;
+                        content: "(该商品已被删除)"
+                    }
+                }
+                .weekItemSaleOff {
+                    color: rgba(0, 0, 0, 0.45);
+                    &::after {
+                        color: #ff4d4f;
+                        content: "(该商品已下架)"
+                    }
+                }
+            }
+        }
+    }
+    .deleteDaysIcon {
+        margin-right: 8px;
+        transition: all .2s;
+        &:hover {
+            color: #ff4d4f;
+            transform: rotate(90deg);            
+        }
+    }
+    .addDaysIcon {
+        font-size: 16px;
+        transition: all .2s;
+        &:hover {
+            color: #1890ff;
+            transform: rotate(90deg);            
+        }
+    }
+    //折扣 与 减免、折扣、赠现金优惠券
+    .discountItem {
+        padding: 4px;
+        margin: 2px;
+        border: 1px dashed #ebedf0;
+        display: flex;
+        flex-direction: row;
+        transition: all .2s;
+        :global {
+            .anticon {
+                cursor: pointer;
+            }
+        }
+        & > div {
+            margin: 0px 8px;
+        }
+        .goodsName {
+            font-weight: bold;
+            margin-left: 2px;
+            margin-right: 8px;
+        }
+        .oldPrice {
+            text-decoration:line-through;
+        }
+        .price {
+            color: #ff4d4f;
+            font-size: 16px;
+        }
+        &:hover {
+            box-shadow: 0px 0px 3px #1890ff;
+        }
+    }
+    .discountItemDsiabled {
+        color: rgba(0, 0, 0, 0.45);
+        &::after {
+            color: #ff4d4f;
+            content: "(该商品已被删除)"
+        }
+    }
+    .discountItemSaleOff {
+        color: rgba(0, 0, 0, 0.45);
+        &::after {
+            color: #ff4d4f;
+            content: "(该商品已下架)"
+        }
+    }
+    
+}
+
+//优惠券
+.couponItem {
+    padding: 4px;
+    border: 1px dashed #ebedf0;
+    display: flex;
+    flex-direction: row;
+    margin-top: 8px;
+    align-items: center;
+}
+.couponCount {
+    margin-top: 8px;
+    font-size: 18px;
+    margin-left: 16px;
+}
+.wrapper {
+    width: 500px;
+    display: flex;
+    background: #fff;
+    border-radius: 8px;    
+    transition: all .2s;
+    &:hover {
+        box-shadow: -3px 3px 3px #ebedf0;
+    }
+}
+.content {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px 0 0 8px;
+    box-shadow: -2px 2px 2px #ebedf0;
+    background: #fff;
+}
+.title {
+    font-size: 24px;
+}
+.time {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #9E9E9E;
+}
+.tip {
+    position: relative;
+    flex: 0 0 140px;
+    text-align: center;
+    color: #ff4242;
+    padding: 20px;
+    border-radius:0 8px 8px 0;
+    box-shadow: 2px 2px 2px #ebedf0;
+    background: #fff;
+}
+.split_line {
+    position: relative;
+    flex: 0 0 0;
+    border-left: 2px dashed #eee;
+    margin: 0 5px 0 3px;
+    background: #fff;
+}
+.split_line:before, .split_line:after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 8px;
+    background: #eee;
+    left: -9px;
+    z-index: 1;
+}
+.split_line:before {
+    border-radius: 0 0 8px 8px;
+    top: 0;
+}
+.split_line:after {
+    border-radius: 8px 8px 0 0;
+    bottom: 0;
+}
+.money {
+    font-weight: bold;
+    font-size: 24px;
+}
+.pay_line {
+    margin-top: 30px;
+    font-size: 16px;
+}
+    
+
+.nodata {
+    color: rgba(0, 0, 0, 0.45);
+}
+.expired {
+    color: #ff4d4f;
+}
+
+.itemExpired {
+    background-color: #ebedf0;
+}

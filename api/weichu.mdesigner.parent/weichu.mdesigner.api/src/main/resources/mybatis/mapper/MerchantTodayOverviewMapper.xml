@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.api.mapper.MerchantTodayOverviewMapper">
+  
+  <select id="sumPayAmountAll" resultType="hashmap">
+  	SELECT 
+	    A.*, B.*, C.*
+	FROM
+	    (SELECT 
+	        IFNULL(SUM(t.cashier_amount), 0) AS sumAmount
+	    FROM
+	        merchant_cashier_log t
+	    WHERE t.cashier_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    		and t.cashier_time &lt;= #{endPayTime,jdbcType=TIMESTAMP}
+    		and t.merchant_id = #{merchantId,jdbcType=INTEGER}) AS A
+	        LEFT JOIN
+	    (SELECT 
+	        IFNULL(SUM(t.cashier_amount), 0) AS sumIncome
+	    FROM
+	        merchant_cashier_log t
+	    WHERE t.cashier_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    		and t.cashier_time &lt;= #{endPayTime,jdbcType=TIMESTAMP}
+    		and t.cashier_type = 1 AND t.merchant_id = #{merchantId,jdbcType=INTEGER}) AS B ON 1 = 1
+	        LEFT JOIN
+	    (SELECT 
+	        IFNULL(SUM(t.cashier_amount), 0) AS sumRefund
+	    FROM
+	        merchant_cashier_log t
+	    WHERE t.cashier_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    		and t.cashier_time &lt;= #{endPayTime,jdbcType=TIMESTAMP}
+    		and t.cashier_type = 2 AND t.merchant_id = #{merchantId,jdbcType=INTEGER}) AS C ON 1 = 1
+  </select>
+  <!-- 今日概览(今日营业额) -->
+  <select id="sumPayAmount" resultType="java.math.BigDecimal">
+    select sum(t.cashier_amount) from merchant_cashier_log t where t.cashier_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    	and t.cashier_time &lt;= #{endPayTime,jdbcType=TIMESTAMP} and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 合计收款金额 -->
+  <select id="sumIncome" resultType="java.math.BigDecimal">
+    select sum(t.cashier_amount) from merchant_cashier_log t where t.cashier_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    	and t.cashier_time &lt;= #{endPayTime,jdbcType=TIMESTAMP} and t.cashier_type=1 and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 合计退款金额 -->
+  <select id="sumRefund" resultType="java.math.BigDecimal">
+    select sum(t.cashier_amount) from merchant_cashier_log t where t.cashier_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    	and t.cashier_time &lt;= #{endPayTime,jdbcType=TIMESTAMP} and t.cashier_type=2 and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 支付方式统计 -->
+  <select id="groupPayMethod" resultType="hashmap">
+  	select t.cashier_method, count(t.cashier_method) as cashier_method_num, sum(t.cashier_amount) as cashier_amount
+  		from merchant_cashier_log t where t.cashier_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    	and t.cashier_time &lt;= #{endPayTime,jdbcType=TIMESTAMP} and t.cashier_type = 1 
+    	and cashier_method in (5,6,7,8,9) and t.merchant_id = #{merchantId,jdbcType=INTEGER} group by cashier_method
+    union all
+    select 13 as cashier_method, count(t.pay_method) as cashier_method_num,
+        sum(t.pay_amount) as cashier_amount from merchant_pay_log t 
+    where t.pay_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    	and t.pay_time &lt;= #{endPayTime,jdbcType=TIMESTAMP} and pay_method in (1,3) and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+    	union all
+    select 24 as cashier_method, count(t.pay_method) as cashier_method_num,
+        sum(t.pay_amount) as cashier_amount from merchant_pay_log t 
+    where t.pay_time &gt;= #{beginPayTime,jdbcType=TIMESTAMP}
+    	and t.pay_time &lt;= #{endPayTime,jdbcType=TIMESTAMP} and pay_method in (2,4) and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <select id="countAllOrder" resultType="hashmap">
+  	SELECT 
+	    IFNULL(order_num, 0) AS order_num,
+	    IFNULL(refund_num, 0) AS refund_num,
+	    IFNULL(all_refund_num, 0) AS all_refund_num,
+	    IFNULL(part_refund_num, 0) AS part_refund_num,
+	    IFNULL(exception_num, 0) AS exception_num
+	FROM
+	    (SELECT 
+	        A.*,
+	            B.refund_num,
+	            C.all_refund_num,
+	            D.part_refund_num,
+	            E.exception_num
+	    FROM
+	        (SELECT 
+	        t.merchant_id, COUNT(*) AS order_num
+	    FROM
+	        merchant_order_his t
+	    WHERE
+	        t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	            AND merchant_id = #{merchantId}) AS A
+	    LEFT OUTER JOIN (SELECT 
+	        COUNT(*) AS refund_num, t.merchant_id
+	    FROM
+	        merchant_order_his t
+	    WHERE
+	        t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_status IN ('7' , '11')
+	            AND merchant_id = #{merchantId}) AS B ON A.merchant_id = B.merchant_id
+	    LEFT JOIN (SELECT 
+	        COUNT(*) AS all_refund_num, t.merchant_id
+	    FROM
+	        merchant_order_his t
+	    WHERE
+	        t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_status = '7'
+	            AND merchant_id = #{merchantId}) AS C ON A.merchant_id = C.merchant_id
+	    LEFT OUTER JOIN (SELECT 
+	        COUNT(*) AS part_refund_num, t.merchant_id
+	    FROM
+	        merchant_order_his t
+	    WHERE
+	        t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_status = '11'
+	            AND merchant_id = #{merchantId}) AS D ON A.merchant_id = D.merchant_id
+	    LEFT OUTER JOIN (SELECT 
+	        COUNT(*) AS exception_num, t.merchant_id
+	    FROM
+	        merchant_order_his t
+	    WHERE
+	        t.total_price != (t.pay_price + t.subtract_amount)
+	            AND t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_status NOT IN ('7' , '11')
+	            AND merchant_id = #{merchantId}) AS E ON A.merchant_id = E.merchant_id) AS G
+  </select>
+  <!-- 今日概览 统计今日订单笔数 -->
+  <select id="countOrder" resultType="java.lang.Integer">
+  	select count(*) order_num from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+    	and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 统计今日概览退单笔数 -->
+  <select id="countOrderByRefund" resultType="java.lang.Integer">
+  	select count(*) order_num from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+    	and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.order_status in ('7', '11') 
+    	and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 统计今日概览退单笔数(全额退款) -->
+  <select id="countOrderByRefund_All" resultType="java.lang.Integer">
+  	select count(*) order_num from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+    	and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.order_status = '7'
+    	and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 统计今日概览退单笔数(部分退款) -->
+  <select id="countOrderByRefund_Part" resultType="java.lang.Integer">
+  	select count(*) order_num from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+    	and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.order_status = '11'
+    	and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 异常单(订单金额<>收款金额+优惠金额) -->
+  <select id="countOrderByException" resultType="java.lang.Integer">
+	select count(*) as exception_num from merchant_order_his t where t.total_price != (t.pay_price + t.subtract_amount) 
+		and t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP} and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+		and t.order_status not in ('7', '11')
+		and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 今日概览统计今日客流量 -->
+  <select id="countDiners" resultType="java.lang.Integer">
+  	select ifnull(sum(t.diners_num), 0) diners_num from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+  		and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 今日人均消费 -->
+  <select id="averageOrderPrice" resultType="java.lang.String">
+  	select FORMAT(sum(t.total_price)/sum(t.diners_num), 2) from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+  		and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 今日消费最高金额 -->
+  <select id="maxTotalPrice" resultType="java.math.BigDecimal">
+  	select max(t.total_price) from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+  		and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 今日消费最低金额 -->
+  <select id="minTotalPrice" resultType="java.math.BigDecimal">
+  	select min(t.total_price) from merchant_order_his t where t.order_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+  		and t.order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} and t.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </select>
+  <!-- 今日翻台率 -->
+  <select id="ftl" resultType="hashmap">
+	SELECT 
+	    A.*, B.*, C.*
+	FROM
+	    (SELECT 
+	        ROUND((SELECT 
+	                    IFNULL(SUM(t.diners_num), 0) diners_num
+	                FROM
+	                    merchant_order_his t
+	                WHERE 
+	                    t.order_time &gt;= #{beginOrderTime1} and t.order_time &lt;= #{endOrderTime1}
+	                    and t.merchant_id = #{merchantId}) / (SELECT 
+	                    IFNULL(SUM(a.table_limit * 2), 1) AS seat
+	                FROM
+	                    merchant_table a
+	                WHERE
+	                    a.merchant_id = #{merchantId}), 4) AS ftl1
+	    FROM DUAL) AS A
+	        LEFT JOIN
+	    (SELECT 
+	        ROUND((SELECT 
+	                    IFNULL(SUM(t.diners_num), 0) diners_num
+	                FROM
+	                    merchant_order_his t
+	                WHERE
+	                    t.order_time &gt;= #{endOrderTime1} and t.order_time &lt;= #{endOrderTime2}
+	                    and t.merchant_id = #{merchantId}) / (SELECT 
+	                    IFNULL(SUM(a.table_limit * 2), 1) AS seat
+	                FROM
+	                    merchant_table a
+	                WHERE
+	                    a.merchant_id = #{merchantId}), 4) AS ftl2
+	    FROM DUAL) AS B ON 1 = 1
+	        LEFT JOIN
+	    (SELECT 
+	        ROUND((SELECT 
+	                    IFNULL(SUM(t.diners_num), 0) diners_num
+	                FROM
+	                    merchant_order_his t
+	                WHERE
+	                    t.order_time &gt;= #{beginOrderTime1} and t.order_time &lt;= #{endOrderTime2}
+	                    and t.merchant_id = #{merchantId}) / (SELECT 
+	                    IFNULL(SUM(a.table_limit * 2), 1) AS seat
+	                FROM
+	                    merchant_table a
+	                WHERE
+	                    a.merchant_id = #{merchantId}), 4) AS ftl3
+	    FROM DUAL) AS C ON 1 = 1
+  </select>
+  <!-- 今日销量排行榜 -->
+  <select id="salesRank" resultType="hashmap">
+	SELECT 
+	    goods_id,
+	    goods_name,
+	    total_num,
+	    goods_unit_name,
+	    CASE
+	        WHEN @prevRank = total_num THEN @curRank
+	        WHEN @prevRank:=total_num THEN @curRank:=@curRank + 1
+	    END AS rank
+	FROM
+	    (SELECT 
+	        g.id AS goods_id,
+	            g.name AS goods_name,
+	            SUM(a.num) AS total_num,
+	            a.order_item_time,
+            	a.goods_unit_name
+	    FROM
+	        merchant_goods g
+	    LEFT OUTER JOIN merchant_order_item_his a  
+	    ON g.id = a.goods_id and a.order_item_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+	    	and a.order_item_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP} 
+	    	and a.order_item_status not in ('9', '10')
+	    	and a.merchant_id = #{merchantId,jdbcType=INTEGER}
+	    WHERE
+	        g.merchant_id = #{merchantId,jdbcType=INTEGER}
+	    GROUP BY g.id
+	    ORDER BY total_num DESC) order_item_his,
+	    (SELECT @curRank:=0, @prevRank:=NULL) r
+  </select>
+  <!-- 分类销售额统计 -->
+  <select id="salesByCategory" resultType="hashmap">
+	SELECT 
+	    F.category_total as y, D.category_name as x
+	FROM
+	    (SELECT 
+	        merchant_id, SUM(goods_total) AS category_total, category
+	    FROM
+	        (SELECT 
+	        A.merchant_id, A.goods_total, G.category
+	    FROM
+	        (SELECT 
+	        t.merchant_id, SUM(t.price * t.num) AS goods_total, t.goods_id
+	    FROM
+	        merchant_order_item_his t
+	    WHERE
+	        t.order_item_time &gt;= #{beginOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_item_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	            AND t.order_item_status not in ('9', '10')
+	            AND t.merchant_id = #{merchantId,jdbcType=INTEGER}
+	    GROUP BY t.goods_id) AS A
+	    LEFT OUTER JOIN merchant_goods G ON A.goods_id = G.id
+	        AND A.merchant_id = G.merchant_id) AS E
+	    GROUP BY category) AS F
+	        LEFT OUTER JOIN
+	    merchant_goods_category D ON F.category = D.id
+	        AND F.merchant_id = D.merchant_id
+  </select>
+  
+  <!-- 营业额报表 -->
+  <!-- 过去30天的数据 -->
+  <select id="selectTurnoverDay" resultType="hashmap">
+	select date_format(a.date, '%Y-%m-%d') as date, ifnull(b.total_price, 0) as total_price from report_date a 
+		left outer join report_turnover b
+		on b.data_date=a.date and b.merchant_id = #{merchantId,jdbcType=INTEGER}
+		where a.date &gt;= #{beginDate,jdbcType=DATE} and a.date &lt;= #{endDate,jdbcType=DATE}
+		order by a.date asc
+  </select>
+  <!-- 营业额周报 -->
+  <select id="selectTurnoverWeek" resultType="hashmap">
+  	select date_format(b.data_date, '%Y-%m-%d') as date, ifnull(b.total_price, 0) as total_price from report_turnover_week b
+		where b.data_date &gt;= #{beginDate,jdbcType=DATE} and b.data_date &lt;= #{endDate,jdbcType=DATE}
+		and b.merchant_id = #{merchantId,jdbcType=INTEGER}
+		order by b.data_date asc
+  </select>
+  <!-- 营业额月报 -->
+  <select id="selectTurnoverMonth" resultType="hashmap">
+  	select concat(date_format(b.data_date, '%Y-%m'), '月') as date, ifnull(b.total_price, 0) as total_price from report_turnover_month b
+		where b.merchant_id = #{merchantId,jdbcType=INTEGER}
+		order by b.data_date asc
+  </select>
+  <!-- 营业额季报 -->
+  <select id="selectTurnoverQuarter" resultType="hashmap">
+  	select b.quarter as date, ifnull(sum(b.total_price),0) as total_price from (SELECT concat(DATE_FORMAT(data_date,'%Y'), '年' , (
+	case DATE_FORMAT(data_date,'%m')
+	when 12 then '第四季度'
+	when 11 then '第四季度'
+	when 10 then '第四季度'
+	when 9 then '第三季度'
+	when 8 then '第三季度'
+	when 7 then '第三季度'
+	when 6 then '第二季度'
+	when 5 then '第二季度'
+	when 4 then '第二季度'
+	when 3 then '第一季度'
+	when 2 then '第一季度'
+	when 1 then '第一季度'
+	end
+	)) as quarter, a.* FROM report_turnover_month a where 
+	merchant_id=#{merchantId,jdbcType=INTEGER} order by data_date asc) as b group by b.quarter
+  </select>
+  <!-- 营业额年报 -->
+  <select id="selectTurnoverYear" resultType="hashmap">
+  	select b.year as date, ifnull(sum(b.total_price),0) as total_price from (SELECT concat(DATE_FORMAT(data_date,'%Y'), '年') as year, 
+  		a.* FROM report_turnover_month 
+	a where merchant_id=#{merchantId,jdbcType=INTEGER} order by data_date asc) as b group by b.year
+  </select>
+  <!-- 客流量报表 -->
+  <select id="selectCustomerFlowDay" resultType="hashmap">
+  	select date_format(a.date, '%Y-%m-%d') as date, ifnull(b.customer_flow, 0) as customer_flow from report_date a left outer join report_customer_flow b
+		on b.data_date=a.date and b.merchant_id = #{merchantId,jdbcType=INTEGER}
+		where a.date &gt;= #{beginDate,jdbcType=DATE} and a.date &lt;= #{endDate,jdbcType=DATE}
+		order by a.date asc
+  </select>
+  <!-- 客流量周报 -->
+  <select id="selectCustomerFlowWeek" resultType="hashmap">
+  	select date_format(b.data_date, '%Y-%m-%d') as date, ifnull(b.customer_flow, 0) as customer_flow from report_customer_flow_week b
+		where b.data_date &gt;= #{beginDate,jdbcType=DATE} and b.data_date &lt;= #{endDate,jdbcType=DATE}
+		and b.merchant_id = #{merchantId,jdbcType=INTEGER}
+		order by b.data_date asc
+  </select>
+  <!-- 客流量月报 -->
+  <select id="selectCustomerFlowMonth" resultType="hashmap">
+  	select concat(date_format(b.data_date, '%Y-%m'), '月') as date, ifnull(b.customer_flow, 0) as customer_flow from report_customer_flow_month b
+		where b.merchant_id = #{merchantId,jdbcType=INTEGER}
+		order by b.data_date asc
+  </select>
+  <!-- 客流量季报 -->
+  <select id="selectCustomerFlowQuarter" resultType="hashmap">
+  	select b.quarter as date, ifnull(sum(b.customer_flow),0) as customer_flow from (SELECT concat(DATE_FORMAT(data_date,'%Y'), '年' , (
+	case DATE_FORMAT(data_date,'%m')
+	when 12 then '第四季度'
+	when 11 then '第四季度'
+	when 10 then '第四季度'
+	when 9 then '第三季度'
+	when 8 then '第三季度'
+	when 7 then '第三季度'
+	when 6 then '第二季度'
+	when 5 then '第二季度'
+	when 4 then '第二季度'
+	when 3 then '第一季度'
+	when 2 then '第一季度'
+	when 1 then '第一季度'
+	end
+	)) as quarter, a.* FROM report_customer_flow_month a where 
+	merchant_id=#{merchantId,jdbcType=INTEGER} order by data_date asc) as b group by b.quarter
+  </select>
+  <!-- 客流量年报 -->
+  <select id="selectCustomerFlowYear" resultType="hashmap">
+  	select b.year as date, ifnull(sum(b.customer_flow),0) as customer_flow from (SELECT concat(DATE_FORMAT(data_date,'%Y'), '年') as year, 
+  		a.* FROM report_customer_flow_month 
+	a where merchant_id=#{merchantId,jdbcType=INTEGER} order by data_date asc) as b group by b.year
+  </select>
+  <!-- 用餐订单报表 -->
+  <select id="selectOrderDay" resultType="hashmap">
+  	select a.id, a.order_num, a.refund_num, a.all_refund_num, a.part_refund_num, a.exception_num, 
+  		date_format(a.data_date, '%Y-%m-%d') as data_date from report_order a
+		where a.data_date &gt;= #{beginDate,jdbcType=DATE} and a.data_date &lt;= #{endDate,jdbcType=DATE}
+		and a.merchant_id = #{merchantId,jdbcType=INTEGER} order by a.data_date asc
+  </select>
+  <!-- 用餐订单周报表 -->
+  <select id="selectOrderWeek" resultType="hashmap">
+  	select a.id, a.order_num, a.refund_num, a.all_refund_num, a.part_refund_num, a.exception_num, 
+  		date_format(a.data_date, '%Y-%m-%d') as data_date from report_order_week a
+		where a.data_date &gt;= #{beginDate,jdbcType=DATE} and a.data_date &lt;= #{endDate,jdbcType=DATE}
+		and a.merchant_id = #{merchantId,jdbcType=INTEGER} order by a.data_date asc
+  </select>
+  <!-- 用餐订单月报 -->
+  <select id="selectOrderMonth" resultType="hashmap">
+  	select a.id, a.order_num, a.refund_num, a.all_refund_num, a.part_refund_num, a.exception_num, 
+  		date_format(a.data_date, '%Y-%m-%d') as data_date from report_order_month a
+		where a.merchant_id = #{merchantId,jdbcType=INTEGER} order by a.data_date asc
+  </select>
+  <!-- 用餐订单季报 -->
+  <select id="selectOrderQuarter" resultType="hashmap">
+  	select b.quarter as data_date, b.date, ifnull(sum(b.order_num), 0) as order_num, 
+	ifnull(sum(b.refund_num), 0) as refund_num, ifnull(sum(b.all_refund_num), 0) as all_refund_num, 
+    ifnull(sum(b.part_refund_num), 0) as part_refund_num, ifnull(sum(b.exception_num), 0) as exception_num from 
+    (SELECT concat(DATE_FORMAT(data_date,'%Y'), '年' , (
+	case DATE_FORMAT(data_date,'%m')
+	when 12 then '第四季度'
+	when 11 then '第四季度'
+	when 10 then '第四季度'
+	when 9 then '第三季度'
+	when 8 then '第三季度'
+	when 7 then '第三季度'
+	when 6 then '第二季度'
+	when 5 then '第二季度'
+	when 4 then '第二季度'
+	when 3 then '第一季度'
+	when 2 then '第一季度'
+	when 1 then '第一季度'
+	end
+	)) as quarter, (
+	case DATE_FORMAT(data_date,'%m')
+	when 12 then concat(DATE_FORMAT(data_date, '%Y'), '-12-31')
+	when 11 then concat(DATE_FORMAT(data_date, '%Y'), '-12-31')
+	when 10 then concat(DATE_FORMAT(data_date, '%Y'), '-12-31')
+	when 9 then concat(DATE_FORMAT(data_date, '%Y'), '-09-30')
+	when 8 then concat(DATE_FORMAT(data_date, '%Y'), '-09-30')
+	when 7 then concat(DATE_FORMAT(data_date, '%Y'), '-09-30')
+	when 6 then concat(DATE_FORMAT(data_date, '%Y'), '-06-30')
+	when 5 then concat(DATE_FORMAT(data_date, '%Y'), '-06-30')
+	when 4 then concat(DATE_FORMAT(data_date, '%Y'), '-06-30')
+	when 3 then concat(DATE_FORMAT(data_date, '%Y'), '-03-31')
+	when 2 then concat(DATE_FORMAT(data_date, '%Y'), '-03-31')
+	when 1 then concat(DATE_FORMAT(data_date, '%Y'), '-03-31')
+	end
+	) as date, a.* FROM report_order_month a where 
+	a.merchant_id=1 order by data_date asc) as b group by b.quarter
+  </select>
+  <!-- 用餐订单年报 -->
+  <select id="selectOrderYear" resultType="hashmap">
+  	select concat(b.year, '年') as data_date, b.year as date, ifnull(sum(b.order_num), 0) as order_num, 
+	ifnull(sum(b.refund_num), 0) as refund_num, ifnull(sum(b.all_refund_num), 0) as all_refund_num, 
+    ifnull(sum(b.part_refund_num), 0) as part_refund_num, ifnull(sum(b.exception_num), 0) as exception_num from 
+    (SELECT DATE_FORMAT(data_date,'%Y') as year, a.* FROM report_order_month a where 
+	a.merchant_id=#{merchantId,jdbcType=INTEGER} order by data_date asc) as b group by b.year
+  </select>
+  <!-- 历史翻台率 -->
+  <select id="selectTableRate" resultType="hashmap">
+  	select date_format(a.date, '%Y-%m-%d') as data_date, ifnull(b.table_turnover, 0) as table_turnover from report_date a 
+		left outer join report_table_rate b
+		on b.data_date=a.date and b.merchant_id = #{merchantId,jdbcType=INTEGER}
+		where a.date &gt;= #{beginDate,jdbcType=DATE} and a.date &lt;= #{endDate,jdbcType=DATE}
+		order by a.date asc
+  </select>
+  <!-- 销量排行榜 销售数量多少排序 -->
+  <select id="selectGoodsRankBySaleNum" resultType="hashmap">
+  	SELECT 
+	goods_id,
+	    goods_name,
+        goods_unit_name,
+	    total_num,
+        total_price,        
+	    CASE
+	        WHEN @prevRank = total_num THEN @curRank
+	        WHEN @prevRank:=total_num THEN @curRank:=@curRank + 1
+	    END AS rank
+	FROM
+	    (SELECT 
+				a.goods_id,
+	            a.goods_name,
+                a.goods_unit_name,
+	            SUM(a.sale_num) AS total_num,
+                sum(a.sale_total_price) as total_price
+	    FROM report_sale_total a where a.merchant_id = #{merchantId,jdbcType=INTEGER}
+	    GROUP BY a.goods_id
+	    ORDER BY total_num DESC) b,
+	    (SELECT @curRank:=0, @prevRank:=NULL) r
+  </select>
+  <!-- 销量排行榜 销售额多少排序 -->
+  <select id="selectGoodsRankBySalePrice" resultType="hashmap">
+  	SELECT 
+	goods_id,
+	    goods_name,
+        goods_unit_name,
+	    total_num,
+        total_price,        
+	    CASE
+	        WHEN @prevRank = total_price THEN @curRank
+	        WHEN @prevRank:=total_price THEN @curRank:=@curRank + 1
+	    END AS rank
+	FROM
+	    (SELECT 
+				a.goods_id,
+	            a.goods_name,
+                a.goods_unit_name,
+	            SUM(a.sale_num) AS total_num,
+                sum(a.sale_total_price) as total_price
+	    FROM report_sale_total a where a.merchant_id = #{merchantId,jdbcType=INTEGER}
+	    GROUP BY a.goods_id
+	    ORDER BY total_price DESC) b,
+	    (SELECT @curRank:=0, @prevRank:=NULL) r
+  </select>
+  <!-- 总营业额、日均营业额、日环比 -->
+  <select id="totalTurnover" resultType="java.math.BigDecimal">
+  	SELECT 
+	    ROUND(ifnull(SUM(a.total_price), 0), 2) AS total
+	FROM
+	    report_turnover a
+	WHERE
+	    a.merchant_id = #{merchantId}
+	UNION ALL SELECT 
+	    ROUND((CASE
+	                WHEN COUNT(b.id) = 0 THEN 0
+	                ELSE SUM(b.total_price) / COUNT(b.id)
+	            END),
+	            2) AS average
+	FROM
+	    report_turnover b
+	WHERE
+	    b.merchant_id = #{merchantId}
+	UNION ALL SELECT 
+	    *
+	FROM
+	    (SELECT 
+	        c.total_price
+	    FROM
+	        report_turnover c
+	    WHERE
+	        c.merchant_id = #{merchantId}
+	    ORDER BY c.data_date DESC
+	    LIMIT 2) AS d
+  </select>
+  <!-- 分析页统计最近15天的营业额 -->
+  <select id="selectTurnover15Day" resultType="hashmap">
+  	<!-- select date_format(data_date, '%Y-%m-%d') as x, total_price as y from report_turnover where data_date &gt;= #{beginDate} 
+  		and merchant_id = #{merchantId} order by data_date asc -->
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.total_price, 0) as y from report_date a 
+		left outer join report_turnover b
+	    on b.data_date=a.date and b.merchant_id = #{merchantId}
+	    where a.date &gt;= #{beginDate}
+  		order by a.date asc
+  </select>
+  <!-- 分析页统计最近15天的订单数量 -->
+  <select id="selectOrderNum15Day" resultType="hashmap">
+  	<!-- select date_format(data_date, '%Y-%m-%d') as x, order_num as y from report_order where data_date &gt;= #{beginDate} 
+  		and merchant_id = #{merchantId} order by data_date asc -->
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.order_num, 0) as y from report_date a 
+		left outer join report_order b
+	    on b.data_date=a.date and b.merchant_id = #{merchantId}
+	    where a.date &gt;= #{beginDate}
+  		order by a.date asc
+  </select>
+  <!-- 分析页统计平均订单量 -->
+  <select id="avgOrderNum" resultType="java.math.BigDecimal">
+  	select ROUND((CASE
+			WHEN COUNT(t.id) = 0 THEN 0
+			ELSE SUM(t.order_num) / COUNT(t.id)
+		END),
+		2) AS average from report_order t where t.merchant_id = #{merchantId}
+  </select>
+  <!-- 统计总共订单数量 -->
+  <select id="totalOrder" resultType="java.lang.Integer">
+  	select ifnull(sum(order_num), 0) from report_order where merchant_id = #{merchantId}
+  </select>
+  <!-- 查询最近15天的平均消费数据 -->
+  <select id="selectAVG15Day" resultType="hashmap">  		
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.average, 0) as y from report_date a 
+		left outer join report_average b
+	    on b.data_date=a.date and b.merchant_id = #{merchantId}
+	    where a.date &gt;= #{beginDate}
+  		order by a.date asc
+  </select>
+  <!-- 分析页统计平均 平均消费-->
+  <select id="avgAvg" resultType="java.math.BigDecimal">
+  	select ROUND((CASE
+			WHEN COUNT(t.id) = 0 THEN 0
+			ELSE SUM(t.average) / COUNT(t.id)
+		END),
+		2) AS average from report_average t where t.merchant_id = #{merchantId}
+  </select>
+  <!-- 查询最后2天数据做环比 -->
+  <select id="selectAVGLast2Day" resultType="java.math.BigDecimal">
+  	select average from report_average where merchant_id = #{merchantId} order by data_date desc limit 2
+  </select>
+  <!-- 查询最近15天的翻台率数据 -->
+  <select id="selectTableRate15Day" resultType="hashmap">
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.table_turnover, 0) as y from report_date a 
+		left outer join report_table_rate b
+	    on b.data_date=a.date and b.merchant_id = #{merchantId}
+	    where a.date &gt;= #{beginDate}
+  		order by a.date asc
+  </select>
+  <!-- 平均翻台率 -->
+  <select id="avgTableRate" resultType="java.math.BigDecimal">
+  	select ROUND((CASE
+			WHEN COUNT(t.id) = 0 THEN 0
+			ELSE SUM(t.table_turnover) / COUNT(t.id)
+		END),
+		4) AS average from report_table_rate t where t.merchant_id = #{merchantId}
+  </select>
+  <!-- 查询最后2天数据做环比 -->
+  <select id="selectTableRateLast2Day" resultType="java.math.BigDecimal">
+  	select table_turnover from report_table_rate where merchant_id = #{merchantId} order by data_date desc limit 2
+  </select>
+  <!-- 查询最近15天的客流量 -->
+  <select id="selectCustomerFlow15Day" resultType="hashmap">
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.customer_flow, 0) as y from report_date a 
+		left outer join report_customer_flow b
+	    on b.data_date=a.date and b.merchant_id = #{merchantId}
+	    where a.date &gt;= #{beginDate}
+  		order by a.date asc
+  </select>
+  
+  <!-- 查询所有分类销售额数据-->
+  <select id="selectSaleCategory" resultType="hashmap">
+  	select ifnull(a.category_name, t.category_name) as x, ifnull(sum(t.category_total), 0) as y from report_sale_category t
+ 		left outer join merchant_goods_category a on t.category_id=a.id and a.merchant_id=#{merchantId}
+  		where t.merchant_id=#{merchantId} group by t.category_id
+  </select>
+  
+  <!-- 支付分类收支统计数据-->
+  <select id="selectPayMethodTotal" resultType="hashmap">
+  	select t.pay_method, ifnull(sum(pay_amount), 0) as pay_amount from report_pay_method t 
+  		where t.merchant_id = #{merchantId} group by pay_method
+  </select>
+  
+  <!-- 会员充值统计数据 -->
+  <select id="selectMemberRechargeTotal" resultType="hashmap">
+  	select ifnull(sum(t.price_amount), 0) as total_amount, t.pay_method from member_record t 
+  		where t.record_time &gt;= #{beginRecordTime,jdbcType=TIMESTAMP} and t.record_time &lt;= #{endRecordTime,jdbcType=TIMESTAMP}
+  		and t.record_type = 1 and t.merchant_id = #{merchantId} group by t.pay_method
+  </select>
+  
+  <!-- 会员消息分析-金额汇总 -->
+  <select id="selectMemberAccountBalance" resultType="java.math.BigDecimal">
+  	select sum(t.account_balance) as account_balance from member_account t where t.merchant_id=#{merchantId}
+  </select>
+  <!-- 会员消费分析-累计充值金额汇总 -->
+  <select id="selectMemberRecordTotal" resultType="hashmap">
+  	select sum(price_amount) as price_amount, sum(point_price) as point_price,
+ 		sum(give_price) as give_price from member_record where record_type=1 and merchant_id=#{merchantId}
+  </select>
+  <!-- 查询总营业额 -->
+  <select id="selectTurnoverByMember" resultType="java.math.BigDecimal">
+  	SELECT ifnull(sum(total_price), 0) as total_price FROM report_turnover where merchant_id=#{merchantId}
+  </select>
+  <!-- 查询会员消费额 -->
+  <select id="selectMemberTurnover" resultType="java.math.BigDecimal">
+  	select ifnull(sum(pay_amount), 0) as member_price from report_pay_method where pay_method=9 and merchant_id=#{merchantId}
+  </select>
+  <!-- 每日新增会员分析 -->
+  <select id="selectReportMemberNew" resultType="hashmap">
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.member_num, 0) as y from report_date a 
+		left outer join report_member_new b
+		on b.data_date=a.date and b.merchant_id = #{merchantId}
+		where a.date &gt;= #{beginDate,jdbcType=DATE} and a.date &lt;= #{endDate,jdbcType=DATE}
+		order by a.date asc
+  </select>
+  <!-- 每日会员充值 -->
+  <select id="selectReportMemberRecharge" resultType="hashmap">
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.recharge_total, 0) as y from report_date a 
+		left outer join report_member_recharge b
+		on b.data_date=a.date and b.merchant_id = #{merchantId}
+		where a.date &gt;= #{beginDate,jdbcType=DATE} and a.date &lt;= #{endDate,jdbcType=DATE}
+		order by a.date asc
+  </select>
+  <!-- 每日会员消费 -->
+  <select id="selectReportMemberConsume" resultType="hashmap">
+  	select date_format(a.date, '%Y-%m-%d') as x, ifnull(b.consume_total, 0) as y from report_date a 
+		left outer join report_member_consume b
+		on b.data_date=a.date and b.merchant_id = #{merchantId}
+		where a.date &gt;= #{beginDate,jdbcType=DATE} and a.date &lt;= #{endDate,jdbcType=DATE}
+		order by a.date asc
+  </select>
+  <!-- 对账单查询根据日期合计 -->
+  <select id="selectReportReconciliationTotal" parameterType="java.util.Map" resultType="hashmap">
+	   Select A.*, B.trunover_refund_total, C.member_amount_total, D.member_refund_total,
+	   (ifnull(B.trunover_refund_total, 0) + ifnull(D.member_refund_total, 0)) as refund_total, 
+	   (A.amount_total + ifnull(B.trunover_refund_total, 0) + ifnull(C.member_amount_total, 0) + ifnull(D.member_refund_total, 0)) as total from 
+	   (SELECT id, pay_method, sum(amount_total) as amount_total
+	  FROM report_reconciliation where data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &gt; 0
+	  <if test="payMethod != null and payMethod != ''">
+	  	and pay_method = #{payMethod}
+	  </if> 
+	  and member_status = 0 and merchant_id = #{merchantId} group by pay_method) as A
+	  left outer join (
+		 SELECT pay_method, sum(amount_total) as trunover_refund_total
+	  FROM report_reconciliation where data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &lt; 0 and member_status = 0 and merchant_id = #{merchantId} group by pay_method
+	  ) as B on A.pay_method = abs(B.pay_method)
+	  left outer join (
+	  SELECT pay_method, sum(amount_total) as member_amount_total
+	  FROM report_reconciliation where data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &gt; 0 and member_status = 1 and merchant_id = #{merchantId} group by pay_method
+	  ) as C on A.pay_method = C.pay_method
+	    left outer join (
+	  SELECT data_date, pay_method, sum(amount_total) as member_refund_total
+	  FROM report_reconciliation where data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &lt; 0 and member_status = 1 and merchant_id = #{merchantId} group by pay_method, data_date
+	  ) as D on A.pay_method = abs(D.pay_method)
+	  order by A.pay_method asc
+  </select>
+  <!-- 对账单查询每日明细 -->
+  <select id="selectReportReconciliation" parameterType="java.util.Map" resultType="hashmap">
+	  Select A.*, B.trunover_refund_total, C.member_amount_total, D.member_refund_total,
+	  (ifnull(B.trunover_refund_total, 0) + ifnull(D.member_refund_total, 0)) as refund_total, 
+	  (A.amount_total + ifnull(B.trunover_refund_total, 0) + ifnull(C.member_amount_total, 0) + ifnull(D.member_refund_total, 0)) as total from 
+	 (SELECT id, data_date, date_format(data_date, '%Y-%m-%d') as data_df, pay_method, sum(amount_total) as amount_total
+	  FROM report_reconciliation where data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &gt; 0
+	  <if test="payMethod != null and payMethod != ''">
+	  	and pay_method = #{payMethod}
+	  </if>  
+	  and member_status = 0 and merchant_id = #{merchantId} group by pay_method, data_date) as A
+	  left outer join (
+		 SELECT data_date, pay_method, sum(amount_total) as trunover_refund_total
+	  FROM report_reconciliation where data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &lt; 0 and member_status = 0 and merchant_id = #{merchantId} group by pay_method, data_date
+	  ) as B on A.data_date = B.data_date and A.pay_method = abs(B.pay_method)
+	  left outer join (
+	  SELECT data_date, pay_method, sum(amount_total) as member_amount_total
+	  FROM report_reconciliation where  data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &gt; 0 and member_status = 1 and merchant_id = #{merchantId} group by pay_method, data_date
+	  ) as C on A.data_date = C.data_date and A.pay_method = C.pay_method
+	  left outer join (
+	  SELECT data_date, pay_method, sum(amount_total) as member_refund_total
+	  FROM report_reconciliation where  data_date &gt;= #{beginDate,jdbcType=DATE} and data_date &lt;= #{endDate,jdbcType=DATE}
+	  and pay_method &lt; 0 and member_status = 1 and merchant_id = #{merchantId} group by pay_method, data_date
+	  ) as D on A.data_date = D.data_date and A.pay_method = abs(D.pay_method)
+	  order by A.data_date asc, A.pay_method asc
+  </select>
+  <!-- 会员消费排行榜 -->
+  <select id="selectMemberRank" resultType="hashmap">
+  	select u.id, u.phone, u.name, date_format(u.register_time, '%Y-%m-%d') as register_time, 
+  		date_format(u.birthday, '%Y-%m-%d') as birthday, date_format(u.last_consumption_time, '%Y-%m-%d') as last_consumption_time, u.point, u.rank, 
+		(ifnull(D.recharge, 0) + ifnull(D.refund, 0)) as total_recharge, ifnull(abs(D.consume), 0) as total_consume from member_user u left outer join (
+	select A.member_id, A.recharge, B.refund, C.consume from (select sum(t.price_amount) as recharge, t.member_id from member_record t where t.record_type = 1 
+		and t.merchant_id = #{merchantId} group by t.member_id) as A
+	left outer join 
+	(select sum(t.price_amount) as refund, t.member_id from member_record t where t.record_type = 3 and t.merchant_id = #{merchantId} group by t.member_id) as B
+	on A.member_id = B.member_id
+	left outer join 
+	(select sum(t.price_amount) as consume, t.member_id from member_record t where t.record_type = 2 and t.merchant_id = #{merchantId} group by t.member_id) as C
+	on A.member_id = C.member_id) D on u.id = D.member_id
+	<where>
+		u.merchant_id = #{merchantId}
+		<if test="totalRecharge != null and totalRecharge != ''">
+			and (ifnull(D.recharge, 0) + ifnull(D.refund, 0)) &gt;= #{totalRecharge}
+		</if>
+		<if test="totalConsume != null and totalConsume != ''">
+			and (ifnull(abs(D.consume), 0)) &gt;=#{totalConsume}
+		</if>
+	</where>
+	<if test="orderByClause != null and orderByClause != ''">
+		order by ${orderByClause}
+	</if>
+  </select>
+</mapper>

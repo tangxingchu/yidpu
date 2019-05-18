@@ -1,0 +1,31 @@
+<mxEditor>
+	<include name="/static/config/wfeditor-commons.xml"/>
+	<ui>
+		<add as="graph" element="graph"
+			style="left:204px;right:240px;top:90px;bottom:1px"/>
+		<add as="toolbar" element="toolbar"/>
+		<!--<add as="toolbar" x="204" y="66" width="50" style="padding:5px;padding-top:8px;padding-right:0px;"/>-->
+	</ui>
+	<mxGraph as="graph">
+		<include name="/static/config/wfgraph-commons.xml"/>
+	</mxGraph>
+	<mxDefaultToolbar as="toolbar">
+		<add as="Save" action="save" icon="/static/images/toolbar/save.gif"/>
+		<separator/>
+		<add as="Undo" action="undo" icon="/static/images/toolbar/undo.gif"/>
+		<add as="Redo" action="redo" icon="/static/images/toolbar/redo.gif"/>
+		<add as="Cut" action="cut" icon="/static/images/toolbar/cut.gif"/>
+		<add as="Copy" action="copy" icon="/static/images/toolbar/copy.gif"/>
+		<add as="Paste" action="paste" icon="/static/images/toolbar/paste.gif"/>
+		<add as="Delete" action="delete" icon="/static/images/toolbar/delete.gif"/>
+		<separator/>
+		<add as="Select" mode="select" icon="/static/images/toolbar/select.gif"/>
+		<add as="Pan" mode="pan" icon="/static/images/toolbar/pan.gif"/>
+		<separator/>
+		<add as="Fit" action="fit" icon="/static/images/toolbar/zoom.gif"/>
+		<add as="Zoom In" action="zoomIn" icon="/static/images/toolbar/zoomin.gif"/>
+		<add as="Zoom Out" action="zoomOut" icon="/static/images/toolbar/zoomout.gif"/>
+		<add as="Actual Size" action="actualSize" icon="/static/images/toolbar/zoomactual.gif"/>
+		<add as="Zoom" action="zoom" icon="/static/images/toolbar/zoom.gif"/>
+	</mxDefaultToolbar>
+</mxEditor>

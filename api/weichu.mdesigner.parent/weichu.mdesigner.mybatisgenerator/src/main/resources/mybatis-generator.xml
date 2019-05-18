@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration  
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"  
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="MysqlTables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!--数据库链接地址账号密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/weichu_youdianpu_db"
+			userId="root" password="1234txc">
+		</jdbcConnection>
+		<!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/weichu_youdianpu_db"
+			userId="root" password="Youdianpu@0709">
+		</jdbcConnection>-->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!--生成Model类存放位置 -->
+		<javaModelGenerator targetPackage="com.weichu.mdesigner.mybatisgenerator.entity"
+			targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!--生成映射文件存放位置 -->
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="src/main/resources/mybatis">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!--生成Dao类存放位置 -->
+		<!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码 type="ANNOTATEDMAPPER",生成Java Model 
+			和基于注解的Mapper对象 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象 type="XMLMAPPER",生成SQLMap 
+			XML文件和独立的Mapper接口 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.weichu.mdesigner.mybatisgenerator.mapper" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!--生成对应表及类名-->
+		<!--
+		<table tableName="member_user" domainObjectName="MemberUser" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_print_setting" domainObjectName="MerchantPrintSetting" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="member_account" domainObjectName="MemberAccount" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="member_rank_config" domainObjectName="MemberRankConfig" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="member_recharge_config" domainObjectName="MemberRechargeConfig" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="member_record" domainObjectName="MemberRecord" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="member_gift" domainObjectName="MemberGift" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="member_change_his" domainObjectName="MemberChangeHis" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="member_user_delete" domainObjectName="MemberUserDelete" 
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true" 
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_user" domainObjectName="MerchantUser"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		-->
+		<table tableName="merchant_goods" domainObjectName="MerchantGoods"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<!--
+		<table tableName="merchant_function" domainObjectName="MerchantFunction"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_role" domainObjectName="MerchantRole"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_user_role" domainObjectName="MerchantUserRole"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_role_function" domainObjectName="MerchantRoleFunction"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="admin_dictionary" domainObjectName="AdminDictionary"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="admin_dictionary_item" domainObjectName="AdminDictionaryItem"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_user_children" domainObjectName="MerchantUserChildren"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="admin_employee" domainObjectName="AdminEmployee"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_employee" domainObjectName="MerchantEmployee"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="admin_log" domainObjectName="AdminLog"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_user_function" domainObjectName="MerchantUserFunction"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_attachment" domainObjectName="MerchantAttachment"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_floor" domainObjectName="MerchantFloor"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_table" domainObjectName="MerchantTable"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_category" domainObjectName="GoodsCategory"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_image" domainObjectName="MerchantImage"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_image" domainObjectName="MerchantGoodsImage"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_his" domainObjectName="MerchantGoodsHis"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_cart" domainObjectName="MerchantCart"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_dictionary" domainObjectName="MerchantDictionary"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_dictionary_item" domainObjectName="MerchantDictionaryItem"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_order" domainObjectName="MerchantOrder"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_order_his" domainObjectName="MerchantOrderHis"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_order_item" domainObjectName="MerchantOrderItem"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_order_item_his" domainObjectName="MerchantOrderItemHis"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_day" domainObjectName="MerchantGoodsDay"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_coupon" domainObjectName="MerchantGoodsCoupon"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_discount" domainObjectName="MerchantGoodsDiscount"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_subtract" domainObjectName="MerchantGoodsSubtract"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_queue" domainObjectName="MerchantQueue"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_queue_table" domainObjectName="MerchantQueueTable"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_extra" domainObjectName="MerchantGoodsExtra"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_goods_extra_item" domainObjectName="MerchantGoodsExtraItem"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_config" domainObjectName="MerchantConfig"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_notice" domainObjectName="MerchantNotice"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_notice_status" domainObjectName="MerchantNoticeStatus"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_message" domainObjectName="MerchantMessage"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>		
+		<table tableName="merchant_alipay" domainObjectName="MerchantAlipay"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="admin_order" domainObjectName="AdminOrder"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_pay_log" domainObjectName="MerchantPayLog"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_cashier_log" domainObjectName="MerchantCashierLog"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_audit" domainObjectName="MerchantAudit"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_business_info" domainObjectName="MerchantBusinessInfo"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="admin_function_price" domainObjectName="AdminFunctionPrice"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="admin_version" domainObjectName="AdminVersion"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_alipay_info" domainObjectName="MerchantAlipayInfo"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_user_change_his" domainObjectName="MerchantUserChangeHis"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_image_his" domainObjectName="MerchantImageHis"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_coupon_consume" domainObjectName="MerchantCouponConsume"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>	
+		<table tableName="merchant_pay_order" domainObjectName="MerchantPayOrder"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_pay_order_his" domainObjectName="MerchantPayOrderHis"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_business_rule_his" domainObjectName="MerchantBusinessRuleHis"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="merchant_business_rule_his_detail" domainObjectName="MerchantBusinessRuleHisDetail"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		 <table tableName="merchant_wxpay_info" domainObjectName="MerchantWxpayInfo"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		<table tableName="mobile_swiper_image" domainObjectName="MobileSwiperImage"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		 <table tableName="merchant_sms_sign" domainObjectName="MerchantSMSSign"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		
+		<table tableName="admin_message_book" domainObjectName="AdminMessageBook"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="true" enableSelectByExample="true"
+			selectByExampleQueryId="false"></table>
+		-->
+	</context>
+</generatorConfiguration>

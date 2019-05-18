@@ -1,0 +1,64 @@
+CREATE DATABASE  IF NOT EXISTS `weichu_youdianpu_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `weichu_youdianpu_db`;
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+--
+-- Host: 127.0.0.1    Database: weichu_youdianpu_db
+-- ------------------------------------------------------
+-- Server version	5.7.22
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `merchant_goods_day`
+--
+
+DROP TABLE IF EXISTS `merchant_goods_day`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `merchant_goods_day` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `merchant_id` int(11) NOT NULL COMMENT '商家ID',
+  `goods_id` int(11) NOT NULL COMMENT '商品ID',
+  `price` decimal(10,2) NOT NULL COMMENT '特价',
+  `description` varchar(500) DEFAULT NULL COMMENT '描述',
+  `enabled` char(1) NOT NULL DEFAULT '1' COMMENT '是否启用',
+  `week` int(11) NOT NULL COMMENT '星期几(字典)',
+  `limit_num` int(11) NOT NULL DEFAULT '1' COMMENT '每桌限点几份',
+  `effective_time` datetime DEFAULT NULL COMMENT '生效时间',
+  `expired_time` datetime DEFAULT NULL COMMENT '失效时间',
+  `create_time` datetime DEFAULT NULL COMMENT '记录创建时间',
+  `modify_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index2` (`goods_id`,`week`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='每日特别商品（菜） 以周做为周期, 商品和天做为纬度';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `merchant_goods_day`
+--
+
+LOCK TABLES `merchant_goods_day` WRITE;
+/*!40000 ALTER TABLE `merchant_goods_day` DISABLE KEYS */;
+INSERT INTO `merchant_goods_day` VALUES (23,1,2,56.00,NULL,'1',4,1,'2018-08-22 00:00:00',NULL,'2018-08-22 21:36:41','2018-08-22 21:36:40'),(25,1,7,39.00,NULL,'1',6,1,'2018-11-16 00:00:00',NULL,'2018-11-16 20:25:40','2018-11-16 20:25:41'),(26,1,2,888.00,NULL,'1',7,1,'2018-11-30 00:00:00',NULL,'2018-11-30 16:22:57','2018-11-30 16:23:03'),(27,1,2,666.00,NULL,'1',3,1,'2019-01-08 00:00:00',NULL,'2019-01-08 15:03:42','2019-01-08 15:03:41'),(28,1,2,99.00,NULL,'1',5,1,'2019-01-17 00:00:00',NULL,'2019-01-17 20:36:25','2019-01-17 20:36:25'),(29,1,2,89.00,NULL,'1',2,1,'2019-02-11 00:00:00',NULL,'2019-02-11 18:55:07','2019-02-11 18:55:07'),(30,2,13,58.00,NULL,'1',1,1,'2019-03-13 00:00:00',NULL,'2019-03-13 00:44:24','2019-03-13 00:44:25'),(33,2,24,20.00,NULL,'1',5,1,'2019-03-13 00:00:00',NULL,'2019-03-13 22:46:33','2019-03-13 22:46:33'),(37,2,13,22.00,NULL,'1',2,1,'2019-03-14 00:00:00',NULL,'2019-03-14 14:36:51','2019-03-14 14:36:47'),(38,2,13,23.00,NULL,'1',3,1,'2019-03-06 00:00:00','2019-03-22 23:59:59','2019-03-14 14:37:04','2019-03-14 14:37:01'),(39,1,2,58.00,NULL,'1',1,1,'2019-03-17 00:00:00',NULL,'2019-03-17 21:56:58','2019-03-17 21:56:58');
+/*!40000 ALTER TABLE `merchant_goods_day` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-05-18  0:49:17

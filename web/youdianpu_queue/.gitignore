@@ -1,0 +1,9 @@
+/node_modules/
+.vscode
+.DS_Store
+/public/goods/
+/public/static/
+/public/static/main*
+/public/floorPlan/
+/dist/
+/db/

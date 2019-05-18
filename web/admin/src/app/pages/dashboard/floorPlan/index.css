@@ -1,0 +1,38 @@
+.toolbar {
+    position: absolute;
+    left: 204px;
+    top: 64px;
+    right:0px;
+    height: 26px;
+    padding-left: 8px;
+    padding-top: 4px;
+}
+
+.graph {
+    position: absolute;
+    overflow:auto;
+    font-family: Arial;
+    font-size: 8pt;
+    border-style: solid;
+    border-color: #F2F2F2;
+    border-width: 1px;
+    background: url('/static/images/grid.gif');
+}
+
+.splash {
+    width: calc(100% - 200px);
+    height: calc(100% - 64px);
+    background: white;
+    position: absolute;
+    top: 64px;
+    left: 200px;
+    z-index: 2;
+}
+
+.shape {
+    position: absolute;
+    width: 240px;
+    padding-top:2px;
+    right:2px;
+    top:64px;
+}

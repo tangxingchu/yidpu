@@ -1,0 +1,6 @@
+/*/target/
+/*/log/
+.settings/
+.project
+*Mapper.xml
+*.java

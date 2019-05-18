@@ -1,0 +1,103 @@
+/* pages/user/user.wxss */
+
+page {
+  background: #f7f7f7;
+}
+
+.container {
+  /*弹性模型*/
+  display: flex;
+  /*垂直方向 列方向 排布*/
+  flex-direction: column;
+  /*居中*//*align-items:center;*//*要从整体解决排布的问题是最好的方案*/
+}
+
+.profileView {
+  /*弹性模型*/
+  display: flex;
+  /*垂直方向 列方向 排布*/
+  flex-direction: column;
+  /*居中*/
+  align-items: center;
+  /*要从整体解决排布的问题是最好的方案*/
+  flex: 1;
+  height: 280rpx;
+  background: #E64320;
+}
+
+.profileViewImageStyle {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  border: 1px #fff solid;
+}
+
+.profileViewFontStyle {
+  font-size: 34rpx;
+  color: #fff;
+}
+
+.secondlayout {
+  flex: 1;
+  height: 100rpx;
+  /*弹性模型*/
+  display: flex;
+  flex-direction: row;
+  /*居中*//*align-items:center;*/
+  justify-content: center;
+  background: #fff;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.secondlayoutitem {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.secondfontstyle {
+  font-size: 30rpx;
+  color: #000;
+}
+.secondfontstyle_button {
+  font-size: 30rpx;
+  color: #000;
+}
+.secondfontstyle_secondary {
+  font-size: 28rpx;
+  color: #888;
+}
+
+.thirdlayout {
+  height: 96rpx;
+  /*弹性模型*/
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+}
+
+.secondimagestyle {
+  width: 48rpx;
+  height: 48rpx;
+  margin: 16rpx;
+}
+
+.fourthlayout {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+.thirdimagestyle {
+  width: 32rpx;
+  height: 32rpx;
+  margin: 16rpx;
+}

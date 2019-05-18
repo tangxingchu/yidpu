@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "店铺",
+    "usingComponents": {
+      "slideTab": "../../components/navigator/index"
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "yidpu.socket.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js -h http://127.0.0.1:8090"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "argv": "0.0.2",
+    "js-base64": "^2.4.9",
+    "node-fetch": "^2.2.0",
+    "socket.io": "^2.1.1",
+    "underscore": "^1.9.1",
+    "url-search-params-polyfill": "^5.0.0"
+  }
+}

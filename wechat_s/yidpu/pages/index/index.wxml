@@ -1,0 +1,65 @@
+<!--index.wxml-->
+<import src="../../components/common/sort_list.wxml" />
+<view class="container">
+  <view class='searchViewContainer'>
+    <view class='location' bindtap='switchLocation'>
+      <image src="../../images/near.png"></image>
+      <text>{{location}}</text>
+    </view>
+    <view class="weui-search-bar" style='flex: 1'>
+      <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input" disabled='true' placeholder="输入店铺名、地址" bindtap="wxSearchTab" />
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--轮播-->
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" style='width:100%;height:150px;'>
+    <block wx:for="{{swiperImages}}" wx:key="{{item.id}}">
+      <swiper-item bindtap='swipclick' id="{{item.id}}">
+        <image src="{{item.imagePath}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <import src='../../components/star/star.wxml' />
+  <import src='../../components/storeitem/storeitem.wxml' />
+  <view class='container'>
+    <view class='navbtns'>
+      <view class='navitem nearby' bindtap='navitation' data-id='01'>
+        默认排序
+      </view>
+      <!-- <view class='line'></view>
+      <view class='navitem sort' bindtap='navitation' data-id='02'>
+        距离最近
+        <image src="{{selectedNav === '02' ? '../../images/arrow_up.png' : '../../images/arrow_down.png'}}"></image>
+      </view> -->
+      <view class='line'></view>
+      <view class='navitem rank' bindtap='navitation' data-id='03'>
+        排序
+        <image src="{{selectedNav === '03' ? '../../images/arrow_up.png' : '../../images/arrow_down.png'}}"></image>
+      </view>
+    </view>
+    <view class='wrap'>
+      <scroll-view class='scroller' style="width:{{width}}px;" scroll-y="true" lower-threshold="800" bindscrolltolower="loadmore">
+        <block wx:for='{{merchantList}}' wx:for-item='store' wx:key='*this'>
+          <template is="store" data="{{store,staticHost}}" />
+        </block>
+      </scroll-view>
+      <view class='spinner' wx:if='{{showspinner}}'>
+        <view class='items'>
+          <block wx:for="{{spinners}}" wx:for-item='item' wx:key="item.id">
+            <view class='item' bindtap='spinnerclick'>{{item.name}}</view>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--上拉加载-->
+  <view class='reachBottomView' wx:if="{{reachBottom}}">
+    <text>数据加载中...</text>
+  </view>
+
+</view>

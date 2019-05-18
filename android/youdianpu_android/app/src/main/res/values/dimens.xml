@@ -1,0 +1,16 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- start BottomNavigationBar基础间距、高度修改 -->
+    <dimen name="fixed_height_bottom_padding">8dp</dimen><!--反向参数，值越大，距离越小-->
+    <!--<dimen name="fixed_height">48dp</dimen>-->
+    <dimen name="fixed_height_top_padding_inactive">-3dp</dimen><!--没看懂，但是跟高度有关，正数会变宽-->
+    <!-- 8(Top Padding) - 12/2(extra padding due to badges) = 2 -->
+    <dimen name="fixed_height_top_padding_active">0dp</dimen><!-- 6(Top Padding) - 12/2(extra padding due to badges) = 0 -->
+    <!--<dimen name="bottom_navigation_elevation">2dp</dimen>-->
+    <dimen name="bottom_navigation_height">52dp</dimen><!--修改高度 ，源码中是56-->
+
+    <!--商家详情页布局 -->
+    <dimen name="detail_backdrop_height">256dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="list_item_avatar_size">40dp</dimen>
+</resources>

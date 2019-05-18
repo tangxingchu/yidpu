@@ -1,0 +1,104 @@
+body {
+    background-color: #F5F5F5;
+    font-size: 14px;
+}
+.subTitle {
+    color: #000000;
+    font-size: 18px;
+    padding: 16px 0 8px 8px;
+}
+.gridItem {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    .text {
+        color: #888;
+        font-size: 16px;
+    }
+    .currText {
+        color: #ffffff;
+    }
+}
+.currGridItem {
+    background-color: #108ee9;
+}
+.placeOrder {
+    :global {
+        .am-list-body {
+            min-width: 100px;
+        }
+        .am-list-content {
+            text-align: center;
+            color: #888;
+        }
+    }
+    display: flex;
+    flex-direction: row;
+    
+    .section {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        background-color: #F5F5F5;
+    }
+}
+
+:global {
+    .am-card-body {
+        padding: 0px 2px;
+    }
+    .am-modal-transparent .am-modal-content .am-modal-body {
+        padding: 0px 8px 8px;
+    }
+    .am-modal-transparent .am-modal-content {
+        padding-top: 4px;
+    }
+    .am-card-header {
+        padding: 4px 8px;
+        font-size: 16px;
+    }
+    .am-card {
+        min-height: 76px;
+        font-size: 14px;
+        width: 100%;
+    }
+    .am-list-item .am-list-line .am-list-content {
+        font-size: 14px;
+    }
+    .am-list-item {
+        min-height: 20px;
+        padding-left: 8px;
+    }
+    .am-list-item .am-list-line {
+        padding-right: 8px;
+    }
+    .am-list-item .am-list-thumb>:first-child {
+        padding-right: 8px;
+    }
+}
+
+.category {
+    .categoryItem {
+        height: 44px;
+        width: 110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .currCategoryItem {
+        background-color: #F5F5F5;
+        color: #333;
+        width: 106px;
+        border-left-width: 4px;
+        border-left-color: #ff4242;
+        border-left-style: solid;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}

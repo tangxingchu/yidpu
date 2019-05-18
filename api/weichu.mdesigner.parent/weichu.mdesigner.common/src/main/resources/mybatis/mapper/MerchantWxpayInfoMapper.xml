@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantWxpayInfoMapper">
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantWxpayInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="sub_mch_id" jdbcType="VARCHAR" property="subMchId" />
+    <result column="contacts_name" jdbcType="VARCHAR" property="contactsName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="service_phone" jdbcType="VARCHAR" property="servicePhone" />
+    <result column="business_licence_no" jdbcType="VARCHAR" property="businessLicenceNo" />
+    <result column="org_photo_path" jdbcType="VARCHAR" property="orgPhotoPath" />
+    <result column="identity_photo_front_path" jdbcType="VARCHAR" property="identityPhotoFrontPath" />
+    <result column="identity_photo_back_path" jdbcType="VARCHAR" property="identityPhotoBackPath" />
+    <result column="account_type" jdbcType="INTEGER" property="accountType" />
+    <result column="account_name" jdbcType="VARCHAR" property="accountName" />
+    <result column="account_bank" jdbcType="VARCHAR" property="accountBank" />
+    <result column="account_fockback" jdbcType="VARCHAR" property="accountFockback" />
+    <result column="account_no" jdbcType="VARCHAR" property="accountNo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, merchant_id, sub_mch_id, contacts_name, phone, email, merchant_name, service_phone, 
+    business_licence_no, org_photo_path, identity_photo_front_path, identity_photo_back_path, 
+    account_type, account_name, account_bank, account_fockback, account_no, create_time, 
+    modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantWxpayInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_wxpay_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_wxpay_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_wxpay_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantWxpayInfoExample">
+    delete from merchant_wxpay_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantWxpayInfo">
+    insert into merchant_wxpay_info (id, merchant_id, sub_mch_id, 
+      contacts_name, phone, email, 
+      merchant_name, service_phone, business_licence_no, 
+      org_photo_path, identity_photo_front_path, identity_photo_back_path, 
+      account_type, account_name, account_bank, 
+      account_fockback, account_no, create_time, 
+      modify_time)
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{subMchId,jdbcType=VARCHAR}, 
+      #{contactsName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{merchantName,jdbcType=VARCHAR}, #{servicePhone,jdbcType=VARCHAR}, #{businessLicenceNo,jdbcType=VARCHAR}, 
+      #{orgPhotoPath,jdbcType=VARCHAR}, #{identityPhotoFrontPath,jdbcType=VARCHAR}, #{identityPhotoBackPath,jdbcType=VARCHAR}, 
+      #{accountType,jdbcType=INTEGER}, #{accountName,jdbcType=VARCHAR}, #{accountBank,jdbcType=VARCHAR}, 
+      #{accountFockback,jdbcType=VARCHAR}, #{accountNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantWxpayInfo">
+    insert into merchant_wxpay_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="subMchId != null">
+        sub_mch_id,
+      </if>
+      <if test="contactsName != null">
+        contacts_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="servicePhone != null">
+        service_phone,
+      </if>
+      <if test="businessLicenceNo != null">
+        business_licence_no,
+      </if>
+      <if test="orgPhotoPath != null">
+        org_photo_path,
+      </if>
+      <if test="identityPhotoFrontPath != null">
+        identity_photo_front_path,
+      </if>
+      <if test="identityPhotoBackPath != null">
+        identity_photo_back_path,
+      </if>
+      <if test="accountType != null">
+        account_type,
+      </if>
+      <if test="accountName != null">
+        account_name,
+      </if>
+      <if test="accountBank != null">
+        account_bank,
+      </if>
+      <if test="accountFockback != null">
+        account_fockback,
+      </if>
+      <if test="accountNo != null">
+        account_no,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="subMchId != null">
+        #{subMchId,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null">
+        #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePhone != null">
+        #{servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceNo != null">
+        #{businessLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPhotoPath != null">
+        #{orgPhotoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPhotoFrontPath != null">
+        #{identityPhotoFrontPath,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPhotoBackPath != null">
+        #{identityPhotoBackPath,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBank != null">
+        #{accountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="accountFockback != null">
+        #{accountFockback,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    <selectKey keyProperty="id" resultType="java.lang.Integer">
+      select LAST_INSERT_ID() as id
+    </selectKey>
+  </insert>
+  <select id="countByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantWxpayInfoExample" resultType="java.lang.Long">
+    select count(*) from merchant_wxpay_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantWxpayInfo">
+    update merchant_wxpay_info
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="subMchId != null">
+        sub_mch_id = #{subMchId,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null">
+        contacts_name = #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePhone != null">
+        service_phone = #{servicePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicenceNo != null">
+        business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPhotoPath != null">
+        org_photo_path = #{orgPhotoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPhotoFrontPath != null">
+        identity_photo_front_path = #{identityPhotoFrontPath,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPhotoBackPath != null">
+        identity_photo_back_path = #{identityPhotoBackPath,jdbcType=VARCHAR},
+      </if>
+      <if test="accountType != null">
+        account_type = #{accountType,jdbcType=INTEGER},
+      </if>
+      <if test="accountName != null">
+        account_name = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBank != null">
+        account_bank = #{accountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="accountFockback != null">
+        account_fockback = #{accountFockback,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantWxpayInfo">
+    update merchant_wxpay_info
+    set merchant_id = #{merchantId,jdbcType=INTEGER},
+      sub_mch_id = #{subMchId,jdbcType=VARCHAR},
+      contacts_name = #{contactsName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      service_phone = #{servicePhone,jdbcType=VARCHAR},
+      business_licence_no = #{businessLicenceNo,jdbcType=VARCHAR},
+      org_photo_path = #{orgPhotoPath,jdbcType=VARCHAR},
+      identity_photo_front_path = #{identityPhotoFrontPath,jdbcType=VARCHAR},
+      identity_photo_back_path = #{identityPhotoBackPath,jdbcType=VARCHAR},
+      account_type = #{accountType,jdbcType=INTEGER},
+      account_name = #{accountName,jdbcType=VARCHAR},
+      account_bank = #{accountBank,jdbcType=VARCHAR},
+      account_fockback = #{accountFockback,jdbcType=VARCHAR},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

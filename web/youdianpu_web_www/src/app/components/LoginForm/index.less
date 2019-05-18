@@ -1,0 +1,33 @@
+.login-form {
+    max-width: 368px;
+    height: 1px;
+}
+.login-form-forgot {
+    float: right;
+}
+.login-form-button {
+    width: 100%;
+}
+.alert {
+    margin-bottom: 12px;
+}
+
+:global {
+    /* caret "after" content visible outside of keyboard popup */
+    .ui-keyboard-preview-wrapper {
+        overflow: visible;
+    }
+    /* add caret character preview popup */
+    .ui-keyboard-caret:after {
+        content: attr(data-character);
+        background: red;
+        color: white;
+        font-family: Verdana, Tahoma, Segoe, sans-serif;
+        font-size: 1.1em;
+        min-width: 1em;
+        position: absolute;
+        z-index: 100;
+        top: -1.4em;
+        left: -.5em;
+    }
+}

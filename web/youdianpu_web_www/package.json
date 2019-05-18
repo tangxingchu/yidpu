@@ -1,0 +1,103 @@
+{
+  "name": "yidpu_cy",
+  "version": "1.0.1",
+  "description": "",
+  "main": "src/main/index.js",
+  "build": {
+    "appId": "com.yidpu.cy",
+    "productName": "一点谱餐饮平台",
+    "copyright": "Copyright © 2019 湖南一点谱科技有限公司",
+    "mac": {
+      "category": "yidpu.app.category.type"
+    },
+    "win": {
+      "icon": "./build/icon_256.ico"
+    },
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "http://static.yidpu.com/main-updater"
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "runAfterFinish": true,
+      "installerIcon": "./build/icon_256.ico",
+      "uninstallerIcon": "./build/icon_256.ico"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.dev.config.js --hot",
+    "build-web-prod": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js",
+    "build-dll": "webpack -p --progress --config ./webpack.config.dll.js",
+    "analyz": "NODE_ENV=production npm_config_report=true npm run build-web-prod"
+  },
+  "author": "一点谱科技",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.22.1",
+    "numeral": "^2.0.6"
+  },
+  "devDependencies": {
+    "@antv/data-set": "^0.8.9",
+    "antd": "^3.7.0",
+    "autoprefixer": "^8.6.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "bizcharts": "^3.1.7",
+    "bizcharts-plugin-slider": "^2.0.3",
+    "classnames": "^2.2.5",
+    "cross-env": "^5.2.0",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0",
+    "file-loader": "^1.1.11",
+    "g2": "^2.3.13",
+    "g2-react": "^1.3.2",
+    "html-webpack-plugin": "^3.2.0",
+    "json-loader": "^0.5.7",
+    "less": "^3.0.2",
+    "less-loader": "^4.1.0",
+    "lodash-decorators": "^6.0.1",
+    "mini-css-extract-plugin": "^0.4.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.2",
+    "path-to-regexp": "^2.2.1",
+    "postcss-loader": "^2.1.5",
+    "prop-types": "^15.6.1",
+    "rc-drawer-menu": "^0.5.7",
+    "rc-tween-one": "^2.2.17",
+    "react": "^16.4.1",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-art": "^16.4.1",
+    "react-css-modules": "^4.7.2",
+    "react-document-title": "^2.0.3",
+    "react-dom": "^16.4.1",
+    "react-fittext": "^1.0.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.10.2",
+    "webpack-bundle-analyzer": "^3.0.4",
+    "webpack-cli": "^2.1.2",
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-dev-server": "^3.1.3",
+    "webpack-hot-middleware": "^2.22.1",
+    "webpack-merge": "^4.2.1"
+  }
+}

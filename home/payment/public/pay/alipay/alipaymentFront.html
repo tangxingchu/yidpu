@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+<script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.inc.min.js"></script>
+<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"></script>
+<script src="https://as.alipayobjects.com/g/component/fetch/1.0.0/fetch.min.js"></script>
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<link rel="stylesheet" href="/css/pay.css">
+<link rel="stylesheet" href="/css/keyboard_alipay.css">
+<title>一点谱合作商家</title>
+</head>
+<!-- 
+	通用说明： 
+	1.模块的隐藏添加class:hide;
+	2.body标签默认绑定ontouchstart事件，激活所有按钮的:active效果
+-->
+<body ontouchstart class="weui-wepay-pay-wrap">
+<div class="weui-wepay-pay">
+    <div class="pay-shop-info">
+        <div class="content" style="display: none">
+            <img class="shop-logo" style="font-size: 0px;">
+            <span class="shop-name"></span>
+        </div>
+    </div>
+    <div class="weui-wepay-pay__bd">
+        <div class="weui-wepay-pay__inner">
+            <h1 class="weui-wepay-pay__title">付款金额(元)</h1>
+            <div class="weui-wepay-pay__inputs"> <strong class="weui-wepay-pay__strong">￥</strong>
+                <label id="paymoney" type="text" class="weui-wepay-pay__input"></label>
+            </div>
+            <div class="weui-wepay-pay__intro">向商家询问支付金额</div>
+        </div>
+    </div>
+</div>
+<div></div>
+<div class="payinfo">
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td class="paynum">1</td>
+			<td class="paynum">2</td>
+			<td class="paynum">3</td>
+			<td id="pay-return"><div class="keybord-return"></div></td>
+		</tr>
+		<tr>
+			<td class="paynum">4</td>
+			<td class="paynum">5</td>
+			<td class="paynum">6</td>
+			<td rowspan="3" class="pay">支付</td>
+		</tr>
+		<tr>
+			<td class="paynum">7</td>
+			<td class="paynum">8</td>
+			<td class="paynum">9</td>
+		</tr>
+		<tr>
+            <td id="pay-zero" colspan="2" class="payzero">0</td>
+			<td id="pay-float">.</td>
+		</tr>
+	</table>
+</div>
+</body>
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script type="text/javascript">
+	var staticHost = "http://static.yidpu.com";
+	var getMInfoApiUrl = "https://api.yidpu.com/api/mobile/getMInfo";
+	var payOrderApiUrl = "https://api.yidpu.com/api/alipay/alipayFrontOrder";
+	var parseUrl = function() {
+		var searchHref = window.location.search.replace('?', '');
+		var params = searchHref.split('&');
+		var returnParam = {};
+		params.forEach(function(param){
+			var paramSplit = param.split('=');
+			returnParam[paramSplit[0]] = paramSplit[1];
+		});
+		return returnParam;
+	}
+	
+	var payOrder = function(payAmount) {
+		ap.showLoading({content: '支付请求中...'});
+		var params = parseUrl();
+		fetch(payOrderApiUrl, {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: "buyerId=" + params.buyerId + "&merchantId=" + params.merchantId  + "&payAmount=" + payAmount
+		}).then(function(response) {
+			return response.json();
+		}).then(function(data) {
+			//订单创建失败
+			if(data.status && data.status != 200) {
+				ap.alert(data.message);
+				ap.hideLoading();
+			} else {
+				ap.hideLoading();
+				//订单创建成功过
+				ap.tradePay({
+					tradeNO: data.tradeNo
+				}, function(res) {
+					if(res.resultCode == 9000) {//支付成功
+						ap.redirectTo({url: '/pay/payment-success.html'});
+					} else if(res.resultCode == 4000) {
+						ap.alert("订单支付失败");
+					} else if(res.resultCode == 6002) {
+						ap.alert("网络出现问题, 订单支付失败");
+					} else if(res.resultCode == 6001) {//用户取消
+					}
+				});
+			}
+		});
+	}
+	var getMerchantInfo = function() {
+		var params = parseUrl();
+		fetch(getMInfoApiUrl, {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: "merchantId=" + params.merchantId
+		}).then(function(response) {
+			return response.json();
+		}).then(function(data) {
+			$(".content").slideDown();
+			$(".shop-logo").attr('src', staticHost + data.logoPath);
+			$(".shop-name").html(data.merchantName);
+		});
+    }
+    
+	$(function(){
+        getMerchantInfo();
+		$(".payinfo").slideDown();
+		var $paymoney = $("#paymoney");
+		
+		$("#pay-stop").click(function(){
+			$(".payinfo").slideUp("fast");
+		});
+		
+		$("#paymoney").focus(function(){
+			$(".payinfo").slideDown();
+       		document.activeElement.blur();
+		});
+		
+		$(".paynum").each(function(){
+            $(this).click(function(){
+				if(($paymoney.text()).indexOf(".") != -1 && ($paymoney.text()).substring(($paymoney.text()).indexOf(".") + 1, ($paymoney.text()).length).length == 2){
+					return;
+				}
+				if($.trim($paymoney.text()) == "0"){
+					return;
+				}
+				if (parseInt($paymoney.text()) > 10000 && $paymoney.text().indexOf(".") == -1) {
+					return;
+				}
+				
+				$('.pay').removeClass('pay-disabled').unbind('click').bind('click', function(){
+					payOrder($paymoney.text());
+				});
+				$paymoney.text($paymoney.text() + $(this).text());
+			});
+		});
+		
+		$("#pay-return").click(function(){
+            $paymoney.text(($paymoney.text()).substring(0, ($paymoney.text()).length - 1));
+			if (!$paymoney.text() || parseFloat($paymoney.text()) == 0) {
+				$('.pay').addClass('pay-disabled').unbind('click');
+			}
+		});
+		
+		$("#pay-zero").click(function(){
+            if(($paymoney.text()).indexOf(".") != -1 && ($paymoney.text()).substring(($paymoney.text()).indexOf(".") + 1, ($paymoney.text()).length).length == 2){
+				return;
+			}
+			if($.trim($paymoney.text()) == "0"){
+				return;
+			}
+			if (parseInt($paymoney.text()) > 10000 && $paymoney.text().indexOf(".") == -1) {
+				return;
+			}
+			$paymoney.text($paymoney.text() + $(this).text());
+		});
+		
+		$("#pay-float").click(function(){
+			if($.trim($paymoney.text()) == ""){
+				return;
+			}
+		
+			if(($paymoney.text()).indexOf(".") != -1){
+				return;
+			}
+			
+			if(($paymoney.text()).indexOf(".") != -1){
+				return;
+			}
+			
+			$paymoney.text($paymoney.text() + $(this).text());
+        });
+        
+        if (!$paymoney.text()) {
+			$('.pay').addClass('pay-disabled');
+		}
+	});
+</script>
+</html>
+

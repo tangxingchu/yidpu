@@ -1,0 +1,16 @@
+{
+  "name": "escpos_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "escpos": "^2.4.9",
+    "ping": "^0.2.2",
+    "promise-queue-plus": "^1.2.1"
+  }
+}

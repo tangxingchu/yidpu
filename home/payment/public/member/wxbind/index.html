@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <!-- set `maximum-scale` for some compatibility issues -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <script>
+            var parseUrl = function() {
+                var searchHref = window.location.search.replace('?', '');
+                var params = searchHref.split('&');
+                var returnParam = {};
+                params.forEach(function(param){
+                    var paramSplit = param.split('=');
+                    returnParam[paramSplit[0]] = paramSplit[1];
+                });
+                return returnParam;
+            }
+            var params = parseUrl();
+            //扫码用户 通过code换取access_token 以及 openid (openid是统一下单类型是JSAPI，必须传的参数)
+            window.location.href = "https://api.yidpu.com/api/wxpay/memberBindRedirect?code=" + params.code + "&merchantId=" 
+                + params.merchantId;
+        </script>
+    </head>
+
+    <body>
+        
+    </body>
+
+</html>

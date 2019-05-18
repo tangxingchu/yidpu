@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <link rel="stylesheet" href="/css/pay-result.css">
+</head>
+<body>
+    <div class="pay-status">
+        <img class="success-logo" src="/images/pay-success.png" alt="">
+        <span class="success-tips">支付成功</span>
+    </div>
+    <div class="ad">
+        <a href="">
+            <img src="/images/ad.png" alt="">
+            <span>广告</span>
+        </a>
+    </div>
+	<!--
+    <div class="pay-info">
+        <div class="pay-number">
+            <span>支付订单:</span>
+            <span>190022446572</span>
+        </div>
+        <div class="pay-sum">
+            <span>支付金额</span>
+            <span>50.0元</span>
+        </div>
+    </div>
+	-->
+</body>
+<!--自适应布局-->
+<script>
+    (function () {
+        var designW = 750;  //设计稿宽
+        var font_rate = 100;
+        //适配
+        document.getElementsByTagName("html")[0].style.fontSize = document.body.offsetWidth / designW * font_rate + "px";
+        document.getElementsByTagName("body")[0].style.fontSize = document.body.offsetWidth / designW * font_rate + "px";
+
+        //监测窗口大小变化
+        window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function () {
+            document.getElementsByTagName("html")[0].style.fontSize = document.body.offsetWidth / designW * font_rate + "px";
+            document.getElementsByTagName("body")[0].style.fontSize = document.body.offsetWidth / designW * font_rate + "px";
+        }, false);
+    })();
+</script>
+</html>

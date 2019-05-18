@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <title>点击下载应用</title>
+    <style type="text/css">
+    *{margin:0; padding:0;}
+    a{text-decoration: none;}
+    img{max-width: 100%; height: auto;}
+    .weixin-tip{display: none; position: fixed; left:0; top:0; bottom:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=80);  height: 100%; width: 100%; z-index: 100;}
+    .weixin-tip p{text-align: center; margin-top: 10%; padding:0 5%;}
+    </style>
+</head>
+<body>
+<br/><br/>
+<div><center><a id="download_app" href="http://download.yidpu.com/yidpu_waiter.apk">
+    <br/>点我下载Android服务员版APP</a></center></div>
+    <div class="weixin-tip">
+        <p>
+            <img src="../../images/live_weixin.png" alt="微信打开"/>
+        </p>
+    </div>
+    <script type="text/javascript">
+        $(window).on("load",function(){
+            var winHeight = $(window).height();
+            
+            $("#download_app").hide();
+            
+            function is_weixin() {
+                var ua = navigator.userAgent.toLowerCase();
+                //alert(ua);  //浏览器   mozilla/5.0 (windows nt 6.1) applewebkit/537.36(khtml,like gecko) chrome/41.0.2272.12 safari/53736
+                            //微信   mozilla/5.0 (linux;u;android 4.4.2;zh-cn;coolpad 8675 build/kot49h) applewebkit/533.1 (khtml,like gecko)version/4.0 mqqbrowser/5.4 tbs/025440 mobile safari/533.1 micromessenger/6.2.4.53_r843fb8e.600 nettype/wifi language/zh_cn
+               
+                if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            var isWeixin = is_weixin();
+            if(isWeixin){
+                $(".weixin-tip").css("height",winHeight);
+                $(".weixin-tip").show();
+            }else{
+                $("#download_app").show();
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta content="email=no" name="format-detection">
+<link rel="stylesheet" href="https://act.weixin.qq.com/static/cdn/css/wepayui/0.1.1/wepayui.min.css">
+<link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
+<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
+<link rel="stylesheet" href="/css/pay.css">
+<link rel="stylesheet" href="/css/keyboard.css">
+<title>一点谱合作商家</title>
+</head>
+<!-- 
+	通用说明： 
+	1.模块的隐藏添加class:hide;
+	2.body标签默认绑定ontouchstart事件，激活所有按钮的:active效果
+-->
+<body ontouchstart class="weui-wepay-pay-wrap">
+<div class="weui-wepay-pay">
+    <div class="pay-shop-info">
+        <div class="content" style="display: none">
+            <img class="shop-logo" style="font-size: 0px;">
+            <span class="shop-name"></span>
+        </div>
+    </div>
+    <div class="weui-wepay-pay__bd">
+        <div class="weui-wepay-pay__inner">
+            <h1 class="weui-wepay-pay__title">付款金额(元)</h1>
+            <div class="weui-wepay-pay__inputs"> <strong class="weui-wepay-pay__strong">￥</strong>
+                <label id="paymoney" type="text" class="weui-wepay-pay__input"></label>
+            </div>
+            <div class="weui-wepay-pay__intro">向商家询问支付金额</div>
+        </div>
+        <div class="weui-wepay-pay__ft">
+            <div class="weui-wepay-pay__btn">
+                    <img  class="weui-btn" src="https://act.weixin.qq.com/static/cdn/img/wepayui/0.1.1/wepay_logo_default_gray.svg" alt="" height="16">
+            </div>
+        </div>
+    </div>
+</div>
+<div></div>
+<div class="payinfo">
+	<table cellspacing="0" cellpadding="0">
+		<tr>
+			<td class="paynum">1</td>
+			<td class="paynum">2</td>
+			<td class="paynum">3</td>
+			<td id="pay-return"><div class="keybord-return"></div></td>
+		</tr>
+		<tr>
+			<td class="paynum">4</td>
+			<td class="paynum">5</td>
+			<td class="paynum">6</td>
+			<td rowspan="3" class="pay">支付</td>
+		</tr>
+		<tr>
+			<td class="paynum">7</td>
+			<td class="paynum">8</td>
+			<td class="paynum">9</td>
+		</tr>
+		<tr>
+            <td id="pay-zero" colspan="2" class="payzero">0</td>
+			<td id="pay-float">.</td>
+		</tr>
+	</table>
+</div>
+</body>
+<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+<script src="/js/layer/layer.js"></script>
+<script type="text/javascript">
+    var staticHost = "http://static.yidpu.com";
+    var getMInfoApiUrl = "https://api.yidpu.com/api/mobile/getMInfo";
+    var configApiUrl = "https://api.yidpu.com/api/wxpay/config";
+    var payOrderApiUrl = "https://api.yidpu.com/api/wxpay/wxpayFrontOrder";
+    var parseUrl = function() {
+        var searchHref = window.location.search.replace('?', '');
+        var params = searchHref.split('&');
+        var returnParam = {};
+        params.forEach(function(param){
+            var paramSplit = param.split('=');
+            returnParam[paramSplit[0]] = paramSplit[1];
+        });
+        return returnParam;
+    }
+
+    var params = parseUrl();
+    var url = encodeURIComponent(location.href.split('#')[0]);
+    fetch(configApiUrl, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'url=' + url
+    }).then(function(response){
+        return response.json();
+    }).then(function(data){
+        wx.config({
+            debug: data.debug == "1" ? true : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: data.appId, // 必填，公众号的唯一标识
+            timestamp: data.timestamp, // 必填，生成签名的时间戳
+            nonceStr: data.noncestr, // 必填，生成签名的随机串
+            signature: data.signature,// 必填，签名
+            jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表
+        });
+    })
+    
+    var payOrder = function(payAmount) {
+        var params = parseUrl();
+        var loading = weui.loading('支付请求中...');
+        fetch(payOrderApiUrl, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "openid=" + params.openid + "&merchantId=" + params.merchantId  + "&payAmount=" + payAmount
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            //订单创建失败
+            loading.hide(function(){
+                if(data.status && data.status != 200) {
+                    alert(data.message);
+                } else {
+                    //订单创建成功过
+                    wx.chooseWXPay({
+                        timestamp: data.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                        nonceStr: data.nonceStr, // 支付签名随机串，不长于 32 位
+                        package: data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+                        signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                        paySign: data.paySign, // 支付签名
+                        success: (res) => {
+                            // 支付成功后的回调函数
+                            window.location.href = '/pay/payment-success.html';
+                        },
+                        fail: (res) => {
+                            //支付失败
+                            alert(JSON.stringify(res));
+                        },
+                        cancel: (res) => {
+                            //支付取消
+                        },
+                    });
+                }
+            });            
+        });
+    }
+    var getMerchantInfo = function() {
+        var params = parseUrl();
+        fetch(getMInfoApiUrl, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: "merchantId=" + params.merchantId
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            $(".content").slideDown();
+            $(".shop-logo").attr('src', staticHost + data.logoPath);
+            $(".shop-name").html(data.merchantName);
+        });
+    }
+	$(function(){
+        getMerchantInfo();
+		$(".payinfo").slideDown();
+		var $paymoney = $("#paymoney");
+		
+		$("#pay-stop").click(function(){
+			$(".payinfo").slideUp("fast");
+		});
+		
+		$("#paymoney").focus(function(){
+			$(".payinfo").slideDown();
+       		document.activeElement.blur();
+		});
+		
+		$(".paynum").each(function(){
+            $(this).click(function(){
+				if(($paymoney.text()).indexOf(".") != -1 && ($paymoney.text()).substring(($paymoney.text()).indexOf(".") + 1, ($paymoney.text()).length).length == 2){
+					return;
+				}
+				if($.trim($paymoney.text()) == "0"){
+					return;
+				}
+				if (parseInt($paymoney.text()) > 10000 && $paymoney.text().indexOf(".") == -1) {
+					return;
+				}
+				
+				$('.pay').removeClass('pay-disabled').unbind('click').bind('click', function(){
+					payOrder($paymoney.text());
+				});
+				$paymoney.text($paymoney.text() + $(this).text());
+			});
+		});
+		
+		$("#pay-return").click(function(){
+            $paymoney.text(($paymoney.text()).substring(0, ($paymoney.text()).length - 1));
+			if (!$paymoney.text() || parseFloat($paymoney.text()) == 0) {
+				$('.pay').addClass('pay-disabled').unbind('click');
+			}
+		});
+		
+		$("#pay-zero").click(function(){
+            if(($paymoney.text()).indexOf(".") != -1 && ($paymoney.text()).substring(($paymoney.text()).indexOf(".") + 1, ($paymoney.text()).length).length == 2){
+				return;
+			}
+			if($.trim($paymoney.text()) == "0"){
+				return;
+			}
+			if (parseInt($paymoney.text()) > 10000 && $paymoney.text().indexOf(".") == -1) {
+				return;
+			}
+			$paymoney.text($paymoney.text() + $(this).text());
+		});
+		
+		$("#pay-float").click(function(){
+			if($.trim($paymoney.text()) == ""){
+				return;
+			}
+		
+			if(($paymoney.text()).indexOf(".") != -1){
+				return;
+			}
+			
+			if(($paymoney.text()).indexOf(".") != -1){
+				return;
+			}
+			
+			$paymoney.text($paymoney.text() + $(this).text());
+        });
+        
+        if (!$paymoney.text()) {
+			$('.pay').addClass('pay-disabled');
+		}
+	});
+</script>
+</html>
+

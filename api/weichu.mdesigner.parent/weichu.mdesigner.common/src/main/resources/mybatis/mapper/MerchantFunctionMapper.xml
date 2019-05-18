@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantFunctionMapper">
+  <!-- 
+  	eviction：缓存回收策略
+		- LRU：最少使用原则，移除最长时间不使用的对象
+		- FIFO：先进先出原则，按照对象进入缓存顺序进行回收
+		- SOFT：软引用，移除基于垃圾回收器状态和软引用规则的对象
+		- WEAK：弱引用，更积极的移除移除基于垃圾回收器状态和弱引用规则的对象
+	flushInterval：刷新时间间隔，单位为毫秒，这里配置的100毫秒。如果不配置，那么只有在进行数据库修改操作才会被动刷新缓存区
+	size：引用额数目，代表缓存最多可以存储的对象个数
+	readOnly：是否只读，如果为true，则所有相同的sql语句返回的是同一个对象（有助于提高性能，但并发操作同一条数据时，可能不安全），如果设置为false，则相同的sql，后面访问的是cache的clone副本。
+  <cache eviction="LRU" size="1024" readOnly="true"/>
+  -->
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantFunction">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="function_name" jdbcType="VARCHAR" property="functionName" />
+    <result column="function_code" jdbcType="VARCHAR" property="functionCode" />
+    <result column="function_uri" jdbcType="VARCHAR" property="functionUri" />
+    <result column="function_type" jdbcType="INTEGER" property="functionType" />
+    <result column="function_category" jdbcType="INTEGER" property="functionCategory" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="function_icon" jdbcType="VARCHAR" property="functionIcon" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <resultMap id="FunctionRolesResultMap" type="com.weichu.mdesigner.common.entity.MerchantFunctionRole">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="function_name" jdbcType="VARCHAR" property="functionName" />
+    <result column="function_code" jdbcType="VARCHAR" property="functionCode" />
+    <result column="function_uri" jdbcType="VARCHAR" property="functionUri" />
+    <result column="function_type" jdbcType="INTEGER" property="functionType" />
+    <result column="function_category" jdbcType="INTEGER" property="functionCategory" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="function_icon" jdbcType="VARCHAR" property="functionIcon" />
+    <result column="role_codes" jdbcType="VARCHAR" property="roleCodes" />
+  </resultMap>
+  <resultMap id="BaseResultMapVo" type="com.weichu.mdesigner.common.vo.RoleFunctionVo">
+  	<id column="function_id" jdbcType="INTEGER" property="functionId" />
+  	<result column="function_name" jdbcType="VARCHAR" property="functionName" />
+  	<result column="function_code" jdbcType="VARCHAR" property="functionCode" />
+  	<result column="grade" jdbcType="INTEGER" property="grade" />
+  	<result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+  	<result column="parent_id" jdbcType="INTEGER" property="parentId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, function_name, function_code, function_uri, function_type, function_category, 
+    parent_id, grade, function_icon, sort_no, enabled, create_time, modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantFunctionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_function
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_function
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_function
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantFunctionExample">
+    delete from merchant_function
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantFunction">
+    insert into merchant_function (id, function_name, function_code, 
+      function_uri, function_type, function_category, 
+      parent_id, grade, function_icon, 
+      sort_no, enabled, create_time, 
+      modify_time)
+    values (#{id,jdbcType=INTEGER}, #{functionName,jdbcType=VARCHAR}, #{functionCode,jdbcType=VARCHAR}, 
+      #{functionUri,jdbcType=VARCHAR}, #{functionType,jdbcType=INTEGER}, #{functionCategory,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, #{functionIcon,jdbcType=VARCHAR}, 
+      #{sortNo,jdbcType=INTEGER}, #{enabled,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantFunction">
+    insert into merchant_function
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="functionName != null">
+        function_name,
+      </if>
+      <if test="functionCode != null">
+        function_code,
+      </if>
+      <if test="functionUri != null">
+        function_uri,
+      </if>
+      <if test="functionType != null">
+        function_type,
+      </if>
+      <if test="functionCategory != null">
+        function_category,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="functionIcon != null">
+        function_icon,
+      </if>
+      <if test="sortNo != null">
+        sort_no,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="functionName != null">
+        #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="functionCode != null">
+        #{functionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="functionUri != null">
+        #{functionUri,jdbcType=VARCHAR},
+      </if>
+      <if test="functionType != null">
+        #{functionType,jdbcType=INTEGER},
+      </if>
+      <if test="functionCategory != null">
+        #{functionCategory,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="functionIcon != null">
+        #{functionIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null">
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantFunction">
+    update merchant_function
+    <set>
+      <if test="functionName != null">
+        function_name = #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="functionCode != null">
+        function_code = #{functionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="functionUri != null">
+        function_uri = #{functionUri,jdbcType=VARCHAR},
+      </if>
+      <if test="functionType != null">
+        function_type = #{functionType,jdbcType=INTEGER},
+      </if>
+      <if test="functionCategory != null">
+        function_category = #{functionCategory,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="functionIcon != null">
+        function_icon = #{functionIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null">
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantFunction">
+    update merchant_function
+    set function_name = #{functionName,jdbcType=VARCHAR},
+      function_code = #{functionCode,jdbcType=VARCHAR},
+      function_uri = #{functionUri,jdbcType=VARCHAR},
+      function_type = #{functionType,jdbcType=INTEGER},
+      function_category = #{functionCategory,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=INTEGER},
+      function_icon = #{functionIcon,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 上面是自动生成的代码、以下是手敲的代码 -->
+  <!-- <select id="selectByMerchantUserId" resultMap="BaseResultMap">
+	select mf.* from merchant_user mu, merchant_user_role mur, merchant_role mr,
+	merchant_role_function mrf,merchant_function mf
+	where mu.id=mur.merchant_id and mur.role_id=mr.id and mr.id=mrf.role_id and
+	mrf.function_id=mf.id
+	and mf.function_category=mu.business_category and
+	mu.id=#{merchantUserId,jdbcType=INTEGER}
+  </select> -->
+  
+  <select id="selectByMerchantCategory" resultMap="BaseResultMap">
+    select A.*
+    from (SELECT * FROM merchant_function WHERE FIND_IN_SET(id, queryChildrenFunction(#{id,jdbcType=INTEGER}))) AS A
+    where (A.function_category = #{merchantCategory,jdbcType=INTEGER} or A.function_category = 0) and A.enabled=1
+    and function_type in (1, 3) order by A.sort_no asc
+  </select>
+  
+  <select id="selectByMerchantCategoryForAdmin" resultMap="BaseResultMap">
+    select A.*
+    from (SELECT * FROM merchant_function WHERE FIND_IN_SET(id, queryChildrenFunction(#{id,jdbcType=INTEGER}))) AS A
+    where (A.function_category = #{merchantCategory,jdbcType=INTEGER} or A.function_category = 0)
+    order by A.sort_no asc
+  </select>
+  
+  <select id="selectMerchantFunctionRole" resultMap="FunctionRolesResultMap">
+  	select A.id,A.function_name,A.function_code,A.function_uri,A.function_type,A.parent_id, A.grade,
+  	A.function_icon, mrf.role_id, A.sort_no, group_concat(mr.role_code) as role_codes
+    from (select * from merchant_function where FIND_IN_SET(id,queryChildrenFunction(#{id,jdbcType=INTEGER}))) AS A
+    left outer join merchant_role_function as mrf on A.id = mrf.function_id
+    left outer join merchant_role as mr on mrf.role_id = mr.id
+    where (A.function_category = #{merchantCategory,jdbcType=INTEGER} or A.function_category = 0) and A.enabled=1
+    and function_type in (1, 3) group by A.id order by A.sort_no asc
+  </select>
+   
+   <!-- 主账户角色授权界面查询使用, 用户授权菜单显示查询使用,根据商家id、等级查询出来能够授权的功能菜单
+          如果已经购买直接将等级设置为1
+    -->
+  <select id="selectAllFunction" resultMap="BaseResultMapVo">
+  	select t.id as function_id, t.function_name, t.function_code,
+	(case when isnull(u.id) then t.grade
+    else 1
+    end) as grade,
+    t.parent_id, t.sort_no, d.item_name as grade_name from merchant_function t
+		left outer join admin_dictionary_item d  on t.grade=d.item_value and d.dict_code='DICT_MERCHANT_GRADE'
+        left outer join merchant_user_function u on t.id=u.function_id and u.merchant_id=#{merchantId} and u.effective_time&lt;=now() and u.expiration_time>now()
+		where t.enabled=1 order by sort_no asc
+  </select>
+  
+  <!-- 查询子账户所拥有的菜单功能(角色授权需要分级授权) -->
+  <select id="selectChildUserFunction" resultMap="BaseResultMapVo">
+  	select distinct(f.function_id) from merchant_role_function f 
+        left outer join merchant_user_role r on r.role_id=f.role_id
+        left outer join
+        merchant_user_children c on r.merchant_childuser_id=c.id where account=#{account}
+        and c.merchant_id=#{merchantId} and r.merchant_id=#{merchantId}
+  </select>
+  
+  <!-- 查询子账户是否具有某一个功能权限 -->
+  <select id="selectFunctionByChildAccountAndFunctionCode" resultMap="BaseResultMap">
+  	select t.* from merchant_function t left outer join merchant_role_function f on t.id=f.function_id
+        left outer join merchant_user_role r on r.role_id=f.role_id
+        left outer join
+        merchant_user_children c on r.merchant_childuser_id=c.id where account=#{account}
+        and c.merchant_id=#{merchantId} and r.merchant_id=#{merchantId} and t.function_code=#{functionCode}
+  </select>
+  
+  <!-- 用户授权界面 勾选角色查询对应的功能菜单 -->
+  <select id="listFunctionByRoleId" resultMap="BaseResultMap">
+  	SELECT t.function_code FROM merchant_function t left outer join merchant_role_function f on t.id = f.function_id
+		where f.role_id in 
+		<foreach collection="roleIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+        </foreach>   
+		and f.merchant_id=#{merchantId,jdbcType=INTEGER}
+  </select>
+</mapper>

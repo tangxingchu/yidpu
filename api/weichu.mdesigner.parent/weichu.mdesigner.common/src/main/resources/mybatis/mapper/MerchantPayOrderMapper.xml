@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantPayOrderMapper">
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantPayOrder">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="parent_order_no" jdbcType="VARCHAR" property="parentOrderNo" />
+    <result column="parent_out_trade_no" jdbcType="VARCHAR" property="parentOutTradeNo" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="order_price" jdbcType="DECIMAL" property="orderPrice" />
+    <result column="order_status" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="pay_no" jdbcType="VARCHAR" property="payNo" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="pay_method" jdbcType="INTEGER" property="payMethod" />
+    <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
+    <result column="wechat_open_id" jdbcType="VARCHAR" property="wechatOpenId" />
+    <result column="alipay_userid" jdbcType="VARCHAR" property="alipayUserid" />
+    <result column="reamrk" jdbcType="VARCHAR" property="reamrk" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, merchant_id, parent_order_no, parent_out_trade_no, order_no, order_time, order_price, 
+    order_status, pay_no, pay_time, pay_method, pay_price, wechat_open_id, alipay_userid, 
+    reamrk
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantPayOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_pay_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_pay_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_pay_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantPayOrderExample">
+    delete from merchant_pay_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantPayOrder">
+    insert into merchant_pay_order (id, merchant_id, parent_order_no, 
+      parent_out_trade_no, order_no, order_time, 
+      order_price, order_status, pay_no, 
+      pay_time, pay_method, pay_price, 
+      wechat_open_id, alipay_userid, reamrk
+      )
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{parentOrderNo,jdbcType=VARCHAR}, 
+      #{parentOutTradeNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{orderPrice,jdbcType=DECIMAL}, #{orderStatus,jdbcType=VARCHAR}, #{payNo,jdbcType=VARCHAR}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{payMethod,jdbcType=INTEGER}, #{payPrice,jdbcType=DECIMAL}, 
+      #{wechatOpenId,jdbcType=VARCHAR}, #{alipayUserid,jdbcType=VARCHAR}, #{reamrk,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantPayOrder">
+    insert into merchant_pay_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="parentOrderNo != null">
+        parent_order_no,
+      </if>
+      <if test="parentOutTradeNo != null">
+        parent_out_trade_no,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="orderPrice != null">
+        order_price,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="payNo != null">
+        pay_no,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="payMethod != null">
+        pay_method,
+      </if>
+      <if test="payPrice != null">
+        pay_price,
+      </if>
+      <if test="wechatOpenId != null">
+        wechat_open_id,
+      </if>
+      <if test="alipayUserid != null">
+        alipay_userid,
+      </if>
+      <if test="reamrk != null">
+        reamrk,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="parentOrderNo != null">
+        #{parentOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOutTradeNo != null">
+        #{parentOutTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMethod != null">
+        #{payMethod,jdbcType=INTEGER},
+      </if>
+      <if test="payPrice != null">
+        #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wechatOpenId != null">
+        #{wechatOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayUserid != null">
+        #{alipayUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="reamrk != null">
+        #{reamrk,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantPayOrderExample" resultType="java.lang.Long">
+    select count(*) from merchant_pay_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantPayOrder">
+    update merchant_pay_order
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="parentOrderNo != null">
+        parent_order_no = #{parentOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOutTradeNo != null">
+        parent_out_trade_no = #{parentOutTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        order_time = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderPrice != null">
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payNo != null">
+        pay_no = #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMethod != null">
+        pay_method = #{payMethod,jdbcType=INTEGER},
+      </if>
+      <if test="payPrice != null">
+        pay_price = #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="wechatOpenId != null">
+        wechat_open_id = #{wechatOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayUserid != null">
+        alipay_userid = #{alipayUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="reamrk != null">
+        reamrk = #{reamrk,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantPayOrder">
+    update merchant_pay_order
+    set merchant_id = #{merchantId,jdbcType=INTEGER},
+      parent_order_no = #{parentOrderNo,jdbcType=VARCHAR},
+      parent_out_trade_no = #{parentOutTradeNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      order_time = #{orderTime,jdbcType=TIMESTAMP},
+      order_price = #{orderPrice,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      pay_no = #{payNo,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      pay_method = #{payMethod,jdbcType=INTEGER},
+      pay_price = #{payPrice,jdbcType=DECIMAL},
+      wechat_open_id = #{wechatOpenId,jdbcType=VARCHAR},
+      alipay_userid = #{alipayUserid,jdbcType=VARCHAR},
+      reamrk = #{reamrk,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 以下是自己写的,上面是自动生成的 -->
+  <!-- 前台扫码支付成功回调 -->
+  <update id="paySuccess">
+  	update merchant_pay_order set pay_no = #{payNo,jdbcType=VARCHAR}, order_status = '8',
+  		pay_time = #{payTime,jdbcType=TIMESTAMP}, pay_method = #{payMethod,jdbcType=INTEGER},
+      	pay_price = (ifnull(pay_price, 0) + #{payPrice,jdbcType=DECIMAL}),
+      	wechat_open_id = (
+      		case when #{payMethod} = 2 then #{code}
+      		when #{payMethod} = 4 then #{code}
+      		else null
+      		end
+      	),
+      	alipay_userid = (
+      		case when #{payMethod} = 1 then #{code}
+      		when #{payMethod} = 3 then #{code}
+      		else null
+      		end
+      	)
+      	where order_no = #{orderNo,jdbcType=VARCHAR} and order_status = '1'
+      	and merchant_id = #{merchantId,jdbcType=INTEGER}
+  </update>
+  <!-- 删除订单 -->
+  <delete id="deleteById">
+  	delete from merchant_pay_order where order_status = '1' and merchant_id = #{merchantId,jdbcType=INTEGER} and id = #{id,jdbcType=INTEGER} 
+  </delete>
+  <!-- 支付单关联用餐订单 -->
+  <update id="relateFrontOrder">
+  	update merchant_pay_order set parent_order_no = #{orderNo} where
+  		id in 
+		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and merchant_id=#{merchantId}
+  </update>
+  <!-- 合并单关联支付单 -->
+  <update id="relateFrontOrderByOutTradeNo">
+  	update merchant_pay_order set parent_out_trade_no = #{outTradeNo} where
+  		id in 
+		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and merchant_id=#{merchantId}
+  </update>
+  <!-- 入库历史之后删除 -->
+  <delete id="deleteByParentOutTradeNo">
+  	delete from merchant_pay_order where parent_out_trade_no = #{parentOutTradeNo} and merchant_id=#{merchantId}
+  </delete>
+  <!-- 入库历史之后删除 -->
+  <delete id="deleteByParentOrderNo">
+  	delete from merchant_pay_order where parent_order_no = #{parentOrderNo} and merchant_id=#{merchantId}
+  </delete>
+  <!-- 入库历史之后删除 (会员移动支付充值)-->
+  <delete id="deleteByIds">
+  	delete from merchant_pay_order where id in
+		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and merchant_id=#{merchantId}
+  </delete>
+  <insert id="insertToHis">
+  	insert into merchant_pay_order_his(merchant_id, parent_order_no, 
+      parent_out_trade_no, order_no, order_time, 
+      order_price, order_status, pay_no, 
+      pay_time, pay_method, pay_price,
+      wechat_open_id, alipay_userid,
+      reamrk)
+		select merchant_id, parent_order_no, 
+      parent_out_trade_no, order_no, order_time, 
+      order_price, order_status, pay_no, 
+      #{now}, pay_method, pay_price,
+      wechat_open_id, alipay_userid,
+      reamrk from merchant_pay_order o where o.order_status = '3' and o.pay_time &lt;= #{now}
+		and o.merchant_id = #{merchantId,jdbcType=INTEGER}
+  </insert>
+  <delete id="deleteByTime">
+  	delete from merchant_pay_order where order_status = '3' and pay_time &lt;= #{now}
+		and merchant_id = #{merchantId,jdbcType=INTEGER}
+  </delete>
+</mapper>

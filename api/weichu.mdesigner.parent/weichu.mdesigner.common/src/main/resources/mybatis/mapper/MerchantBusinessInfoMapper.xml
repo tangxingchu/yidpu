@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weichu.mdesigner.common.mapper.MerchantBusinessInfoMapper">
+  <resultMap id="BaseResultMap" type="com.weichu.mdesigner.common.entity.MerchantBusinessInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_id" jdbcType="INTEGER" property="merchantId" />
+    <result column="morning_enabled" jdbcType="INTEGER" property="morningEnabled" />
+    <result column="morning_opening" jdbcType="TIME" property="morningOpening" />
+    <result column="morning_closeing" jdbcType="TIME" property="morningCloseing" />
+    <result column="nooning_enabled" jdbcType="INTEGER" property="nooningEnabled" />
+    <result column="nooning_opening" jdbcType="TIME" property="nooningOpening" />
+    <result column="nooning_closeing" jdbcType="TIME" property="nooningCloseing" />
+    <result column="afternoon_enabled" jdbcType="INTEGER" property="afternoonEnabled" />
+    <result column="afternoon_opening" jdbcType="TIME" property="afternoonOpening" />
+    <result column="afternoon_closeing" jdbcType="TIME" property="afternoonCloseing" />
+    <result column="takeout_distance" jdbcType="REAL" property="takeoutDistance" />
+    <result column="has_parking" jdbcType="CHAR" property="hasParking" />
+    <result column="parking" jdbcType="VARCHAR" property="parking" />
+    <result column="point_cash" jdbcType="INTEGER" property="pointCash" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, merchant_id, morning_enabled, morning_opening, morning_closeing, nooning_enabled, 
+    nooning_opening, nooning_closeing, afternoon_enabled, afternoon_opening, afternoon_closeing, 
+    takeout_distance, has_parking, parking, point_cash, create_time, modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from merchant_business_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_business_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from merchant_business_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfoExample">
+    delete from merchant_business_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfo">
+    insert into merchant_business_info (id, merchant_id, morning_enabled, 
+      morning_opening, morning_closeing, nooning_enabled, 
+      nooning_opening, nooning_closeing, afternoon_enabled, 
+      afternoon_opening, afternoon_closeing, takeout_distance, 
+      has_parking, parking, point_cash, 
+      create_time, modify_time)
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{morningEnabled,jdbcType=INTEGER}, 
+      #{morningOpening,jdbcType=TIME}, #{morningCloseing,jdbcType=TIME}, #{nooningEnabled,jdbcType=INTEGER}, 
+      #{nooningOpening,jdbcType=TIME}, #{nooningCloseing,jdbcType=TIME}, #{afternoonEnabled,jdbcType=INTEGER}, 
+      #{afternoonOpening,jdbcType=TIME}, #{afternoonCloseing,jdbcType=TIME}, #{takeoutDistance,jdbcType=REAL}, 
+      #{hasParking,jdbcType=CHAR}, #{parking,jdbcType=VARCHAR}, #{pointCash,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfo">
+    insert into merchant_business_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="morningEnabled != null">
+        morning_enabled,
+      </if>
+      <if test="morningOpening != null">
+        morning_opening,
+      </if>
+      <if test="morningCloseing != null">
+        morning_closeing,
+      </if>
+      <if test="nooningEnabled != null">
+        nooning_enabled,
+      </if>
+      <if test="nooningOpening != null">
+        nooning_opening,
+      </if>
+      <if test="nooningCloseing != null">
+        nooning_closeing,
+      </if>
+      <if test="afternoonEnabled != null">
+        afternoon_enabled,
+      </if>
+      <if test="afternoonOpening != null">
+        afternoon_opening,
+      </if>
+      <if test="afternoonCloseing != null">
+        afternoon_closeing,
+      </if>
+      <if test="takeoutDistance != null">
+        takeout_distance,
+      </if>
+      <if test="hasParking != null">
+        has_parking,
+      </if>
+      <if test="parking != null">
+        parking,
+      </if>
+      <if test="pointCash != null">
+        point_cash,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="morningEnabled != null">
+        #{morningEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="morningOpening != null">
+        #{morningOpening,jdbcType=TIME},
+      </if>
+      <if test="morningCloseing != null">
+        #{morningCloseing,jdbcType=TIME},
+      </if>
+      <if test="nooningEnabled != null">
+        #{nooningEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="nooningOpening != null">
+        #{nooningOpening,jdbcType=TIME},
+      </if>
+      <if test="nooningCloseing != null">
+        #{nooningCloseing,jdbcType=TIME},
+      </if>
+      <if test="afternoonEnabled != null">
+        #{afternoonEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="afternoonOpening != null">
+        #{afternoonOpening,jdbcType=TIME},
+      </if>
+      <if test="afternoonCloseing != null">
+        #{afternoonCloseing,jdbcType=TIME},
+      </if>
+      <if test="takeoutDistance != null">
+        #{takeoutDistance,jdbcType=REAL},
+      </if>
+      <if test="hasParking != null">
+        #{hasParking,jdbcType=CHAR},
+      </if>
+      <if test="parking != null">
+        #{parking,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCash != null">
+        #{pointCash,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfoExample" resultType="java.lang.Long">
+    select count(*) from merchant_business_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfo">
+    update merchant_business_info
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="morningEnabled != null">
+        morning_enabled = #{morningEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="morningOpening != null">
+        morning_opening = #{morningOpening,jdbcType=TIME},
+      </if>
+      <if test="morningCloseing != null">
+        morning_closeing = #{morningCloseing,jdbcType=TIME},
+      </if>
+      <if test="nooningEnabled != null">
+        nooning_enabled = #{nooningEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="nooningOpening != null">
+        nooning_opening = #{nooningOpening,jdbcType=TIME},
+      </if>
+      <if test="nooningCloseing != null">
+        nooning_closeing = #{nooningCloseing,jdbcType=TIME},
+      </if>
+      <if test="afternoonEnabled != null">
+        afternoon_enabled = #{afternoonEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="afternoonOpening != null">
+        afternoon_opening = #{afternoonOpening,jdbcType=TIME},
+      </if>
+      <if test="afternoonCloseing != null">
+        afternoon_closeing = #{afternoonCloseing,jdbcType=TIME},
+      </if>
+      <if test="takeoutDistance != null">
+        takeout_distance = #{takeoutDistance,jdbcType=REAL},
+      </if>
+      <if test="hasParking != null">
+        has_parking = #{hasParking,jdbcType=CHAR},
+      </if>
+      <if test="parking != null">
+        parking = #{parking,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCash != null">
+        point_cash = #{pointCash,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfo">
+    update merchant_business_info
+    set merchant_id = #{merchantId,jdbcType=INTEGER},
+      morning_enabled = #{morningEnabled,jdbcType=INTEGER},
+      morning_opening = #{morningOpening,jdbcType=TIME},
+      morning_closeing = #{morningCloseing,jdbcType=TIME},
+      nooning_enabled = #{nooningEnabled,jdbcType=INTEGER},
+      nooning_opening = #{nooningOpening,jdbcType=TIME},
+      nooning_closeing = #{nooningCloseing,jdbcType=TIME},
+      afternoon_enabled = #{afternoonEnabled,jdbcType=INTEGER},
+      afternoon_opening = #{afternoonOpening,jdbcType=TIME},
+      afternoon_closeing = #{afternoonCloseing,jdbcType=TIME},
+      takeout_distance = #{takeoutDistance,jdbcType=REAL},
+      has_parking = #{hasParking,jdbcType=CHAR},
+      parking = #{parking,jdbcType=VARCHAR},
+      point_cash = #{pointCash,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 以下是自己写的 -->
+  <!-- 查询积分返现比例1元需要多少积分 -->
+  <select id="selectPointCash" resultType="java.lang.Integer">
+  	select point_cash from merchant_business_info where merchant_id=#{merchantId}
+  </select>
+  <!-- 修改 -->
+  <update id="updateByEntity" parameterType="com.weichu.mdesigner.common.entity.MerchantBusinessInfo">
+  	update merchant_business_info
+    <set>
+      <if test="morningEnabled != null">
+        morning_enabled = #{morningEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="morningOpening != null">
+        morning_opening = #{morningOpening,jdbcType=TIME},
+      </if>
+      <if test="morningCloseing != null">
+        morning_closeing = #{morningCloseing,jdbcType=TIME},
+      </if>
+      <if test="nooningEnabled != null">
+        nooning_enabled = #{nooningEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="nooningOpening != null">
+        nooning_opening = #{nooningOpening,jdbcType=TIME},
+      </if>
+      <if test="nooningCloseing != null">
+        nooning_closeing = #{nooningCloseing,jdbcType=TIME},
+      </if>
+      <if test="afternoonEnabled != null">
+        afternoon_enabled = #{afternoonEnabled,jdbcType=INTEGER},
+      </if>
+      <if test="afternoonOpening != null">
+        afternoon_opening = #{afternoonOpening,jdbcType=TIME},
+      </if>
+      <if test="afternoonCloseing != null">
+        afternoon_closeing = #{afternoonCloseing,jdbcType=TIME},
+      </if>
+      <if test="takeoutDistance != null">
+        takeout_distance = #{takeoutDistance,jdbcType=REAL},
+      </if>
+      <if test="hasParking != null">
+        has_parking = #{hasParking,jdbcType=CHAR},
+      </if>
+      <if test="parking != null">
+        parking = #{parking,jdbcType=VARCHAR},
+      </if>
+      <if test="pointCash != null">
+        point_cash = #{pointCash,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where merchant_id = #{merchantId,jdbcType=INTEGER}
+  </update>
+</mapper>

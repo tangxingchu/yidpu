@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.weichu.mdesigner</groupId>
+	<artifactId>weichu.mdesigner.parent</artifactId>
+	<version>1.0.0-RELEASE</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<!-- 解决maven install 或test 的时候控制台中文乱码 -->
+		<argLine>-Dfile.encoding=UTF-8</argLine>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<!-- Inherit defaults from Spring Boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.9.RELEASE</version>
+	</parent>
+
+	<!-- Package as an executable jar -->
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!-- maven编译编码设置，其实可以不用设置，设置上面的project.build.sourceEncoding就ok了 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- 解决maven install 或test 的时候控制台中文乱码。用spring boot配的2.18.1仍然是乱码，原因不知 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<forkMode>once</forkMode>
+					<argLine>-Dfile.encoding=UTF-8</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<!-- 子model里面还需要添加依赖，这里只是为了统一版本 -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- 阿里系的Druid依赖包 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>1.1.6</version>
+			</dependency>
+			<!-- mybatis -->
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>1.3.1</version>
+			</dependency>
+			<!-- 提供丰富的Java工具方法 -->
+			<dependency>
+				<groupId>com.xiaoleilu</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>3.2.2</version>
+			</dependency>
+			<!-- 阿里系fastjson依赖包 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>1.2.41</version>
+			</dependency>
+			<!-- mybatis通用mapper -->
+			<dependency>
+				<groupId>tk.mybatis</groupId>
+				<artifactId>mapper-spring-boot-starter</artifactId>
+				<version>1.1.7</version>
+			</dependency>
+			<!-- mybatis分页插件 -->
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper-spring-boot-starter</artifactId>
+				<version>1.2.3</version>
+			</dependency>
+			<!-- jwt （与spring security 配合使用） -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>0.9.0</version>
+			</dependency>
+			<!-- Thymeleaf模板引擎 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-thymeleaf</artifactId>
+				<version>1.5.9.RELEASE</version>
+			</dependency>
+			<!-- java mail支持 -->
+			<dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-mail</artifactId>
+			    <version>1.5.9.RELEASE</version>
+			</dependency>
+			<!-- redis -->
+			<dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-redis</artifactId>
+			    <version>1.3.8.RELEASE</version>
+			</dependency>
+			<!-- 图片压缩工具包 -->
+			<dependency>
+				<groupId>net.coobird</groupId>
+				<artifactId>thumbnailator</artifactId>
+				<version>0.4.8</version>
+			</dependency>
+			<!-- xml相关 -->
+			<dependency>
+			    <groupId>jaxen</groupId>
+			    <artifactId>jaxen</artifactId>
+			    <version>1.1.6</version>
+			</dependency>
+			<dependency>
+			    <groupId>dom4j</groupId>
+			    <artifactId>dom4j</artifactId>
+			    <version>1.6.1</version>
+			</dependency>
+			<!-- poi -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.17</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi-ooxml-schemas</artifactId>
+			    <version>3.17</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi-ooxml</artifactId>
+			    <version>3.17</version>
+			</dependency>
+			<!-- 本地缓存 -->
+			<dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-cache</artifactId>
+			    <version>1.5.9.RELEASE</version>
+			</dependency>
+			<dependency>
+			    <groupId>net.sf.ehcache</groupId>
+			    <artifactId>ehcache</artifactId>
+			    <version>2.10.4</version>
+			</dependency> 
+			<!-- restTemplate采用okHttp3的实现 -->
+			<dependency>
+			    <groupId>com.squareup.okhttp3</groupId>
+			    <artifactId>okhttp</artifactId>
+			    <version>3.10.0</version>
+			</dependency>
+			<!-- 阿里云短信平台依赖 -->
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-core</artifactId>
+				<version>4.0.6</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+				<version>1.1.0</version>
+			</dependency>
+			<!-- 蚂蚁金服支付宝sdk -->
+			<dependency>
+				<groupId>com.alipay.sdk</groupId>
+				<artifactId>alipay-sdk-java</artifactId>
+				<version>3.3.87.ALL</version>
+			</dependency>
+			<!-- socket.io的java客户端依赖 -->
+			<dependency>
+			    <groupId>io.socket</groupId>
+			    <artifactId>socket.io-client</artifactId>
+			    <version>1.0.0</version>
+			</dependency>
+			<dependency>
+	            <groupId>org.apache.httpcomponents</groupId>
+	            <artifactId>httpclient</artifactId>
+	            <version>4.5.3</version>
+	        </dependency>
+		</dependencies>
+	</dependencyManagement>
+	<!-- 子module可以继承的依赖 -->
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>weichu.mdesigner.utils</module><!-- 工具包 -->
+		<module>weichu.mdesigner.auth</module><!-- 认证模块 -->
+		<module>weichu.mdesigner.api</module><!-- 可运行的jar，前端与移动端的api -->
+		<module>weichu.mdesigner.businesslogger</module><!-- 可运行的jar，单独的日志入库模块（从mq读取日志入库） -->
+		<module>weichu.mdesigner.admin.api</module><!--可运行的jar， 后台管理的api -->
+		<module>weichu.mdesigner.mybatisgenerator</module><!-- 仅仅是用于生成mybatis代码 -->
+		<module>weichu.mdesigner.mobile.api</module><!--可运行的jar， 移动端的api -->
+		<module>weichu.mdesigner.common</module><!-- api与amdin.api公用的一些底层操作 -->
+		<module>microservice-discovery-eureka</module>
+		<module>EurekaServer</module>
+		<module>Ribbon</module>
+	</modules>
+</project>

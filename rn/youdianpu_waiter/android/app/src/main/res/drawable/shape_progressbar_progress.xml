@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 这个也是设置时圆角还是直角，左边的 -->
+    <corners android:radius="5dip" />
+    <!-- 设置进度的颜色，将startColor、centerColor、endColor都设置成同一个颜色值 -->
+    <gradient
+        android:angle="270"
+        android:centerColor="@color/bg_bule"
+        android:centerY="0.75"
+        android:endColor="@color/bg_bule"
+        android:startColor="@color/bg_bule" />
+</shape>

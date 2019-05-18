@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">有点谱</string>
+    <string name="txt_anonymous">匿名</string>
+    <string name="preference_file_key">youdianpuFile</string>
+
+    <!-- transition shared elements -->
+    <string name="transition_shot" translatable="false">shot</string>
+    <string name="transition_shot_background" translatable="false">shot_background</string>
+
+    <string name="transition_qrcode_activity" translatable="false">qrcode_activity</string>
+</resources>

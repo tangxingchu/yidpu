@@ -1,0 +1,11 @@
+<!--components/navigator.wxml-->
+<!-- 自定义tab标签组件-->
+<!-- 标题列表-->
+<view class="scroll-view-x" wx:if="{{!ttype || ttype==2}}">
+  <view class="scroll-view-item" wx:for="{{tList}}" wx:key="*this">
+    <view class="{{currentTab==(index) ? 'on' : ''}}" bindtap="_swichNav" data-current="{{index}}">{{ !tname ? item.name : item[tname].name }}</view>
+  </view>
+</view>
+<!--内容列表-->
+<slot>
+</slot>

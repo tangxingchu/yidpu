@@ -1,0 +1,22 @@
+.editable_cell_value_wrap {
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.editable_ow:hover .editable_cell_value_wrap {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
+}
+.total {
+  text-align: right;
+  font-size: 16px;
+  font-weight: bold;
+}
+.goods_day {
+  font-size: 13px;
+  color: #ff4242;
+}
+.goods_extra {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}

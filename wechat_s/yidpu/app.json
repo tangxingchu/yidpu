@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/order/order",
+    "pages/user/user",
+    "pages/login/login",
+    "pages/search/search",
+    "pages/switchcity/switchcity",
+    "pages/store/store",
+    "pages/placeOrder/placeOrder"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#E64320",
+    "navigationBarTitleText": "一点谱",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#FF8C00",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "./images/shou.png",
+        "selectedIconPath": "./images/s.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "images/g.png",
+        "selectedIconPath": "images/gg.png",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "debug": true
+}

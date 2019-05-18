@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 这个是背景颜色 -->
+    <item android:id="@android:id/background">
+        <shape>
+
+            <!-- 这个是设置圆角还会直角，如果设置成0dip就是直角 -->
+            <corners android:radius="5dip"/>
+            <!-- 设置背景的颜色，将startColor、centerColor、endColor都设置成同一个颜色值 -->
+            <!--
+                 如果你不用颜色值也可以，可以直接用图片来代替，在item中添加这个属性就可以了，其他的不需要
+			     android:drawable="@drawable/progressbar_bg"
+            -->
+            <gradient
+                android:angle="270"
+                android:centerColor="@color/white"
+                android:centerY="0.75"
+                android:endColor="@color/white"
+                android:startColor="@color/white"/>
+        </shape>
+    </item>
+    <!-- 这个是第二进度条的颜色，没用到，大同小异 -->
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="5dip"/>
+
+                <gradient
+                    android:angle="270"
+                    android:centerColor="#80C07AB8"
+                    android:centerY="0.75"
+                    android:endColor="#a0C07AB8"
+                    android:startColor="#80C07AB8"/>
+            </shape>
+        </clip>
+    </item>
+    <!-- 这个是设置你进度的颜色 -->
+    <item android:id="@android:id/progress">
+
+        <!--这样写右边没有圆角哦-->
+ <!--       <clip>
+            <shape>
+                <corners android:radius="5dip"/>
+
+                <gradient
+                    android:angle="270"
+                    android:centerColor="@color/bg_bule"
+                    android:centerY="0.75"
+                    android:endColor="@color/bg_bule"
+                    android:startColor="@color/bg_bule"/>
+            </shape>
+        </clip>-->
+
+
+        <!--改用scale属性，为了右边圆角，clip没有这个功能-->
+        <scale
+            android:drawable="@drawable/shape_progressbar_progress"
+            android:scaleWidth="100%"/>
+
+    </item>
+
+</layer-list>

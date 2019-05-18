@@ -1,0 +1,15 @@
+<!--pages/placeOrder/placeOrder.wxml-->
+<view class='wrap'>
+  <view class='merchantHear'>
+    <image src="{{store.photo}}" mode="aspectFill"></image>
+    <view class='info'>
+      <view class='name'>{{store.name}}</view>
+      <view class='star_price'>
+        <template is='star' data="{{count:store.star}}" /> {{store.starcount}}条
+      </view>
+      <view class='type_km'>
+        <view class='type'>{{store.buztype}}</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,33 @@
+<mxEditor>
+	<ui>
+		<resource basename="/src/resources/editor"/>
+	</ui>
+	<mxDefaultPopupMenu as="popupHandler">
+		<condition name="userObject"><![CDATA[
+			function (editor, cell, evt)
+			{
+				if(cell) {
+					var tableCode = cell.getAttribute('tableCode');
+					if(tableCode != null) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
+			}
+			]]>
+		</condition>
+		<add as="order" action="order" if="userObject"/>
+		<add as="viewOrderItem" action="viewOrderItem" if="userObject"/>
+		<separator/>
+		<add as="printOrder" action="printOrder" if="userObject"/>
+		<add as="qrcode" action="qrcode" if="userObject"/>
+		<separator/>
+		<add as="free" action="setFree" if="userObject"/>
+		<add as="dinner" action="setDinner" if="userObject"/>
+		<add as="seat" action="setSeat" if="userObject"/>
+	</mxDefaultPopupMenu>
+	<include name="/src/config/keyhandler-commons.xml"/>
+</mxEditor>

@@ -1,0 +1,20 @@
+<mxEditor>
+	<include name="/src/config/wfeditor-commons.xml"/>
+	<ui>
+		<add as="graph" element="graph"/>
+		<add as="toolbar" element="toolbar"/>
+		<!--<add as="toolbar" x="204" y="66" width="50" style="padding:5px;padding-top:8px;padding-right:0px;"/>-->
+	</ui>
+	<mxGraph as="graph">
+		<include name="/src/config/wfgraph-commons.xml"/>
+	</mxGraph>
+	<mxDefaultToolbar as="toolbar">
+		<add as="Pan" mode="pan" icon="/src/images/toolbar/pan.gif"/>
+		<add as="Select" mode="select" icon="/src/images/toolbar/select.gif"/>
+		<separator/>
+		<add as="Fit" action="fit" icon="/src/images/toolbar/zoom.gif"/>
+		<add as="Zoom In" action="zoomIn" icon="/src/images/toolbar/zoomin.gif"/>
+		<add as="Zoom Out" action="zoomOut" icon="/src/images/toolbar/zoomout.gif"/>
+		<add as="Actual Size" action="actualSize" icon="/src/images/toolbar/zoomactual.gif"/>
+	</mxDefaultToolbar>
+</mxEditor>

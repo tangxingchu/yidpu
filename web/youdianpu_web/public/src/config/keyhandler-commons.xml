@@ -1,0 +1,6 @@
+<mxEditor>
+	<mxDefaultKeyHandler as="keyHandler">
+		<add as="107" action="zoomIn"/>
+		<add as="109" action="zoomOut"/>
+	</mxDefaultKeyHandler>
+</mxEditor>
