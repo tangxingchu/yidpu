@@ -7,3 +7,7 @@
 -------
 ##ESCPOS
 >>>>热敏打印机escpos指令测试代码
+
+License
+-------
+MIT
