@@ -13,10 +13,6 @@
 			connectionURL="jdbc:mysql://localhost:3306/weichu_youdianpu_db"
 			userId="root" password="1234txc">
 		</jdbcConnection>
-		<!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/weichu_youdianpu_db"
-			userId="root" password="Youdianpu@0709">
-		</jdbcConnection>-->
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
