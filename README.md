@@ -36,6 +36,7 @@
 ![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168579404.jpg)
 ![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168591878.jpg)
 ![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/1558168603722.jpg)
+![工作台](https://github.com/tangxingchu/yidpu/blob/master/sample/IMG_20190117_093038.jpg)
 
 License
 -------
