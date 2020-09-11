@@ -12,7 +12,7 @@
   "dependencies": {
     "argv": "0.0.2",
     "js-base64": "^2.4.9",
-    "node-fetch": "^2.2.0",
+    "node-fetch": "^2.6.1",
     "socket.io": "^2.1.1",
     "underscore": "^1.9.1",
     "url-search-params-polyfill": "^5.0.0"
