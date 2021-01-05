@@ -45,7 +45,7 @@
   "author": "一点谱科技",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "electron-updater": "^3.0.3",
     "escpos": "^2.4.11",
     "express": "^4.16.3",
