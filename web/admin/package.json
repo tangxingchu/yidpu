@@ -22,7 +22,7 @@
     "js-base64": "^2.4.5",
     "lodash": "^4.17.4",
     "lodash-decorators": "^5.0.0",
-    "moment": "^2.22.1",
+    "moment": "^2.29.4",
     "mxgraph": "^3.9.3",
     "numeral": "^2.0.6",
     "path-to-regexp": "^2.2.1",
