@@ -15,7 +15,7 @@
     "react-native": "0.55.4",
     "react-native-button": "^2.3.0",
     "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera.git#v0.12.0",
-    "react-native-code-push": "^5.4.2",
+    "react-native-code-push": "^5.7.0",
     "react-native-icon-badge": "^1.1.3",
     "react-native-permissions": "^1.1.1",
     "react-native-storage": "^0.2.2",
